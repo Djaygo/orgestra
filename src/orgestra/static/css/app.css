@@ -279,9 +279,9 @@ body:has(#sources-toggle:checked) .sidebar {
 .world {
   position: absolute;
   inset: 0;
-  mask-image: linear-gradient(to bottom, transparent 0%, #000 12%);
 }
-.world canvas { display: block; }
+/* Only the characters fade into the page; speech bubbles above the strip stay opaque and uncut. */
+.world canvas { display: block; mask-image: linear-gradient(to bottom, transparent 0%, #000 12%); }
 .stage-labels { position: absolute; inset: 0; }
 .stage-name {
   font-size: 11px;
