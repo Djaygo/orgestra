@@ -8,6 +8,8 @@ import { type Bounds, randomPoint } from "./wander";
 const MAX_PIXEL_RATIO = 2;
 const MAX_STEP_SECONDS = 0.1;
 const WANDER_CHANCE_PER_SECOND = 0.35;
+// A backlog delivered at once (a tab coming back to the foreground) shows only its first line.
+const MIN_SAY_GAP_MS = 250;
 
 export function pixelRatio(deviceRatio: number): number {
   return Math.min(deviceRatio, MAX_PIXEL_RATIO);
@@ -77,8 +79,13 @@ export function mountWorld(container: HTMLElement, cast: CastMember[], events: E
   resizeObserver.observe(container);
   resize();
 
+  let lastSayAt = Number.NEGATIVE_INFINITY;
   const stopSay = onStageEvent(events, SAY, ({ speaker, listener, text }) => {
     const now = performance.now();
+    if (now - lastSayAt < MIN_SAY_GAP_MS) {
+      return;
+    }
+    lastSayAt = now;
     const from = characters.get(speaker);
     const to = characters.get(listener);
     from?.say(text, to, now);
