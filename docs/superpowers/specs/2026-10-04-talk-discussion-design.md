@@ -15,37 +15,45 @@ line diffs. Search results and the talk page take on the look of a Discourse for
   safeguard.
 - **Anyone can edit any post.** Every edit appends a revision attributed to the editor's display name.
 - **Style scope.** Search results and the talk page only. The home page stays as it is.
-- **Storage.** SQLite through stdlib `sqlite3`, one file. No ORM, no new dependency.
+- **Storage.** SQLite through [alchemical](https://github.com/miguelgrinberg/alchemical), a thin
+  SQLAlchemy 2.0 wrapper (`Alchemical(url)`, `db.Model`, `db.create_all()`, `with db.begin() as session`).
+  Added with `uv add alchemical`.
+- **Scale.** Few users and no bots are assumed: no spam protection and no edit-conflict handling.
+  Concurrent edits are last write wins; every edit is a kept revision, so nothing is lost.
 
 ## Data model
 
-```sql
-posts(
-  id          INTEGER PRIMARY KEY,
-  talk_ref    TEXT NOT NULL,                 -- "<year>/<slug>", the catalog key
-  parent_id   INTEGER REFERENCES posts(id),  -- NULL for a top-level post
-  kind        TEXT NOT NULL CHECK (kind IN ('comment', 'question')),
-  author_name TEXT NOT NULL,
-  created_at  TEXT NOT NULL,                 -- UTC ISO 8601
-  answered    INTEGER NOT NULL DEFAULT 0     -- questions only
-)
-revisions(
-  id          INTEGER PRIMARY KEY,
-  post_id     INTEGER NOT NULL REFERENCES posts(id),
-  body        TEXT NOT NULL,
-  editor_name TEXT NOT NULL,
-  created_at  TEXT NOT NULL
-)
+SQLAlchemy 2.0 models on `db.Model`:
+
+```python
+class Post(db.Model):
+    id: Mapped[int] = mapped_column(primary_key=True)
+    talk_ref: Mapped[str] = mapped_column(index=True)  # "<year>/<slug>", the catalog key
+    parent_id: Mapped[int | None] = mapped_column(ForeignKey("post.id"))  # None for a top-level post
+    kind: Mapped[str]  # "comment" | "question"
+    author_name: Mapped[str]
+    created_at: Mapped[datetime]  # UTC
+    answered: Mapped[bool] = mapped_column(default=False)  # questions only
+    revisions: Mapped[list[Revision]] = relationship(order_by="Revision.id")
+    replies: Mapped[list[Post]] = relationship(order_by="Post.id")
+
+
+class Revision(db.Model):
+    id: Mapped[int] = mapped_column(primary_key=True)
+    post_id: Mapped[int] = mapped_column(ForeignKey("post.id"))
+    body: Mapped[str]
+    editor_name: Mapped[str]
+    created_at: Mapped[datetime]
 ```
 
 - The current text of a post is its latest revision; the first revision is the original post. The
   post row holds no copy of the body.
 - Edit count, "edited" state and reply counts are derived by query, never stored.
 - Only top-level posts have a kind chosen by the visitor; replies are always `comment`.
-- `answered` is the only mutable column on `posts`. Anyone can toggle it on a question.
+- `answered` is the only mutable column on `post`. Anyone can toggle it on a question.
 - The talks themselves stay in the JSON dataset; the database holds discussion data only.
-- The schema is created on startup (`CREATE TABLE IF NOT EXISTS`). `ORGESTRA_DB_PATH` sets the file
-  (default `data/orgestra.db`); the file is gitignored.
+- Tables are created on startup with `db.create_all()`. `ORGESTRA_DB_PATH` sets the file (default
+  `data/orgestra.db`, gitignored); tests use `sqlite://` in memory.
 
 ## Behaviour
 
@@ -71,19 +79,13 @@ Comment or Question, name, body), then the thread.
   muted. The first revision is shown as plain text.
 - Each non-current revision has a "restore this version" button that appends a new revision with
   that revision's text. Nothing is ever deleted.
-- Simultaneous edits: the edit form carries the id of the revision it started from. If the latest
-  revision differs on save, nothing is written; the form is shown again with the newer text and a
-  notice, so no edit is lost silently.
 
-### Input and abuse limits
+### Input limits
 
 - Body: plain text, 1 to 5000 characters after trimming. Name: 1 to 40 characters. Violations
   re-render the form with an error; nothing is stored.
 - Output is HTML-escaped by Jinja. Line breaks are kept and bare `http(s)` URLs become links with
   `rel="nofollow noopener"`.
-- A hidden honeypot field rejects naive bots silently.
-- A per-client limit on creating and editing posts (in memory, per IP, for example 10 per minute)
-  returns 429.
 - Unknown `talk_ref` or `parent_id` returns 404; a reply must belong to the same talk as its parent.
 
 ### Style
@@ -100,15 +102,15 @@ Comment or Question, name, body), then the thread.
 
 | Unit | Responsibility | Depends on |
 |---|---|---|
-| `discussion/db.py` | open the SQLite file, create the schema | `sqlite3`, settings |
-| `discussion/store.py` | create post, add revision, restore, toggle answered, list thread, counts | `db` |
+| `discussion/models.py` | `db` (Alchemical), `Post`, `Revision` | alchemical, settings |
+| `discussion/store.py` | create post, add revision, restore, toggle answered, list thread, counts; takes a session | `models` |
 | `discussion/diff.py` | line diff of two texts into renderable lines | `difflib` |
-| `discussion/routes.py` | htmx and form endpoints, validation, rate limit | `store`, `diff`, templates |
+| `discussion/routes.py` | htmx and form endpoints, validation | `store`, `diff`, templates |
 | templates `partials/discussion/*` | thread, post, forms, history panel | route contexts |
 | `results.html`, `talk.html`, `app.css` | forum-style list and talk page | `store` for counts |
 
-Boundaries: `store` takes and returns attrs records (`Post`, `Revision`); it knows nothing about
-HTTP. Routes parse and validate input at the edge. Templates only render.
+Boundaries: `store` functions take a session and work on `Post` and `Revision`; they know nothing
+about HTTP. Routes open one `db.begin()` transaction per request and render before it closes. Routes parse and validate input at the edge. Templates only render.
 
 ## Routes
 
@@ -116,7 +118,7 @@ HTTP. Routes parse and validate input at the edge. Templates only render.
 |---|---|
 | `POST /talks/{year}/{slug}/posts` | create a top-level post or, with `parent_id`, a reply |
 | `GET /posts/{id}/edit` | inline edit form |
-| `POST /posts/{id}/edit` | append a revision, or the conflict form |
+| `POST /posts/{id}/edit` | append a revision |
 | `GET /posts/{id}/history` | history panel with diffs |
 | `POST /posts/{id}/restore/{revision_id}` | append a revision with that text |
 | `POST /posts/{id}/answered` | toggle answered on a question |
@@ -125,16 +127,15 @@ htmx requests return the affected fragment; plain requests redirect back to the 
 
 ## Testing
 
-- `store` on an in-memory SQLite: nesting, ordering, latest revision, edit count, restore,
-  conflict detection.
+- `store` on an in-memory SQLite: nesting, ordering, latest revision, edit count, restore.
 - `diff`: added, removed, unchanged and first-revision cases.
 - Routes through `TestClient`: post, reply, edit, history, restore, answered; validation errors,
-  HTML escaping, honeypot, rate limit, 404s, cross-talk parent rejection.
+  HTML escaping, 404s, cross-talk parent rejection.
 - Extend `tests/test_app.py` for the talk page and results list rendering counts.
 - Frontend demo (`frontend/scripts/record-demo.mjs`) gains a step: open a talk, post a comment, edit
   it, open the history.
 
 ## Out of scope
 
-Accounts, moderation, notifications, search over comments, pagination of very long threads, rich
+Accounts, moderation, spam protection, edit-conflict handling, notifications, search over comments, pagination of very long threads, rich
 text, and any change to the home page.
