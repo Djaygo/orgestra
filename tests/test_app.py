@@ -78,3 +78,14 @@ def test_lucky_redirects_to_a_talk_with_details(client):
     response = client.get("/lucky", follow_redirects=False)
     assert response.status_code == 303
     assert response.headers["location"].startswith("/talks/")
+
+
+def test_results_list_shows_post_counts_and_activity(client):
+    ref = "2025/13-years-of-cryptocurrency-de-anonymization-and-counting"
+    client.post(f"/talks/{ref}/posts", data={"kind": "comment", "name": "Ada", "body": "Nice talk"})
+
+    html = client.get("/search", params={"q": "cryptocurrency"}).text
+
+    assert 'class="topics-head"' in html
+    assert '<span class="hit-replies" title="Posts in the discussion">1</span>' in html
+    assert "just now" in html

@@ -22,7 +22,7 @@ from orgestra.discussion import routes as discussion_routes
 from orgestra.discussion.diff import revision_history
 from orgestra.discussion.models import db
 from orgestra.discussion.render import ago, linkify
-from orgestra.discussion.store import thread
+from orgestra.discussion.store import talk_stats, thread
 from orgestra.events import SPOTLIGHT, Spotlight, hx_trigger
 from orgestra.personas import initials, persona_hue
 from orgestra.questions import summary
@@ -133,13 +133,17 @@ router = APIRouter()
 
 def search_response(request: Request, services: Services, query: str) -> HTMLResponse:
     result = services.index.search(query) if query.strip() else None
-    if result is not None and is_fragment_request(request):
-        response = services.templates.TemplateResponse(request, "partials/results.html", {"result": result})
-        speakers = list(dict.fromkeys(s.slug for hit in result.hits for s in hit.talk.speakers))
-        response.headers["HX-Trigger"] = hx_trigger(SPOTLIGHT, Spotlight(speakers=speakers))
-        return response
-    page = "search.html" if result is not None else "home.html"
-    return services.templates.TemplateResponse(request, page, {"result": result})
+    if result is None:
+        return services.templates.TemplateResponse(request, "home.html", {"result": None})
+    with db.begin() as session:
+        stats = talk_stats(session, [hit.talk.ref for hit in result.hits])
+        context = {"result": result, "stats": stats}
+        if not is_fragment_request(request):
+            return services.templates.TemplateResponse(request, "search.html", context)
+        response = services.templates.TemplateResponse(request, "partials/results.html", context)
+    speakers = list(dict.fromkeys(s.slug for hit in result.hits for s in hit.talk.speakers))
+    response.headers["HX-Trigger"] = hx_trigger(SPOTLIGHT, Spotlight(speakers=speakers))
+    return response
 
 
 @router.get("/", response_class=HTMLResponse)
