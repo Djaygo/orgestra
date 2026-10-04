@@ -30,7 +30,7 @@ adapter and changing configuration, with no change to the form, routes or tests.
   `from` is accepted only when it starts with a single `/`; anything else becomes the empty string.
 - `POST /report` (form fields `title`, `description`, `page`) validates, files the issue and renders a
   thank-you page: "Thanks, your report was filed as #<number>", with a link back to `page`
-  (or to `/` when it is empty).  The page shows the number but does not link to the issue.
+  (or to `/` when it is empty). The page shows the number but does not link to the issue.
 
 ### The issue
 
@@ -96,8 +96,8 @@ created once at startup with a 10 s timeout and passed in, so tests can inject a
   button is absent and `/report` is 404 for both methods.
 - The token never appears in any rendered page or in `repr(settings)`.
 - The demo tour gains a step that opens the form from the top bar and fills it in without submitting,
-  so a demo never creates a real issue (the demo server runs without a token, so the step is skipped
-  there when the button is absent).
+  so a demo never creates a real issue (the demo server is started with a placeholder repository and token
+  so the button shows).
 
 ## Out of scope
 
