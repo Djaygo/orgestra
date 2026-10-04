@@ -10,7 +10,8 @@ When a change touches templates, CSS or `frontend/`, record a short video of it 
 the pull request:
 
 1. `cd frontend && npm ci && npm run build`
-2. `uv run orgestra` (from the repo root, in the background)
+2. `ORGESTRA_DB_PATH=$(mktemp -d)/demo.db uv run orgestra` (from the repo root, in the background; the
+   throwaway database keeps the demo's posts out of `data/orgestra.db`)
 3. `cd frontend && npm run demo -- --out ../demo.mp4` (`--query` changes the search it types;
    set `CHROMIUM_PATH` when Playwright's own browser is not installed)
 4. Attach the video where the reviewer reads it (the PR thread or project chat). Do not commit it.

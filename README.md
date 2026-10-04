@@ -22,7 +22,7 @@ just dev         # develop: builds the stage, runs the backend (reload) and the 
 Without the frontend build the app still works; the stage shows the conversation transcript only.
 
 Settings (environment): `ORGESTRA_DATA_DIR` (default `data/`), `ORGESTRA_TURN_INTERVAL` (seconds
-between conversation turns, default 3.5), `ORGESTRA_HOST`, `ORGESTRA_PORT`, `ORGESTRA_RELOAD`.
+between conversation turns, default 3.5), `ORGESTRA_DB_PATH` (SQLite file for the talk discussion, default `data/orgestra.db`), `ORGESTRA_HOST`, `ORGESTRA_PORT`, `ORGESTRA_RELOAD`.
 
 ## Checks
 

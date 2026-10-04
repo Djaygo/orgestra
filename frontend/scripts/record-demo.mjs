@@ -25,6 +25,36 @@ const pause = (page, ms) => page.waitForTimeout(ms);
 const started = Date.now();
 const log = (step) => console.log(`${((Date.now() - started) / 1000).toFixed(1)}s ${step}`);
 
+/** Discussion: ask a question, reply, correct the question and open its history. */
+async function discuss(page) {
+  const form = page.locator("form.new-post");
+  await form.scrollIntoViewIfNeeded();
+  await form.locator("select[name=kind]").selectOption("question");
+  await form.locator("input[name=name]").fill("Ada");
+  await form.locator("textarea[name=body]").pressSequentially("How does this hold up at scale?", { delay: 50 });
+  await form.locator("button[type=submit]").click();
+  await page.waitForSelector(".post");
+  log("question posted");
+  await pause(page, 1500);
+  const post = page.locator(".post").first();
+  await post.locator("details.reply > summary").click();
+  await post.locator("details.reply input[name=name]").fill("Grace");
+  await post.locator("details.reply textarea").pressSequentially("Mostly by sharding early.", { delay: 50 });
+  await post.locator("details.reply button[type=submit]").click();
+  await page.waitForSelector(".post .post");
+  log("reply posted");
+  await pause(page, 1500);
+  await post.locator("details.edit > summary").first().click();
+  await post.locator("details.edit textarea").first().pressSequentially(" (asking about 10k users)", { delay: 50 });
+  await post.locator("details.edit button[type=submit]").first().click();
+  await page.waitForSelector("details.history");
+  log("edited");
+  await pause(page, 1000);
+  await page.locator("details.history > summary").first().click();
+  log("history");
+  await pause(page, 3500);
+}
+
 /** The tour: home with the characters talking, a search, People also ask, a talk and a speaker. */
 async function tour(page) {
   await page.goto(values.base);
@@ -46,6 +76,7 @@ async function tour(page) {
   await page.waitForSelector(".talk");
   log("talk");
   await pause(page, 3000);
+  await discuss(page);
   const speaker = page.locator(".talk .persona-chip").first();
   if (await speaker.count()) {
     await speaker.click();
