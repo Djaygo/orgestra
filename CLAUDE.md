@@ -3,8 +3,7 @@
 Python backend (FastAPI, Jinja2, htmx) in `src/orgestra`, three.js stage in `frontend/`. See README.md.
 
 ## Checks before pushing
-- `uv run pytest && uv run ruff check && uv run ruff format --check && uv run ty check`
-- `cd frontend && npm run check && npm test && npm run build`
+- `just check` (Python: pytest, ruff check, ruff format --check, ty; frontend: check, test, build)
 
 ## Demo video for frontend changes
 When a change touches templates, CSS or `frontend/`, record a short video of it and share it with

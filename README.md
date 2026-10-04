@@ -11,10 +11,12 @@ Search and personas over the talks and slides of a conference (GOTO Copenhagen t
 ## Run it
 
 ```sh
-uv sync                                   # Python 3.11+, uv
-(cd frontend && npm ci && npm run build)  # optional: builds the three.js stage
-uv run orgestra                           # http://127.0.0.1:8000
+uv sync          # Python 3.11+, uv
+just build       # optional: builds the three.js stage
+just run         # http://127.0.0.1:8000
 ```
+
+`just` lists every recipe; each one wraps the plain `uv` and `npm` commands in the `justfile`.
 
 Without the frontend build the app still works; the stage shows the conversation transcript only.
 
@@ -24,13 +26,12 @@ between conversation turns, default 3.5), `ORGESTRA_HOST`, `ORGESTRA_PORT`, `ORG
 ## Checks
 
 ```sh
-uv run pytest && uv run ruff check && uv run ty check
-cd frontend && npm run check && npm test
+just check
 ```
 
 ## Demo video
 
-With the app running, `cd frontend && npm run demo -- --out ../demo.mp4` records a short tour
+With the app running, `just demo` records a short tour
 (home, a search, People also ask, a talk, a speaker) with Playwright. `.mp4` needs ffmpeg; `.webm`
 does not. Agents attach one to every pull request that changes the frontend (see CLAUDE.md).
 
