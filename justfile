@@ -1,3 +1,5 @@
+url := "http://" + env("ORGESTRA_HOST", "127.0.0.1") + ":" + env("ORGESTRA_PORT", "8000")
+
 default:
     @just --list
 
@@ -5,13 +7,15 @@ default:
 build:
     cd frontend && npm ci && npm run build
 
-# Backend with reload plus the frontend in watch mode, both stopped with ctrl-c
+# Backend with reload plus the frontend in watch mode, opened in the browser; ctrl-c stops both
 dev: build
     #!/usr/bin/env bash
     set -euo pipefail
-    trap 'kill $(jobs -p)' EXIT
+    trap 'kill $(jobs -p) 2>/dev/null' EXIT
     (cd frontend && npm run dev) &
-    uv run orgestra
+    (until curl -sf -o /dev/null {{ url }}; do sleep 0.5; done; python3 -m webbrowser {{ url }}) &
+    uv run orgestra &
+    wait
 
 # Start the app on http://127.0.0.1:8000 (serves the last `just build`)
 run:

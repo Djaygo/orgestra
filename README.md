@@ -14,7 +14,7 @@ Search and personas over the talks and slides of a conference (GOTO Copenhagen t
 uv sync          # Python 3.11+, uv
 just build       # optional: builds the three.js stage
 just run         # http://127.0.0.1:8000
-just dev         # develop: builds the stage, then runs the backend (reload) and the stage watcher
+just dev         # develop: builds the stage, runs the backend (reload) and the stage watcher, opens the browser
 ```
 
 `just` lists every recipe; each one wraps the plain `uv` and `npm` commands in the `justfile`.
