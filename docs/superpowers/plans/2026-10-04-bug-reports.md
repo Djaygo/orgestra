@@ -457,7 +457,7 @@ def test_filing_a_report_shows_the_issue_number_and_sends_the_context(client, tr
     assert response.status_code == 200
     assert "#7" in response.text
     assert f'href="{TALK}"' in response.text
-    (title, body), = tracker.calls
+    ((title, body),) = tracker.calls
     assert title == "[site] Search is broken"
     assert "Typing does nothing" in body
     assert f"Page: {TALK}" in body
@@ -553,7 +553,7 @@ Extend `Settings` (keep the existing fields):
 
 and in `from_env` add:
 
-```python
+```text
             issues_provider=os.environ.get("ORGESTRA_ISSUES_PROVIDER", "github"),
             issues_repo=os.environ.get("ORGESTRA_ISSUES_REPO", ""),
             issues_token=os.environ.get("ORGESTRA_ISSUES_TOKEN", ""),

@@ -8,6 +8,7 @@ dependencies = [
   "alchemical>=1.0.3",
   "attrs>=25.1",
   "fastapi>=0.115",
+  "httpx2>=2.13.1",
   "jinja2>=3.1",
   "pydantic>=2.10",
   "python-multipart>=0.0.32",
@@ -20,7 +21,6 @@ orgestra = "orgestra.__main__:main"
 
 [dependency-groups]
 dev = [
-  "httpx2",
   "pytest>=8.3",
   "ruff>=0.9",
   "ty>=0.0.1a1",
