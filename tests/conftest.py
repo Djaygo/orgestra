@@ -38,6 +38,7 @@ def catalog() -> Catalog:
             speakers=[{"slug": "grace", "name": "Grace Hopper"}],
         ),
         make_talk("unknown-talk", extracted=False, title=None),
+        make_talk("kubernetes-unplugged", extracted=False, title=None),
     ]
     speakers = [
         Speaker(slug="ada", name="Ada Lovelace", talks=["2025/kubernetes-at-scale"]),

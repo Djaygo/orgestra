@@ -12,7 +12,7 @@ from typing import Annotated
 
 import attrs
 from fastapi import APIRouter, Depends, FastAPI, HTTPException, Query, Request
-from fastapi.responses import HTMLResponse, StreamingResponse
+from fastapi.responses import HTMLResponse, RedirectResponse, StreamingResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
@@ -20,6 +20,7 @@ from orgestra.conversations import Conversation, Persona, conversations, persona
 from orgestra.dataset import Catalog, load_catalog
 from orgestra.events import SPOTLIGHT, Spotlight, hx_trigger
 from orgestra.personas import initials, persona_hue
+from orgestra.questions import summary
 from orgestra.search import SearchIndex
 from orgestra.thesaurus import load_thesaurus
 
@@ -92,7 +93,7 @@ def build_templates(catalog: Catalog, cast: list[Persona]) -> Jinja2Templates:
     templates = Jinja2Templates(
         directory=PACKAGE_DIR / "templates", context_processors=[lambda _request: layout]
     )
-    templates.env.filters.update(hue=persona_hue, initials=initials)
+    templates.env.filters.update(hue=persona_hue, initials=initials, summary=summary)
     return templates
 
 
@@ -123,7 +124,8 @@ def search_response(request: Request, services: Services, query: str) -> HTMLRes
         speakers = list(dict.fromkeys(s.slug for hit in result.hits for s in hit.talk.speakers))
         response.headers["HX-Trigger"] = hx_trigger(SPOTLIGHT, Spotlight(speakers=speakers))
         return response
-    return services.templates.TemplateResponse(request, "home.html", {"result": result})
+    page = "search.html" if result is not None else "home.html"
+    return services.templates.TemplateResponse(request, page, {"result": result})
 
 
 @router.get("/", response_class=HTMLResponse)
@@ -134,6 +136,14 @@ def home(request: Request, services: AppServices, q: SearchQuery = "") -> HTMLRe
 @router.get("/search", response_class=HTMLResponse)
 def search(request: Request, services: AppServices, q: SearchQuery = "") -> HTMLResponse:
     return search_response(request, services, q)
+
+
+@router.get("/lucky")
+def lucky(services: AppServices) -> RedirectResponse:
+    """A random talk with details, for the "I'm feeling curious" button."""
+    talks = [talk for talk in services.catalog.talks.values() if talk.extracted]
+    choice = random.choice(talks)  # ruff: ignore[S311] picks a talk to show, nothing secret
+    return RedirectResponse(f"/talks/{choice.ref}", status_code=303)
 
 
 @router.get("/talks/{year}/{slug}", response_class=HTMLResponse)

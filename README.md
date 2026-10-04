@@ -28,6 +28,12 @@ uv run pytest && uv run ruff check && uv run ty check
 cd frontend && npm run check && npm test
 ```
 
+## Demo video
+
+With the app running, `cd frontend && npm run demo -- --out ../demo.mp4` records a short tour
+(home, a search, People also ask, a talk, a speaker) with Playwright. `.mp4` needs ffmpeg; `.webm`
+does not. Agents attach one to every pull request that changes the frontend (see CLAUDE.md).
+
 ## How it fits together
 
 HTMX pages plus one three.js island:
@@ -43,9 +49,11 @@ HTMX pages plus one three.js island:
 | Templates | `src/orgestra/templates/` | Jinja2; htmx and its SSE extension are vendored in `static/vendor/` |
 | Stage | `frontend/src/` | TypeScript + Vite, built into `src/orgestra/static/dist/` |
 
-The search box swaps results into `#main` (`hx-get`, debounced, `hx-push-url`). Sidebar and result
-links are boosted into the same `#main`, so the stage, kept outside every swap target with
-`hx-preserve`, keeps its WebGL context across navigation.
+The pages follow Google search: a centred logo and search box on the home page, and on the results
+page a search box that updates `#results` while typing (`hx-get`, debounced, `hx-push-url`), with a
+"People also ask" box. Links and forms are boosted into `#main`. The stage is a fixed, transparent,
+full-width strip along the bottom: page content fades out underneath it, and it sits outside every
+swap target with `hx-preserve`, so it keeps its WebGL context across navigation.
 
 Server and stage talk only through DOM events, defined in `src/orgestra/events.py` and
 `frontend/src/events.ts`:

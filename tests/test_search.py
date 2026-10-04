@@ -13,7 +13,11 @@ def titles(result):
 
 
 def test_exact_word(index):
-    assert titles(index.search("kubernetes")) == ["Kubernetes at Scale"]
+    assert titles(index.search("kubernetes"))[0] == "Kubernetes at Scale"
+
+
+def test_talks_without_details_rank_below_talks_with_details(index):
+    assert titles(index.search("kubernetes")) == ["Kubernetes at Scale", "Kubernetes unplugged"]
 
 
 def test_synonym_finds_talks_that_never_use_the_word(index):
@@ -21,7 +25,7 @@ def test_synonym_finds_talks_that_never_use_the_word(index):
 
 
 def test_typo_is_corrected_to_an_indexed_word(index):
-    assert titles(index.search("kubernets")) == ["Kubernetes at Scale"]
+    assert titles(index.search("kubernets"))[0] == "Kubernetes at Scale"
 
 
 def test_talks_matching_every_concept_rank_first(index):

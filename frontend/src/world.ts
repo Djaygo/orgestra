@@ -1,16 +1,5 @@
 // The three.js world: a plaza where the cast wanders and walks up to each other to talk.
-import {
-  CircleGeometry,
-  Color,
-  DirectionalLight,
-  HemisphereLight,
-  Mesh,
-  MeshStandardMaterial,
-  PerspectiveCamera,
-  Scene,
-  Timer,
-  WebGLRenderer,
-} from "three";
+import { DirectionalLight, HemisphereLight, PerspectiveCamera, Scene, Timer, WebGLRenderer } from "three";
 import { CSS2DRenderer } from "three/addons/renderers/CSS2DRenderer.js";
 import { Character, createSharedParts, disposeSharedParts } from "./character";
 import { type CastMember, onStageEvent, SAY, SPOTLIGHT } from "./events";
@@ -24,39 +13,40 @@ export function pixelRatio(deviceRatio: number): number {
   return Math.min(deviceRatio, MAX_PIXEL_RATIO);
 }
 
-/** A plaza that grows with the cast so a large edition does not turn into a crowd. */
+/** A wide, shallow strip that grows with the cast so a large edition does not turn into a crowd. */
 export function plazaFor(castSize: number): Bounds {
-  const halfWidth = Math.min(14, 4 + Math.sqrt(castSize) * 1.1);
-  return { halfWidth, halfDepth: halfWidth * 0.55 };
+  const halfWidth = Math.min(18, 5 + Math.sqrt(castSize) * 1.4);
+  return { halfWidth, halfDepth: 2.2 };
+}
+
+const CAMERA_ELEVATION = 0.22; // radians above the horizon
+const LOOK_HEIGHT = 0.8;
+
+/** How far the camera stands back so the plaza's full width fits a viewport of this aspect. */
+export function cameraDistance(bounds: Bounds, verticalFovDeg: number, aspect: number): number {
+  const halfVertical = (verticalFovDeg * Math.PI) / 360;
+  const halfHorizontal = Math.atan(Math.tan(halfVertical) * aspect);
+  return (bounds.halfWidth * 1.05) / Math.tan(halfHorizontal) + bounds.halfDepth;
 }
 
 /** Mount the world in `container`; returns the function that tears it down and frees the GPU. */
 export function mountWorld(container: HTMLElement, cast: CastMember[], events: EventTarget): () => void {
   const bounds = plazaFor(cast.length);
+  // No background and no floor: the canvas is transparent so the characters walk on the page itself.
   const scene = new Scene();
-  scene.background = new Color("#dff0ff");
+  const camera = new PerspectiveCamera(30, 1, 0.1, 200);
 
-  const camera = new PerspectiveCamera(42, 1, 0.1, 100);
-  camera.position.set(0, bounds.halfWidth * 0.75, bounds.halfWidth * 1.25);
-  camera.lookAt(0, 0, bounds.halfDepth * 0.2);
-
-  const renderer = new WebGLRenderer({ antialias: true });
+  const renderer = new WebGLRenderer({ antialias: true, alpha: true });
+  renderer.setClearColor(0x000000, 0);
   renderer.setPixelRatio(pixelRatio(window.devicePixelRatio));
   const labels = new CSS2DRenderer();
   labels.domElement.className = "stage-labels";
   container.append(renderer.domElement, labels.domElement);
 
-  scene.add(new HemisphereLight("#ffffff", "#8fbf7f", 1.6));
+  scene.add(new HemisphereLight("#ffffff", "#b8c4d6", 1.7));
   const sun = new DirectionalLight("#ffffff", 1.4);
   sun.position.set(4, 10, 6);
   scene.add(sun);
-
-  const groundGeometry = new CircleGeometry(1, 64);
-  const groundMaterial = new MeshStandardMaterial({ color: new Color("#bfe3a8"), roughness: 1 });
-  const ground = new Mesh(groundGeometry, groundMaterial);
-  ground.rotation.x = -Math.PI / 2;
-  ground.scale.set(bounds.halfWidth * 1.15, bounds.halfDepth * 1.3, 1);
-  scene.add(ground);
 
   const parts = createSharedParts();
   const characters = new Map(
@@ -72,6 +62,13 @@ export function mountWorld(container: HTMLElement, cast: CastMember[], events: E
       return;
     }
     camera.aspect = width / height;
+    const distance = cameraDistance(bounds, camera.fov, camera.aspect);
+    camera.position.set(
+      0,
+      LOOK_HEIGHT + Math.sin(CAMERA_ELEVATION) * distance,
+      Math.cos(CAMERA_ELEVATION) * distance,
+    );
+    camera.lookAt(0, LOOK_HEIGHT, 0);
     camera.updateProjectionMatrix();
     renderer.setSize(width, height);
     labels.setSize(width, height);
@@ -119,8 +116,6 @@ export function mountWorld(container: HTMLElement, cast: CastMember[], events: E
       character.dispose();
     }
     disposeSharedParts(parts);
-    groundGeometry.dispose();
-    groundMaterial.dispose();
     renderer.dispose();
     renderer.domElement.remove();
     labels.domElement.remove();

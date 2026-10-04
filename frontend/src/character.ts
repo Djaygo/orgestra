@@ -2,9 +2,11 @@
 import {
   type BufferGeometry,
   CapsuleGeometry,
+  CircleGeometry,
   Color,
   Group,
   Mesh,
+  MeshBasicMaterial,
   MeshStandardMaterial,
   SphereGeometry,
 } from "three";
@@ -28,8 +30,10 @@ export interface SharedParts {
   eye: BufferGeometry;
   body: BufferGeometry;
   limb: BufferGeometry;
+  shadow: BufferGeometry;
   skin: MeshStandardMaterial;
   dark: MeshStandardMaterial;
+  shade: MeshBasicMaterial;
 }
 
 export function createSharedParts(): SharedParts {
@@ -39,17 +43,21 @@ export function createSharedParts(): SharedParts {
     eye: new SphereGeometry(0.045, 8, 6),
     body: new CapsuleGeometry(0.24, 0.36, 6, 16),
     limb: new CapsuleGeometry(0.07, 0.32, 4, 8),
+    // A soft blob under each character grounds it on the transparent page.
+    shadow: new CircleGeometry(0.42, 24),
     skin: new MeshStandardMaterial({ color: new Color("#f2c9a0"), roughness: 0.8 }),
     dark: new MeshStandardMaterial({ color: new Color("#2b2522"), roughness: 0.6 }),
+    shade: new MeshBasicMaterial({ color: 0x000000, transparent: true, opacity: 0.12, depthWrite: false }),
   };
 }
 
 export function disposeSharedParts(parts: SharedParts): void {
-  for (const geometry of [parts.head, parts.hair, parts.eye, parts.body, parts.limb]) {
+  for (const geometry of [parts.head, parts.hair, parts.eye, parts.body, parts.limb, parts.shadow]) {
     geometry.dispose();
   }
-  parts.skin.dispose();
-  parts.dark.dispose();
+  for (const material of [parts.skin, parts.dark, parts.shade]) {
+    material.dispose();
+  }
 }
 
 type Mode = "wander" | "approach" | "talk";
@@ -113,10 +121,16 @@ export class Character {
     // Names show only while someone talks or is spotlit, so a full plaza stays readable.
     this.nameTag.visible = false;
     this.bubble = label("stage-bubble", "");
-    this.bubble.position.y = 2.25;
+    this.bubble.position.y = 2.1;
+    this.bubble.center.set(0.5, 1); // anchor the bottom edge, so long lines grow upward
     this.bubble.visible = false;
 
+    const shadow = new Mesh(parts.shadow, parts.shade);
+    shadow.rotation.x = -Math.PI / 2;
+    shadow.position.y = 0.01;
+
     this.root.add(
+      shadow,
       body,
       head,
       hair,

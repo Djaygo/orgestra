@@ -1,25 +1,28 @@
 {% extends "base.html" %}
-{% block title %}{{ result.query ~ " · " if result else "" }}Orgestra{% endblock %}
+{% block main_class %}page home{% endblock %}
+{% block header %}
+  <label for="sources-toggle" class="sources-button">Sources</label>
+{% endblock %}
 {% block content %}
-  {% if result %}
-    {% include "partials/results.html" %}
-  {% else %}
-    <section class="intro">
-      <h1>Ask the conference</h1>
-      <p>
-        Search {{ catalog.talks|length }} talks by {{ catalog.speakers|length }} speakers. Questions are extracted
-        from every talk, and your words are expanded with synonyms, so “llm” also finds “large language model”.
-      </p>
-      <ul class="editions">
-        {% for organization in catalog.organizations %}
-          {% for edition in organization.editions %}
-            <li>
-              <strong>{{ organization.name }} {{ edition.year }}</strong>: {{ edition.talks }} talks,
-              {{ edition.extracted }} with details, {{ edition.slides_known }} with slides
-            </li>
-          {% endfor %}
+  <section class="hero">
+    <h1 class="logo large">
+      {% include "partials/logo.html" %}
+    </h1>
+    {% with live=false, query="" %}
+      {% include "partials/searchbox.html" %}
+    {% endwith %}
+    <div class="hero-buttons">
+      <button type="submit" form="search-form" class="button">Orgestra search</button>
+      <a class="button" href="/lucky">I'm feeling curious</a>
+    </div>
+    <p class="hero-note">
+      {% for organization in catalog.organizations %}
+        {{ organization.name }}:
+        {% for edition in organization.editions %}
+          {{ edition.year }} ({{ edition.talks }} talks){{ ", " if not loop.last }}
         {% endfor %}
-      </ul>
-    </section>
-  {% endif %}
+      {% endfor %}
+      · {{ catalog.speakers|length }} speakers
+    </p>
+  </section>
 {% endblock %}

@@ -59,3 +59,21 @@ def test_sse_event_prefixes_every_line():
     assert (
         sse_event("turn", "<li>a</li>\n<li>b</li>") == "event: turn\ndata: <li>a</li>\ndata: <li>b</li>\n\n"
     )
+
+
+def test_search_page_searches_while_typing(client):
+    html = client.get("/search", params={"q": "security"}).text
+    assert 'hx-target="#results"' in html
+    assert "People also ask" in html
+
+
+def test_home_is_just_the_search_box(client):
+    html = client.get("/").text
+    assert 'class="logo large"' in html
+    assert 'hx-target="#results"' not in html
+
+
+def test_lucky_redirects_to_a_talk_with_details(client):
+    response = client.get("/lucky", follow_redirects=False)
+    assert response.status_code == 303
+    assert response.headers["location"].startswith("/talks/")

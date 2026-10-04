@@ -14,6 +14,8 @@ from orgestra.thesaurus import Concept, Thesaurus
 
 FIELD_WEIGHTS = {"title": 3.0, "tags": 2.0, "speakers": 2.0, "questions": 1.5, "abstract": 1.0}
 SYNONYM_WEIGHT = 0.7
+# Talks only known by their schedule slug rank below talks with an abstract and speakers.
+UNEXTRACTED_WEIGHT = 0.5
 TYPO_MIN_LENGTH = 4
 TYPO_MIN_SIMILARITY = 80
 MAX_QUESTIONS_PER_HIT = 3
@@ -39,6 +41,10 @@ class SearchResult:
     query: str
     concepts: list[Concept]
     hits: list[Hit]
+
+    def top_questions(self, limit: int = 4) -> list[Question]:
+        """The best-ranked talks' first matching questions, for a "People also ask" box."""
+        return [hit.questions[0] for hit in self.hits if hit.questions][:limit]
 
 
 def occurrences(variant: Terms, field: Terms) -> int:
@@ -105,7 +111,8 @@ def score_document(doc: Document, concepts: list[Concept]) -> Hit | None:
         return None
     coverage = matched / len(concepts)
     questions = matching_questions(doc, concepts)
-    return Hit(talk=doc.talk, score=sum(scores) * coverage * coverage, questions=questions)
+    weight = 1.0 if doc.talk.extracted else UNEXTRACTED_WEIGHT
+    return Hit(talk=doc.talk, score=sum(scores) * coverage * coverage * weight, questions=questions)
 
 
 def concept_score(doc: Document, concept: Concept) -> float:

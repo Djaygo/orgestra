@@ -1,35 +1,55 @@
 <div id="results" class="results">
-  <p class="summary">
-    {{ result.hits|length }} talk{{ "" if result.hits|length == 1 else "s" }} for “{{ result.query }}”.
+  <p class="result-stats">
+    About {{ result.hits|length }} talk{{ "" if result.hits|length == 1 else "s" }}
     {% for concept in result.concepts if concept.alternatives %}
-      {% if loop.first %}Also searched:{% endif %}
-      <span class="expansion"><strong>{{ concept.label }}</strong> ≈ {{ concept.alternatives|join(", ") }}</span>
+      {% if loop.first %}· also searched for{% endif %}
+      <span class="expansion"><strong>{{ concept.label }}</strong> ≈ {{ concept.alternatives[:4]|join(", ") }}</span>
     {% endfor %}
   </p>
-  <ol class="hits">
-    {% for hit in result.hits %}
-      <li class="hit">
-        <h3>
-          <a href="/talks/{{ hit.talk.ref }}">{{ hit.talk.display_title }}</a>
-        </h3>
-        <p class="meta">
-          {{ hit.talk.year }} · {{ hit.talk.section or "Talk" }}
+  {% for hit in result.hits %}
+    <article class="hit{% if not hit.talk.extracted %} hit-pending{% endif %}">
+      <div class="hit-source">
+        {% if hit.talk.speakers %}
+          {% with person=hit.talk.speakers[0] %}
+            <span class="avatar small" style="--hue: {{ person.slug|hue }}" aria-hidden="true">{{ person.name|initials }}</span>
+          {% endwith %}
+        {% else %}
+          <span class="avatar small" aria-hidden="true">?</span>
+        {% endif %}
+        <div>
+          <span class="hit-site">{{ hit.talk.speakers|map(attribute="name")|join(", ") or hit.talk.organization|upper }}</span>
+          <span class="hit-crumbs">{{ hit.talk.organization }} › {{ hit.talk.year }} › {{ hit.talk.section or "talk" }}</span>
+        </div>
+      </div>
+      <h3>
+        <a href="/talks/{{ hit.talk.ref }}">{{ hit.talk.display_title }}</a>
+      </h3>
+      <p class="hit-snippet">
+        {% if hit.talk.day %}<span class="muted">{{ hit.talk.day }} {{ hit.talk.start }} —</span>{% endif %}
+        {{ (hit.talk.abstract or "Details of this talk have not been extracted yet.")|summary }}
+      </p>
+      {% if hit.talk.tags %}
+        <p class="hit-tags">
           {% for tag in hit.talk.tags %}<span class="tag">{{ tag }}</span>{% endfor %}
         </p>
-        <p class="people">
-          {% for person in hit.talk.speakers %}
-            {% include "partials/persona_chip.html" %}
-          {% endfor %}
-        </p>
-        {% for question in hit.questions %}
+      {% endif %}
+    </article>
+    {% if loop.index == 2 and result.top_questions() %}
+      <section class="people-ask" aria-label="People also ask">
+        <h2>People also ask</h2>
+        {% for question in result.top_questions() %}
           <details class="question">
             <summary>{{ question.text }}</summary>
-            <p>{{ question.answer }}</p>
+            <p>
+              {{ question.answer }} <a href="/talks/{{ question.talk_ref }}">Open the talk</a>
+            </p>
           </details>
         {% endfor %}
-      </li>
-    {% else %}
-      <li class="empty">No talks match yet. Try another word: synonyms and typos are handled.</li>
-    {% endfor %}
-  </ol>
+      </section>
+    {% endif %}
+  {% else %}
+    <p class="empty">
+      Your search, <strong>{{ result.query }}</strong>, did not match any talks. Try other words: synonyms and typos are handled.
+    </p>
+  {% endfor %}
 </div>

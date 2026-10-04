@@ -222,3 +222,7 @@ __marimo__/
 # Frontend
 node_modules/
 src/orgestra/static/dist/
+
+# Demo videos
+demo.mp4
+demo.webm

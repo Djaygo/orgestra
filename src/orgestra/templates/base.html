@@ -11,32 +11,24 @@
     {% if scene_available %}<script type="module" src="/static/dist/stage.js"></script>{% endif %}
   </head>
   <body>
-    <header class="topbar">
-      <a href="/" class="brand">Orgestra</a>
-      <form action="/" method="get" role="search" class="search">
-        <label for="q" class="visually-hidden">Search talks, questions and speakers</label>
-        <input id="q"
-               type="search"
-               name="q"
-               value="{{ result.query if result else '' }}"
-               placeholder="Ask about a topic, a talk or a speaker"
-               autocomplete="off"
-               hx-get="/search"
-               hx-trigger="input changed delay:300ms, search"
-               hx-sync="this:replace"
-               hx-target="#main"
-               hx-swap="innerHTML"
-               hx-push-url="true"
-               hx-indicator="#search-busy">
-        <span id="search-busy" class="htmx-indicator" aria-hidden="true">Searching…</span>
-      </form>
-    </header>
-    {% include "partials/stage.html" %}
+    <input type="checkbox" id="sources-toggle" class="visually-hidden">
     <div id="app" class="layout" hx-boost="true" hx-target="#main" hx-select="#main" hx-swap="outerHTML">
       {% include "partials/sidebar.html" %}
-      <main id="main" class="content">
+      <main id="main" class="{% block main_class %}page{% endblock %}">
+        {% block header %}
+          <header class="topbar">
+            <a href="/" class="logo small" aria-label="Orgestra home">{% include "partials/logo.html" %}</a>
+            {% block searchbox %}
+              {% with live=false, query="" %}
+                {% include "partials/searchbox.html" %}
+              {% endwith %}
+            {% endblock %}
+            <label for="sources-toggle" class="sources-button">Sources</label>
+          </header>
+        {% endblock %}
         {% block content %}{% endblock %}
       </main>
     </div>
+    {% include "partials/stage.html" %}
   </body>
 </html>

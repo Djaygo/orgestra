@@ -1,0 +1,16 @@
+{# The search field. `live` searches while typing and swaps only #results (on the results page);
+   otherwise Enter opens the results page. #}
+<form id="search-form" action="/search" method="get" role="search" class="searchbox">
+  <svg class="searchbox-icon" viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M15.5 14h-.8l-.3-.3A6.5 6.5 0 1 0 14 15.5l.3.3v.8l5 5 1.5-1.5-5-5zm-6 0a4.5 4.5 0 1 1 0-9 4.5 4.5 0 0 1 0 9z" />
+  </svg>
+  <label for="q" class="visually-hidden">Search talks, questions and speakers</label>
+  <input id="q"
+         type="search"
+         name="q"
+         value="{{ query }}"
+         placeholder="Ask about a topic, a talk or a speaker"
+         autocomplete="off"
+         {% if live %}hx-get="/search" hx-trigger="input changed delay:300ms, search" hx-sync="this:replace" hx-target="#results" hx-select="#results" hx-swap="outerHTML" hx-push-url="true" hx-indicator="#search-busy"{% endif %}>
+  <span id="search-busy" class="htmx-indicator searchbox-busy" aria-hidden="true"></span>
+</form>

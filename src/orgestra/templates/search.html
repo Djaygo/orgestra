@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}{{ result.query }} · Orgestra{% endblock %}
+{% block searchbox %}
+  {% with live=true, query=result.query %}
+    {% include "partials/searchbox.html" %}
+  {% endwith %}
+{% endblock %}
+{% block content %}
+  {% include "partials/results.html" %}
+{% endblock %}
