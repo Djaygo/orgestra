@@ -45,7 +45,7 @@ async function discuss(page) {
   log("reply posted");
   await pause(page, 1500);
   await post.locator("details.edit > summary").first().click();
-  await post.locator("details.edit textarea").first().pressSequentially(" (asking about 10k users)", { delay: 50 });
+  await post.locator("details.edit textarea").first().fill("How does this hold up at 10k users?");
   await post.locator("details.edit button[type=submit]").first().click();
   await page.waitForSelector("details.history");
   log("edited");
