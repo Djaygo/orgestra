@@ -101,7 +101,12 @@ def build_templates(catalog: Catalog, cast: list[Persona]) -> Jinja2Templates:
         directory=PACKAGE_DIR / "templates", context_processors=[lambda _request: layout]
     )
     templates.env.filters.update(
-        hue=persona_hue, initials=initials, summary=summary, ago=ago, linkify=linkify, history=revision_history
+        hue=persona_hue,
+        initials=initials,
+        summary=summary,
+        ago=ago,
+        linkify=linkify,
+        history=revision_history,
     )
     return templates
 
