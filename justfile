@@ -5,6 +5,14 @@ default:
 build:
     cd frontend && npm ci && npm run build
 
+# Backend with reload plus the frontend in watch mode, both stopped with ctrl-c
+dev: build
+    #!/usr/bin/env bash
+    set -euo pipefail
+    trap 'kill $(jobs -p)' EXIT
+    (cd frontend && npm run dev) &
+    uv run orgestra
+
 # Start the app on http://127.0.0.1:8000 (serves the last `just build`)
 run:
     uv run orgestra
