@@ -1,0 +1,64 @@
+<article class="post{% if post.kind == 'question' %} post-question{% endif %}" id="post-{{ post.id }}">
+  <details class="thread" open>
+    <summary class="post-head">
+      <span class="avatar small" style="--hue: {{ post.author_name|hue }}" aria-hidden="true">{{ post.author_name|initials }}</span>
+      <strong>{{ post.author_name }}</strong>
+      {% if post.kind == "question" %}
+        <span class="badge">Question</span>
+        {% if post.answered %}<span class="badge badge-answered">Answered</span>{% endif %}
+      {% endif %}
+      <span class="muted" title="{{ post.created_at }} UTC">{{ post.created_at|ago }}</span>
+    </summary>
+    <div class="post-body">{{ post.body|linkify }}</div>
+    <div class="post-actions">
+      <details class="reply">
+        <summary>reply</summary>
+        <form method="post" action="/posts/{{ post.id }}/replies">
+          <input name="name" value="{{ author_name }}" placeholder="Your name" maxlength="40" required>
+          <textarea name="body" rows="2" maxlength="5000" required></textarea>
+          <button class="button" type="submit">Reply</button>
+        </form>
+      </details>
+      <details class="edit">
+        <summary>edit</summary>
+        <form method="post" action="/posts/{{ post.id }}/edit">
+          <input name="name" value="{{ author_name }}" placeholder="Your name" maxlength="40" required>
+          <textarea name="body" rows="3" maxlength="5000" required>{{ post.body }}</textarea>
+          <button class="button" type="submit">Save</button>
+        </form>
+      </details>
+      {% if post.kind == "question" %}
+        <form class="answered inline" method="post" action="/posts/{{ post.id }}/answered">
+          <button class="link-button" type="submit">{{ "mark unanswered" if post.answered else "mark answered" }}</button>
+        </form>
+      {% endif %}
+      {% if post.edited %}
+        <details class="history">
+          <summary>(edited)</summary>
+          <ol class="revisions">
+            {% for entry in post|history %}
+              <li>
+                <div class="revision-head">
+                  <strong>{{ entry.revision.editor_name }}</strong>
+                  <span class="muted">{{ entry.revision.created_at|ago }}</span>
+                  {% if not loop.first %}
+                    <form class="inline" method="post" action="/posts/{{ post.id }}/restore/{{ entry.revision.id }}">
+                      <input type="hidden" name="name" value="{{ author_name or 'Anonymous' }}">
+                      <button class="link-button" type="submit">restore this version</button>
+                    </form>
+                  {% endif %}
+                </div>
+                <pre class="diff">{% for line in entry.lines %}<span class="diff-{{ line.kind }}">{{ line.marker }} {{ line.text }}</span>{% endfor %}</pre>
+              </li>
+            {% endfor %}
+          </ol>
+        </details>
+      {% endif %}
+    </div>
+    {% for reply in post.replies %}
+      {% with post=reply %}
+        {% include "partials/discussion/post.html" %}
+      {% endwith %}
+    {% endfor %}
+  </details>
+</article>

@@ -18,7 +18,11 @@ from fastapi.templating import Jinja2Templates
 
 from orgestra.conversations import Conversation, Persona, conversations, personas
 from orgestra.dataset import Catalog, load_catalog
+from orgestra.discussion import routes as discussion_routes
+from orgestra.discussion.diff import revision_history
 from orgestra.discussion.models import db
+from orgestra.discussion.render import ago, linkify
+from orgestra.discussion.store import thread
 from orgestra.events import SPOTLIGHT, Spotlight, hx_trigger
 from orgestra.personas import initials, persona_hue
 from orgestra.questions import summary
@@ -96,7 +100,9 @@ def build_templates(catalog: Catalog, cast: list[Persona]) -> Jinja2Templates:
     templates = Jinja2Templates(
         directory=PACKAGE_DIR / "templates", context_processors=[lambda _request: layout]
     )
-    templates.env.filters.update(hue=persona_hue, initials=initials, summary=summary)
+    templates.env.filters.update(
+        hue=persona_hue, initials=initials, summary=summary, ago=ago, linkify=linkify, history=revision_history
+    )
     return templates
 
 
@@ -154,8 +160,14 @@ def talk(request: Request, services: AppServices, *, year: int, slug: str) -> HT
     found = services.catalog.talks.get(f"{year}/{slug}")
     if found is None:
         raise HTTPException(status_code=404, detail="Talk not found")
-    context = {"talk": found, "questions": services.index.questions_for(found.ref)}
-    return services.templates.TemplateResponse(request, "talk.html", context)
+    with db.begin() as session:
+        context = {
+            "talk": found,
+            "questions": services.index.questions_for(found.ref),
+            "posts": thread(session, found.ref),
+            "author_name": discussion_routes.remembered_name(request),
+        }
+        return services.templates.TemplateResponse(request, "talk.html", context)
 
 
 @router.get("/speakers/{slug}", response_class=HTMLResponse)
@@ -193,4 +205,5 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     app.state.services = build_services(resolved)
     app.mount("/static", StaticFiles(directory=PACKAGE_DIR / "static"), name="static")
     app.include_router(router)
+    app.include_router(discussion_routes.router)
     return app

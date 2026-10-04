@@ -1,0 +1,21 @@
+<section class="discussion" id="discussion">
+  <h2>
+    Discussion <span class="count">{{ posts|sum(attribute="thread_size") }}</span>
+  </h2>
+  <form class="new-post" method="post" action="/talks/{{ talk.ref }}/posts">
+    <div class="form-row">
+      <select name="kind" aria-label="Type">
+        <option value="comment">Comment</option>
+        <option value="question">Question</option>
+      </select>
+      <input name="name" value="{{ author_name }}" placeholder="Your name" maxlength="40" required>
+    </div>
+    <textarea name="body" rows="3" maxlength="5000" placeholder="Add a comment or ask a question" required></textarea>
+    <button class="button" type="submit">Post</button>
+  </form>
+  {% for post in posts %}
+    {% include "partials/discussion/post.html" %}
+  {% else %}
+    <p class="muted">No discussion yet. Ask the first question.</p>
+  {% endfor %}
+</section>
