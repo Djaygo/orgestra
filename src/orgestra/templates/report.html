@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Report a bug · Orgestra{% endblock %}
+{% block content %}
+  <article class="report">
+    <h1>Report a bug</h1>
+    <p class="muted">Tell us what went wrong. Your report goes straight to the people who build this site.</p>
+    <form class="report-form" method="post" action="/report" hx-boost="false">
+      <input type="hidden" name="page" value="{{ page }}">
+      <label>Title
+        <input name="title" maxlength="120" required>
+      </label>
+      <label>What happened?
+        <textarea name="description" rows="6" maxlength="5000" required></textarea>
+      </label>
+      <p>
+        <button class="button" type="submit">Send report</button>
+        <a href="{{ page or '/' }}">Cancel</a>
+      </p>
+    </form>
+  </article>
+{% endblock %}

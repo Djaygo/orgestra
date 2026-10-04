@@ -367,6 +367,25 @@ body:has(#sources-toggle:checked) .layout { grid-template-columns: minmax(0, 1fr
 .diff-del { background: rgb(234 67 53 / 0.2); }
 .diff-same { color: var(--faint); }
 
+/* Bug report */
+.report-button { margin-left: auto; color: var(--muted); padding: 0.5rem; border-radius: 4px; }
+.report-button:hover { background: var(--hover); text-decoration: none; }
+.report-button + .sources-button { margin-left: 0; }
+.home .report-button { position: absolute; top: 1rem; right: 6.5rem; }
+.report { max-width: 720px; }
+.report h1 { font-weight: 400; font-size: 28px; margin: 0.25rem 0 0.75rem; }
+.report-form { display: grid; gap: 1rem; }
+.report-form label { display: grid; gap: 0.35rem; color: var(--muted); }
+.report-form input, .report-form textarea {
+  font: inherit;
+  color: var(--text);
+  background: var(--box);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 0.5rem 0.7rem;
+}
+.report-form .button { margin: 0 0.75rem 0 0; }
+
 @media (max-width: 1000px) {
   .layout { grid-template-columns: minmax(0, 1fr); }
   .sidebar { display: none; }

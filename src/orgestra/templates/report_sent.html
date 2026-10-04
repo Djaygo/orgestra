@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}Report sent · Orgestra{% endblock %}
+{% block content %}
+  <article class="report">
+    <h1>Thanks, your report was filed as #{{ number }}</h1>
+    <p>
+      <a href="{{ page or '/' }}">Back to where you were</a>
+    </p>
+  </article>
+{% endblock %}

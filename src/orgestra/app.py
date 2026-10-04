@@ -26,6 +26,9 @@ from orgestra.discussion.store import talk_stats, thread
 from orgestra.events import SPOTLIGHT, Spotlight, hx_trigger
 from orgestra.personas import initials, persona_hue
 from orgestra.questions import summary
+from orgestra.reports import routes as reports_routes
+from orgestra.reports.build import build_tracker
+from orgestra.reports.tracker import IssueTracker
 from orgestra.search import SearchIndex
 from orgestra.thesaurus import load_thesaurus
 
@@ -40,6 +43,9 @@ class Settings:
     data_dir: Path = REPO_DATA_DIR
     db_path: Path = REPO_DATA_DIR / "orgestra.db"
     turn_interval_s: float = 3.5
+    issues_provider: str = "github"
+    issues_repo: str = ""
+    issues_token: str = attrs.field(default="", repr=False)
 
     @classmethod
     def from_env(cls) -> Settings:
@@ -47,6 +53,9 @@ class Settings:
             data_dir=Path(os.environ.get("ORGESTRA_DATA_DIR", REPO_DATA_DIR)),
             db_path=Path(os.environ.get("ORGESTRA_DB_PATH", REPO_DATA_DIR / "orgestra.db")),
             turn_interval_s=float(os.environ.get("ORGESTRA_TURN_INTERVAL", "3.5")),
+            issues_provider=os.environ.get("ORGESTRA_ISSUES_PROVIDER", "github"),
+            issues_repo=os.environ.get("ORGESTRA_ISSUES_REPO", ""),
+            issues_token=os.environ.get("ORGESTRA_ISSUES_TOKEN", ""),
         )
 
 
@@ -59,6 +68,7 @@ class Services:
     index: SearchIndex
     cast: list[Persona]
     templates: Jinja2Templates
+    tracker: IssueTracker | None
 
 
 def is_fragment_request(request: Request) -> bool:
@@ -97,9 +107,17 @@ def transcript_frames(script: Iterator[Conversation]) -> Iterator[Conversation]:
 def build_templates(catalog: Catalog, cast: list[Persona]) -> Jinja2Templates:
     # What the layout (sidebar, stage) needs on every page.
     layout = {"catalog": catalog, "cast_json": cast_json(cast), "scene_available": SCENE_ENTRY.exists()}
-    templates = Jinja2Templates(
-        directory=PACKAGE_DIR / "templates", context_processors=[lambda _request: layout]
-    )
+
+    def layout_context(request: Request) -> dict[str, object]:
+        query = f"?{request.url.query}" if request.url.query else ""
+        return layout | {
+            # No button on the report pages themselves: it would link the form back to itself.
+            "reports_enabled": request.app.state.services.tracker is not None
+            and request.url.path != "/report",
+            "report_from": request.url.path + query,
+        }
+
+    templates = Jinja2Templates(directory=PACKAGE_DIR / "templates", context_processors=[layout_context])
     templates.env.filters.update(
         hue=persona_hue,
         initials=initials,
@@ -120,6 +138,7 @@ def build_services(settings: Settings) -> Services:
         index=SearchIndex.build(catalog, load_thesaurus()),
         cast=cast,
         templates=build_templates(catalog, cast),
+        tracker=build_tracker(settings.issues_provider, settings.issues_repo, settings.issues_token),
     )
 
 
@@ -215,4 +234,5 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     app.mount("/static", StaticFiles(directory=PACKAGE_DIR / "static"), name="static")
     app.include_router(router)
     app.include_router(discussion_routes.router)
+    app.include_router(reports_routes.router)
     return app
