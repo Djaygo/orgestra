@@ -18,6 +18,7 @@ from fastapi.templating import Jinja2Templates
 
 from orgestra.conversations import Conversation, Persona, conversations, personas
 from orgestra.dataset import Catalog, load_catalog
+from orgestra.discussion.models import db
 from orgestra.events import SPOTLIGHT, Spotlight, hx_trigger
 from orgestra.personas import initials, persona_hue
 from orgestra.questions import summary
@@ -33,12 +34,14 @@ SearchQuery = Annotated[str, Query(max_length=200)]
 @attrs.frozen
 class Settings:
     data_dir: Path = REPO_DATA_DIR
+    db_path: Path = REPO_DATA_DIR / "orgestra.db"
     turn_interval_s: float = 3.5
 
     @classmethod
     def from_env(cls) -> Settings:
         return cls(
             data_dir=Path(os.environ.get("ORGESTRA_DATA_DIR", REPO_DATA_DIR)),
+            db_path=Path(os.environ.get("ORGESTRA_DB_PATH", REPO_DATA_DIR / "orgestra.db")),
             turn_interval_s=float(os.environ.get("ORGESTRA_TURN_INTERVAL", "3.5")),
         )
 
@@ -183,7 +186,11 @@ async def conversation_stream(request: Request, services: AppServices) -> Stream
 
 def create_app(settings: Settings | None = None) -> FastAPI:
     app = FastAPI(title="Orgestra")
-    app.state.services = build_services(settings or Settings.from_env())
+    resolved = settings or Settings.from_env()
+    resolved.db_path.parent.mkdir(parents=True, exist_ok=True)
+    db.initialize(f"sqlite:///{resolved.db_path}")
+    db.create_all()
+    app.state.services = build_services(resolved)
     app.mount("/static", StaticFiles(directory=PACKAGE_DIR / "static"), name="static")
     app.include_router(router)
     return app

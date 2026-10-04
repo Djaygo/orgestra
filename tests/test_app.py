@@ -8,9 +8,10 @@ from orgestra.events import SPOTLIGHT
 
 
 @pytest.fixture(scope="module")
-def client():
-    # The dataset checked in under data/ is the fixture for the routes.
-    return TestClient(create_app(Settings(data_dir=REPO_DATA_DIR)))
+def client(tmp_path_factory):
+    # The dataset checked in under data/ is the fixture for the routes; the database is a throwaway.
+    db_path = tmp_path_factory.mktemp("db") / "orgestra.db"
+    return TestClient(create_app(Settings(data_dir=REPO_DATA_DIR, db_path=db_path)))
 
 
 def test_home_has_search_sidebar_and_stage(client):

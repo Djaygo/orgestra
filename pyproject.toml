@@ -5,10 +5,12 @@ description = "Search and personas over conference talks and slides"
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
+  "alchemical>=1.0.3",
   "attrs>=25.1",
   "fastapi>=0.115",
   "jinja2>=3.1",
   "pydantic>=2.10",
+  "python-multipart>=0.0.32",
   "rapidfuzz>=3.12",
   "uvicorn[standard]>=0.34",
 ]

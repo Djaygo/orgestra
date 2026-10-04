@@ -226,3 +226,9 @@ src/orgestra/static/dist/
 # Demo videos
 demo.mp4
 demo.webm
+
+# Discussion database
+data/orgestra.db*
+
+# Executing-plans workspace
+.superpowers/

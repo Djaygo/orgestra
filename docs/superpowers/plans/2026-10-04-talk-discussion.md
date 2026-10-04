@@ -704,7 +704,10 @@ def test_too_long_fields_are_rejected(client):
 
 
 def test_unknown_targets_are_404(client):
-    assert client.post("/talks/2025/nope/posts", data={"kind": "comment", "name": "A", "body": "b"}).status_code == 404
+    assert (
+        client.post("/talks/2025/nope/posts", data={"kind": "comment", "name": "A", "body": "b"}).status_code
+        == 404
+    )
     assert client.post("/posts/99/replies", data={"name": "A", "body": "b"}).status_code == 404
     assert client.post("/posts/99/edit", data={"name": "A", "body": "b"}).status_code == 404
     assert client.post("/posts/99/restore/1", data={"name": "A"}).status_code == 404

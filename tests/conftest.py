@@ -5,6 +5,7 @@ from typing import Any
 import pytest
 
 from orgestra.dataset import Catalog, Organization, Speaker, Talk
+from orgestra.discussion.models import db
 from orgestra.thesaurus import Thesaurus, load_thesaurus
 
 
@@ -57,3 +58,12 @@ def catalog() -> Catalog:
 @pytest.fixture(scope="session")
 def thesaurus() -> Thesaurus:
     return load_thesaurus()
+
+
+@pytest.fixture
+def session(tmp_path):
+    """A session on a fresh database file (an in-memory database is per thread)."""
+    db.initialize(f"sqlite:///{tmp_path / 'test.db'}")
+    db.create_all()
+    with db.begin() as session:
+        yield session
