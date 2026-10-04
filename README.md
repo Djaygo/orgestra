@@ -22,7 +22,7 @@ just dev         # develop: builds the stage, runs the backend (reload) and the 
 Without the frontend build the app still works; the stage shows the conversation transcript only.
 
 Settings (environment): `ORGESTRA_DATA_DIR` (default `data/`), `ORGESTRA_TURN_INTERVAL` (seconds
-between conversation turns, default 3.5), `ORGESTRA_DB_PATH` (SQLite file for the talk discussion, default `data/orgestra.db`), `ORGESTRA_HOST`, `ORGESTRA_PORT`, `ORGESTRA_RELOAD`.
+between conversation turns, default 3.5), `ORGESTRA_DB_PATH` (SQLite file for the talk discussion, default `data/orgestra.db`), `ORGESTRA_ISSUES_PROVIDER` (`github`), `ORGESTRA_ISSUES_REPO` (`owner/name`) and `ORGESTRA_ISSUES_TOKEN` (a fine-grained token with Issues read and write on that repository; the "Report a bug" button files an issue there and is hidden unless both repo and token are set), `ORGESTRA_HOST`, `ORGESTRA_PORT`, `ORGESTRA_RELOAD`.
 
 ## Checks
 

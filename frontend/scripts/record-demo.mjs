@@ -55,6 +55,22 @@ async function discuss(page) {
   await pause(page, 3500);
 }
 
+/** Report a bug: open the form from the top bar and fill it in, without sending anything. */
+async function reportBug(page) {
+  const button = page.locator(".report-button");
+  if (!(await button.count())) {
+    return;
+  }
+  await button.click();
+  await page.waitForSelector("form.report-form");
+  const form = page.locator("form.report-form");
+  await form.locator("input[name=title]").pressSequentially("The search box loses my query", { delay: 50 });
+  await form.locator("textarea[name=description]").pressSequentially("I typed a long query, switched tabs and it was gone.", { delay: 40 });
+  log("report form filled in");
+  await pause(page, 2500);
+  await page.goBack();
+}
+
 /** The tour: home with the characters talking, a search, People also ask, a talk and a speaker. */
 async function tour(page) {
   await page.goto(values.base);
@@ -87,6 +103,7 @@ async function tour(page) {
   await page.goBack();
   log("back");
   await pause(page, 2000);
+  await reportBug(page);
 }
 
 const videoDir = mkdtempSync(join(tmpdir(), "orgestra-demo-"));

@@ -24,8 +24,8 @@ adapter and changing configuration, with no change to the form, routes or tests.
 
 ### Button and form
 
-- The top bar (see `templates/base.html`) shows "Report a bug" next to "Sources" when the feature is
-  enabled. It links to `/report?from=<path and query of the current page>`.
+- The top bar (see `templates/base.html` and the home page header) shows "Report a bug" next to
+  "Sources" when the feature is enabled, except on the report pages themselves. It links to `/report?from=<path and query of the current page>`.
 - `GET /report` renders the form: title, description, a hidden `page` field filled from `from`.
   `from` is accepted only when it starts with a single `/`; anything else becomes the empty string.
 - `POST /report` (form fields `title`, `description`, `page`) validates, files the issue and renders a
@@ -35,10 +35,11 @@ adapter and changing configuration, with no change to the form, routes or tests.
 ### The issue
 
 - Title: `[site] <title>`.
-- Body, in this order: a "Description" heading, the description in a fenced block (the fence is longer
-  than any backtick run inside the text), then a list with the page URL (the app's `/…` path as the
-  visitor sent it), the browser's `User-Agent` header, and the UTC time. The visitor's IP is not
-  recorded.
+- Body, in this order: a "Description" heading and the description in a fenced block (the fence is
+  longer than any backtick run inside the text), then a "Context" heading and a second fenced block
+  with the page path (the app's `/…` path as the visitor sent it), the browser's `User-Agent` header
+  and the UTC time. Both blocks are fenced because the visitor controls all of those values. The
+  visitor's IP is not recorded.
 - No labels and no assignees: a fine-grained token limited to issues cannot create labels.
 
 ### Limits and errors
@@ -66,7 +67,7 @@ of its `repr`.
 | Unit | Responsibility | Depends on |
 |---|---|---|
 | `reports/tracker.py` | `IssueTracker` protocol: `create_issue(title, body) -> Issue`; `Issue(number)`; `TrackerError` | none |
-| `reports/github.py` | `GitHubIssues(repo, token, client)` implements the protocol over the REST API | `httpx` |
+| `reports/github.py` | `GitHubIssues(repo, token, client)` implements the protocol over the REST API | `httpx2` |
 | `reports/body.py` | builds the issue title and body (fenced description, metadata) | none |
 | `reports/routes.py` | `/report` routes, validation, the thank-you and failure pages | `IssueTracker`, templates |
 | `templates/report.html`, `report_sent.html`, `report_failed.html`; `base.html` | the form, the two result pages, the top-bar button | route contexts |
@@ -80,12 +81,12 @@ one branch where the provider is chosen. Nothing is added for it today.
 
 `POST https://api.github.com/repos/{repo}/issues` with headers `Authorization: Bearer <token>`,
 `Accept: application/vnd.github+json`, `X-GitHub-Api-Version: 2022-11-28` and a JSON body
-`{"title", "body"}`. Success is status 201 with the issue `number` in the JSON. The `httpx.Client` is
+`{"title", "body"}`. Success is status 201 with the issue `number` in the JSON. The `httpx2.Client` (the client Starlette 1.7 already requires; `httpx` is not installed) is
 created once at startup with a 10 s timeout and passed in, so tests can inject a mock transport.
 
 ## Testing
 
-- `GitHubIssues` with `httpx.MockTransport`: request URL, headers and JSON body; a 201 response gives
+- `GitHubIssues` with `httpx2.MockTransport`: request URL, headers and JSON body; a 201 response gives
   the issue number; a 401, a 422, a 500, a timeout, invalid JSON and a 201 without `number` all raise
   `TrackerError`.
 - `body.py`: the description is fenced, a description containing backticks gets a longer fence,
