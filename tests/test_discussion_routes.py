@@ -86,3 +86,10 @@ def test_a_non_ascii_name_survives_the_cookie(client):
 
     html = client.get(f"/talks/{TALK}").text
     assert 'name="name" value="Zoë Ünal"' in html
+
+
+def test_discussion_forms_keep_the_scroll_position_when_boosted(client):
+    # htmx scrolls to the top after a boosted swap unless the swap says `show:none`.
+    html = client.get(f"/talks/{TALK}").text
+
+    assert '<section class="discussion" id="discussion" hx-swap="outerHTML show:none">' in html
