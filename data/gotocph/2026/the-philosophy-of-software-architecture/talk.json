@@ -1,0 +1,32 @@
+{
+  "slug": "the-philosophy-of-software-architecture",
+  "organization": "gotocph",
+  "year": 2026,
+  "session_id": 4139,
+  "extracted": true,
+  "title": "The Philosophy of Software Architecture",
+  "section": "Conference Talk",
+  "format": null,
+  "track": null,
+  "tags": [
+    "architecture",
+    "software teams"
+  ],
+  "day": "Wednesday",
+  "start": "11:30",
+  "end": "12:15",
+  "room": "TAP1, Main Stage",
+  "abstract": "This session looks at the underlying philosophical beliefs that inform the everyday practice of software architecture.\n\nInstead of endlessly arguing in terms of frameworks and methods, why not understand why we think the way we do, why some people disagree, and why we can't trust our Computer Science educations?\n\nWho are we, why are we like this, and can we ever change?",
+  "speakers": [
+    {
+      "slug": "barry-o-reilly",
+      "name": "Barry O'Reilly",
+      "role_company": "Designing resilient software for complex domains"
+    }
+  ],
+  "session_url": "https://gotocph.com/2026/sessions/4139/the-philosophy-of-software-architecture",
+  "video_url": null,
+  "other_links": [],
+  "slides_url": null,
+  "slides_file": null
+}

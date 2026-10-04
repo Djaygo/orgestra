@@ -1,0 +1,36 @@
+{
+  "slug": "ai-friendly-code-the-missing-link-for-speed-with-quality",
+  "organization": "gotocph",
+  "year": 2026,
+  "session_id": 3981,
+  "extracted": true,
+  "title": "AI-Friendly Code: The Missing Link for Speed with Quality",
+  "section": "Conference Talk",
+  "format": [
+    "Slides",
+    "Code examples",
+    "Real-world research findings and engineering insights"
+  ],
+  "track": null,
+  "tags": [
+    "code quality",
+    "programming"
+  ],
+  "day": "Wednesday",
+  "start": "10:15",
+  "end": "11:00",
+  "room": "TAP1, Main Stage",
+  "abstract": "Have you seen early productivity gains from AI, only to watch them disappear under growing complexity and production incidents? You're not alone. There's a common reason: many production systems already struggle with technical debt. When AI agents enter the development loop, that debt becomes a multiplier. Poor-quality code not only increases defects and costs. It dramatically raises AI risk by driving high breakage rates, turning promising AI agents into legacy code generators rather than genuine help.\n\nFortunately, there's hope on the horizon. In this talk, Adam Tornhill shows how organizations can achieve both speed and quality with AI. Backed by large-scale empirical studies on AI coding and developer productivity, we separate what works from what doesn't in real-world systems. Building on these findings, we then look at a practical framework for driving and sustaining AI-friendly code at scale. The AI revolution is here. Is your code ready?",
+  "speakers": [
+    {
+      "slug": "adam-tornhill",
+      "name": "Adam Tornhill",
+      "role_company": "Software X-Ray in the AI ages"
+    }
+  ],
+  "session_url": "https://gotocph.com/2026/sessions/3981/ai-friendly-code-the-missing-link-for-speed-with-quality",
+  "video_url": null,
+  "other_links": [],
+  "slides_url": null,
+  "slides_file": null
+}

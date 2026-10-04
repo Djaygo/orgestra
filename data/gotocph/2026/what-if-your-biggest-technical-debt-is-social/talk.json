@@ -1,0 +1,32 @@
+{
+  "slug": "what-if-your-biggest-technical-debt-is-social",
+  "organization": "gotocph",
+  "year": 2026,
+  "session_id": 3974,
+  "extracted": true,
+  "title": "What If Your Biggest Technical Debt Is Social?",
+  "section": "Conference Talk",
+  "format": null,
+  "track": null,
+  "tags": [
+    "code quality",
+    "strategy"
+  ],
+  "day": "Thursday Oct 1",
+  "start": "11:30",
+  "end": "12:15",
+  "room": "TAP1, Stage 2",
+  "abstract": "Ward Cunningham's original technical debt metaphor in 1992 was not about bad code. Debt could be a business and learning strategy: we build with the understanding we have today, use the software, learn something new, and discover that yesterday's good design no longer fits what we now know.\n\nMore recently, Kent Beck has reframed a similar tension as Features vs. Future: delivering value now while preserving our ability to respond to what comes next.\n\nAI-accelerated code production makes that *learning debt* more urgent.\n\nThis talk explores why faster execution loops, better DDD-informed specifications, disciplined TDD, and stronger AI harnesses are only part of the answer. The deepest learning debt is social and non-linear. It accumulates in our pursuit to understand the problem, notice assumptions, let our mental models shift, decide what matters, take ownership, and act under uncertainty.\n\nDrawing on Domain-Driven Design, collaborative modeling, cognitive science, and dialogical practices, we'll explore how we can make *thinking together* a deliberate part of software design.\n\nBorrowing Kari Zeller's language, how might we* re-place ourselves* as AI changes how software gets made? Instead of simply inserting AI into our existing processes and ways of thinking, what would it mean to rethink how we work with each other and with AI, where we create value, and what we take responsibility for?",
+  "speakers": [
+    {
+      "slug": "xin-yao",
+      "name": "Xin Yao",
+      "role_company": "Bringing sociotechnical thinking into software architecture"
+    }
+  ],
+  "session_url": "https://gotocph.com/2026/sessions/3974/what-if-your-biggest-technical-debt-is-social",
+  "video_url": null,
+  "other_links": [],
+  "slides_url": "__PENDING__",
+  "slides_file": null
+}

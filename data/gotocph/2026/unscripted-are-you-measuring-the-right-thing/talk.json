@@ -1,0 +1,39 @@
+{
+  "slug": "unscripted-are-you-measuring-the-right-thing",
+  "organization": "gotocph",
+  "year": 2026,
+  "session_id": 4242,
+  "extracted": true,
+  "title": "Unscripted: Are you measuring the right thing?",
+  "section": "Conference Talk",
+  "format": "Unscripted",
+  "track": null,
+  "tags": [
+    "software delivery",
+    "DORA",
+    "Theory of Constraints",
+    "measurement"
+  ],
+  "day": "Wednesday Sep 30",
+  "start": "11:30",
+  "end": "12:15",
+  "room": "Thoughtworks Live Stage",
+  "abstract": "Nathen Harvey led DORA research, which has spent a decade measuring how software teams deliver. Simon White comes at it from Theory of Constraints.\n\nTwo well-evidenced views, one question.\n\nThis is our unscripted stage. No slides, no script, and no idea where it ends up.",
+  "speakers": [
+    {
+      "slug": "nathen-harvey",
+      "name": "Nathen Harvey",
+      "role_company": "AI as an amplifier of software delivery"
+    },
+    {
+      "slug": "simon-white",
+      "name": "Simon White",
+      "role_company": "Chairman of TOCICO and Senior Program Manager at WTG"
+    }
+  ],
+  "session_url": "https://gotocph.com/2026/sessions/4242/unscripted-are-you-measuring-the-right-thing",
+  "video_url": null,
+  "other_links": [],
+  "slides_url": null,
+  "slides_file": null
+}

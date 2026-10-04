@@ -1,0 +1,17 @@
+{
+  "slug": "stuart-greenlees",
+  "name": "Stuart Greenlees",
+  "role_company": "Senior Director of Technology at Liberty IT",
+  "role": null,
+  "company": null,
+  "bio": null,
+  "email": null,
+  "photo_url": null,
+  "links": {},
+  "profiles": {
+    "2025": "https://gotocph.com/2025/speakers/4151"
+  },
+  "talks": [
+    "2025/leading-3000-developers-into-the-next-era-of-software-engineering"
+  ]
+}

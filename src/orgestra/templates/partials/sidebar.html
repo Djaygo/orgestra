@@ -1,0 +1,28 @@
+<nav class="sidebar" aria-label="Sources">
+  {% for organization in catalog.organizations %}
+    <h2>{{ organization.name }}</h2>
+    {% for year, talks in catalog.talks_by_year(organization.slug).items() %}
+      <details {% if loop.first %}open{% endif %}>
+        <summary>{{ year }} <span class="count">{{ talks|length }} talks</span></summary>
+        <ul>
+          {% for talk in talks %}
+            <li {% if not talk.extracted %}class="pending" title="Details not extracted yet"{% endif %}>
+              <a href="/talks/{{ talk.ref }}">{{ talk.display_title }}</a>
+              {% if talk.slides_url %}<span class="badge" title="Slides available">slides</span>{% endif %}
+            </li>
+          {% endfor %}
+        </ul>
+      </details>
+    {% endfor %}
+  {% endfor %}
+  <details>
+    <summary>Speakers <span class="count">{{ catalog.speakers|length }}</span></summary>
+    <ul>
+      {% for speaker in catalog.speakers.values()|sort(attribute="name") %}
+        <li>
+          <a href="/speakers/{{ speaker.slug }}">{{ speaker.name }}</a>
+        </li>
+      {% endfor %}
+    </ul>
+  </details>
+</nav>

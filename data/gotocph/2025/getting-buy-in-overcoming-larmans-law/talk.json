@@ -1,0 +1,34 @@
+{
+  "slug": "getting-buy-in-overcoming-larmans-law",
+  "organization": "gotocph",
+  "year": 2025,
+  "session_id": 3628,
+  "extracted": true,
+  "title": "Getting Buy-In: Overcoming Larman's Law",
+  "section": "Keynote",
+  "format": "Keynote",
+  "track": null,
+  "tags": [
+    "Keynote",
+    "(tech) teams"
+  ],
+  "day": "Friday Oct 3",
+  "start": "16:30",
+  "end": "17:30",
+  "room": "TAP1, Main Stage",
+  "abstract": "Larman's Law states, \"Organizations are implicitly optimized to avoid changing the status quo…\" The third law is particularly relevant: 'Any change initiative will be derided as \"purist,\" \"theoretical,\" \"revolutionary,\" \" \"religion,\" and \"needing pragmatic customization for local concerns\"—which deflects from addressing weaknesses and the manager/specialist status quo.'\n\nYou need to overcome that resistance to use innovative approaches like no-estimation or mob/ensemble programming.\n\nDevs, however, almost always go about that the wrong way. Senior management is rarely interested in the mechanics of what you're doing. They're interested in the bottom line, how the new approaches change how the business is managed, and whether the inevitable disruption is worth it.\n\nIn this talk, you'll learn how to convince the \"suits\" (and your clients) that innovation is a good thing. You'll learn how to create a business case for innovation that overcomes the resistance of Larman's Law.",
+  "speakers": [
+    {
+      "slug": "allen-holub",
+      "name": "Allen Holub",
+      "role_company": "Authority. When Allen Speaks the World Listens"
+    }
+  ],
+  "session_url": "https://gotocph.com/2025/sessions/3628/getting-buy-in-overcoming-larmans-law",
+  "video_url": "https://www.youtube-nocookie.com/embed/UAlumfwmcwY",
+  "other_links": [
+    "https://gotocph.com/2025/sessions/3628/slides"
+  ],
+  "slides_url": "https://files.gotocon.com/uploads/slides/conference_105/3628/original/OvercomingLarmansLaw-GotoCPH-2025.pdf",
+  "slides_file": null
+}

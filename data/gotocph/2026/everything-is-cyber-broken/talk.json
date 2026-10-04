@@ -1,0 +1,36 @@
+{
+  "slug": "everything-is-cyber-broken",
+  "organization": "gotocph",
+  "year": 2026,
+  "session_id": 4159,
+  "extracted": true,
+  "title": "Everything is Cyber-Broken",
+  "section": "Keynote",
+  "format": "Keynote",
+  "track": null,
+  "tags": [
+    "Keynote"
+  ],
+  "day": "Thursday Oct 1",
+  "start": "17:45",
+  "end": "18:45",
+  "room": "TAP1, Main Stage",
+  "abstract": "It's 2026 and we still can't get cyber right! So much of what we do online is fundamentally broken security wise and we often don't even know it until it all goes wrong. Think we've learned from our mistakes? Think again!\n\nThis talk is a conversation between Scott Helme and Troy Hunt on the state of \"insecurity\" and the fundamental misunderstandings of how technology works. It's based on our direct experiences and is a casual, scary, comedic look into the underbelly of the cybersecurity industry. It's off the record, edgy, hilarious and terrifying.",
+  "speakers": [
+    {
+      "slug": "troy-hunt",
+      "name": "Troy Hunt",
+      "role_company": "What real-world breaches teach us about web security"
+    },
+    {
+      "slug": "scott-helme",
+      "name": "Scott Helme",
+      "role_company": "Security from the attacker's perspective"
+    }
+  ],
+  "session_url": "https://gotocph.com/2026/sessions/4159/everything-is-cyber-broken",
+  "video_url": null,
+  "other_links": [],
+  "slides_url": null,
+  "slides_file": null
+}

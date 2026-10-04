@@ -1,0 +1,40 @@
+{
+  "slug": "leading-3000-developers-into-the-next-era-of-software-engineering",
+  "organization": "gotocph",
+  "year": 2025,
+  "session_id": 3823,
+  "extracted": true,
+  "title": "Leading 3000 Developers into the Next Era of Software Engineering",
+  "section": "Conference Talk",
+  "format": null,
+  "track": null,
+  "tags": [
+    "programming",
+    "artificial intelligence (AI)",
+    "productivity"
+  ],
+  "day": "Thursday Oct 2",
+  "start": "10:15",
+  "end": "11:00",
+  "room": "TAP1, Main Stage",
+  "abstract": "For the past two years Liberty Mutual has faced a challenge. How to exploit GenAI to make our 3000 engineers more productive without compromising quality, safety, or our values. Initially we created our own ChatGPT experience (LibertyGPT), rolled out GitHub CoPilot worldwide, and designed our own SDLC process. That was the easy part.\n\nRight now we're tackling three interrelated opportunities. The first is AI Engineering - how do we integrate GenAI into developer pipelines to ship better software faster? The second is AI Architecture - how do we infuse AI based features into new applications to better serve our customers? The final revolves around Agentic AI and the prospect of Digital Software Engineers - can this work and if so how?\n\nYour organisation is most likely walking a similar path. We will share with you what we have learned to date, in terms of technologies, architectures, practises and processes. There will be no artificial hype or gushing over vendors and their platforms. This will be a 'from the trenches' talk where we share hard won lessons.",
+  "speakers": [
+    {
+      "slug": "garth-gilmour",
+      "name": "Garth Gilmour",
+      "role_company": "Learning Consultant at Liberty IT"
+    },
+    {
+      "slug": "stuart-greenlees",
+      "name": "Stuart Greenlees",
+      "role_company": "Senior Director of Technology at Liberty IT"
+    }
+  ],
+  "session_url": "https://gotocph.com/2025/sessions/3823/leading-3000-developers-into-the-next-era-of-software-engineering",
+  "video_url": "https://www.youtube-nocookie.com/embed/tRL2sRDg_DA",
+  "other_links": [
+    "https://gotocph.com/2025/sessions/3823/slides"
+  ],
+  "slides_url": "https://files.gotocon.com/uploads/slides/conference_105/3823/original/Leading%20Devs%20Into%20The%20Next%20Era%20Of%20Engineering.pdf",
+  "slides_file": null
+}

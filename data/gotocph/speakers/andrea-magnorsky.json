@@ -1,0 +1,17 @@
+{
+  "slug": "andrea-magnorsky",
+  "name": "Andrea Magnorsky",
+  "role_company": "Programmer and Creator of Bytesize Architecture Sessions",
+  "role": null,
+  "company": null,
+  "bio": null,
+  "email": null,
+  "photo_url": null,
+  "links": {},
+  "profiles": {
+    "2026": "https://gotocph.com/2026/speakers/4563"
+  },
+  "talks": [
+    "2026/unscripted-overengineering-isn-t-what-you-think-it-is"
+  ]
+}

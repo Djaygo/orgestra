@@ -1,0 +1,17 @@
+{
+  "slug": "luca-mezzalira",
+  "name": "Luca Mezzalira",
+  "role_company": "Modernizing your system architecture",
+  "role": null,
+  "company": null,
+  "bio": null,
+  "email": null,
+  "photo_url": null,
+  "links": {},
+  "profiles": {
+    "2026": "https://gotocph.com/2026/speakers/4244"
+  },
+  "talks": [
+    "2026/garbage-context-garbage-code"
+  ]
+}

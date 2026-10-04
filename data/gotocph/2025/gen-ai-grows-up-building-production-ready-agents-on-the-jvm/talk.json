@@ -1,0 +1,35 @@
+{
+  "slug": "gen-ai-grows-up-building-production-ready-agents-on-the-jvm",
+  "organization": "gotocph",
+  "year": 2025,
+  "session_id": 3893,
+  "extracted": true,
+  "title": "Gen AI Grows Up: Building Production-Ready Agents on the JVM",
+  "section": "Keynote",
+  "format": null,
+  "track": null,
+  "tags": [
+    "Gen AI",
+    "Agents",
+    "JVM",
+    "Production",
+    "Enterprise"
+  ],
+  "day": "Wednesday",
+  "start": "13:00",
+  "end": "14:00",
+  "room": "TAP1, Main Stage",
+  "abstract": "Every C-suite demands a Gen AI strategy. Few deliver results. While Gen AI technology borders on miraculous, most attempts to deploy it in business applications fail—not because the technology is flawed, but because the approach is fundamentally wrong.\n\nIn this talk, Rod Johnson explains why these initiatives stumble and how to build agents that actually work in production.\n\nOne critical mistake? Treating Gen AI as a standalone technology divorced from your existing systems. Agents are only as valuable as what they can access and act upon. Your business logic, your data, your processes—these are key assets that underpin AI power.\n\nPython dominates machine learning, but almost none of the business-critical software running your enterprise is written in Python. There's a reason for that. There's also a reason the world's most reliable systems run on the JVM.\n\nThe JVM isn't just relevant to enterprise AI—it's essential. Agents built on the JVM have frictionless access to critical business logic and infrastructure. The mature ecosystem, robust tooling, and battle-tested reliability of the JVM become AI superpowers.\n\nAnother mistake: ignoring what we already know about software engineering. Domain modeling, unit testing, type safety—these aren't obstacles to AI; they're the foundations of dependable AI systems.\n\nLearn how the Embabel agent framework brings together the power of Gen AI with the strength of the JVM, enabling you to build agents that are testable, maintainable, and production-ready from day one.\n\nIt's time for Gen AI to grow up. Let's build it right.",
+  "speakers": [
+    {
+      "slug": "rod-johnson",
+      "name": "Rod Johnson",
+      "role_company": "Building the future of agent frameworks at Embabel"
+    }
+  ],
+  "session_url": "https://gotocph.com/2025/sessions/3893/gen-ai-grows-up-building-production-ready-agents-on-the-jvm",
+  "video_url": "https://www.youtube-nocookie.com/embed/yMDw0nlWd7s",
+  "other_links": [],
+  "slides_url": "https://files.gotocon.com/uploads/slides/conference_105/3893/original/goto.pdf",
+  "slides_file": null
+}

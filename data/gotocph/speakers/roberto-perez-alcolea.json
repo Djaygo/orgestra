@@ -1,0 +1,17 @@
+{
+  "slug": "roberto-perez-alcolea",
+  "name": "Roberto Perez Alcolea",
+  "role_company": "Software Engineer at Netflix",
+  "role": null,
+  "company": null,
+  "bio": null,
+  "email": null,
+  "photo_url": null,
+  "links": {},
+  "profiles": {
+    "2025": "https://gotocph.com/2025/speakers/4160"
+  },
+  "talks": [
+    "2025/from-lag-to-lightning-confident-automated-changes-at-scale"
+  ]
+}

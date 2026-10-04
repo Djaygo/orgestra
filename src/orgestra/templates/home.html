@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block main_class %}page home{% endblock %}
+{% block header %}
+  {% include "partials/report_button.html" %}
+  <label for="sources-toggle" class="sources-button">Sources</label>
+{% endblock %}
+{% block content %}
+  <section class="hero">
+    <h1 class="logo large">
+      {% include "partials/logo.html" %}
+    </h1>
+    {% with live=false, query="" %}
+      {% include "partials/searchbox.html" %}
+    {% endwith %}
+    <div class="hero-buttons">
+      <button type="submit" form="search-form" class="button">Orgestra search</button>
+      <a class="button" href="/lucky">I'm feeling curious</a>
+    </div>
+    <p class="hero-note">
+      {% for organization in catalog.organizations %}
+        {{ organization.name }}:
+        {% for edition in organization.editions %}
+          {{ edition.year }} ({{ edition.talks }} talks){{ ", " if not loop.last }}
+        {% endfor %}
+      {% endfor %}
+      · {{ catalog.speakers|length }} speakers
+    </p>
+  </section>
+{% endblock %}

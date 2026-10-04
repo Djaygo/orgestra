@@ -1,0 +1,33 @@
+{
+  "slug": "level-up-choosing-the-technical-leadership-path",
+  "organization": "gotocph",
+  "year": 2025,
+  "session_id": 3638,
+  "extracted": true,
+  "title": "Level Up: Choosing The Technical Leadership Path",
+  "section": "Conference Talk",
+  "format": null,
+  "track": null,
+  "tags": [
+    "teams and productivity",
+    "leadership",
+    "(tech) teams"
+  ],
+  "day": "Wednesday Oct 1",
+  "start": "10:15",
+  "end": "11:00",
+  "room": "TAP1, Main Stage",
+  "abstract": "Do you want to have more impact in your work? Do you want to grow in your career? Do you want to know what \"good\" technical leadership looks like?\n\nThen come along to this talk where Pat Kua, who has been growing technical leaders for more than a decade, will share some practical advice on what it means to be a good technical leader, where to get started and how you can level up.",
+  "speakers": [
+    {
+      "slug": "patrick-kua",
+      "name": "Patrick Kua",
+      "role_company": "Founder of the Tech Lead Academy. Accelerating the Growth of Technical Leaders"
+    }
+  ],
+  "session_url": "https://gotocph.com/2025/sessions/3638/level-up-choosing-the-technical-leadership-path",
+  "video_url": "https://player.vimeo.com/video/1125780609",
+  "other_links": [],
+  "slides_url": "https://files.gotocon.com/uploads/slides/conference_105/3638/original/2025-10-GotoCPH-LevelUp-ChoosingTheTechnicalLeadershipPath.pdf",
+  "slides_file": null
+}

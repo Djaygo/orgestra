@@ -1,0 +1,32 @@
+{
+  "slug": "the-forest-and-the-desert-are-parallel-universes",
+  "organization": "gotocph",
+  "year": 2025,
+  "session_id": 3659,
+  "extracted": true,
+  "title": "The Forest & The Desert Are Parallel Universes",
+  "section": "Conference Talk",
+  "format": null,
+  "track": null,
+  "tags": [
+    "software engineering",
+    "philosophy"
+  ],
+  "day": "Wednesday Oct 1",
+  "start": "16:15",
+  "end": "17:00",
+  "room": "TAP1, Main Stage",
+  "abstract": "So close and yet so far. We see similar behaviors in The Forest & The Desert, but with opposite meanings. Similar words but opposite meanings. Superficially similar goals but working out at completely different scales.\n\nWhat is The Forest? What is The Desert? Why are they so different, despite the similarities? And how can we get from crumbs to cake and stay there?",
+  "speakers": [
+    {
+      "slug": "kent-beck",
+      "name": "Kent Beck",
+      "role_company": "Creator of Extreme Programming, Co-authored the Agile Manifesto"
+    }
+  ],
+  "session_url": "https://gotocph.com/2025/sessions/3659/the-forest-and-the-desert-are-parallel-universes",
+  "video_url": "https://www.youtube-nocookie.com/embed/W7XL_LZgvKI",
+  "other_links": [],
+  "slides_url": "https://files.gotocon.com/uploads/slides/conference_105/3659/original/Forest%20and%20Desert%20Parallel%20Universes.pdf",
+  "slides_file": null
+}

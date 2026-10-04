@@ -1,0 +1,36 @@
+{
+  "slug": "learning-modern-java-the-playful-way",
+  "organization": "gotocph",
+  "year": 2026,
+  "session_id": 4000,
+  "extracted": true,
+  "title": "Learning Modern Java The Playful Way",
+  "section": "Conference Talk",
+  "format": null,
+  "track": null,
+  "tags": [
+    "programming languages"
+  ],
+  "day": "Thursday Oct 1",
+  "start": "16:45",
+  "end": "17:30",
+  "room": "TAP1, Room 2",
+  "abstract": "Staying up to date with Modern Java can feel overwhelming. If you don't have any experience with Java since Java 8 (or at all), features like structured concurrency or pattern matching might sound exciting, but also scary: \"How do I even get started with that?\"\n\nFear not! In this session Marit and Piotr will explain to you the new exciting things and also show you how to use them in your IDE, so that the next day you can start having fun and profit with modern Java in your favorite tools on your own.",
+  "speakers": [
+    {
+      "slug": "marit-van-dijk",
+      "name": "Marit van Dijk",
+      "role_company": "Senior Developer Advocate at JetBrains | Java Champion"
+    },
+    {
+      "slug": "piotr-przybyl",
+      "name": "Piotr Przybyl",
+      "role_company": "Software Gardener"
+    }
+  ],
+  "session_url": "https://gotocph.com/2026/sessions/4000/learning-modern-java-the-playful-way",
+  "video_url": null,
+  "other_links": [],
+  "slides_url": "https://files.gotocon.com/uploads/slides/conference_135/4000/original/Learning%20modern%20Java%20%20the%20playful%20way%20-%20GOTO%20Copenhagen.pdf",
+  "slides_file": null
+}

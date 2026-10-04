@@ -1,0 +1,14 @@
+{# The three.js island: a full-width strip along the bottom of every page. It is outside every swap
+   target and preserved by id, so htmx never destroys the WebGL context. The stage script reads the
+   cast below and listens for character:* events. #}
+<section id="stage" class="stage" hx-preserve aria-label="Speakers talking about their talks">
+  <div id="world" class="world" role="img" aria-label="Speakers walking around"></div>
+  <script type="application/json" id="cast-data">{{ cast_json|safe }}</script>
+  <ol id="transcript"
+      class="transcript"
+      hx-ext="sse"
+      sse-connect="/conversations/stream"
+      sse-swap="turn"
+      aria-live="polite"
+      aria-label="What the speakers are saying"></ol>
+</section>

@@ -1,0 +1,31 @@
+{
+  "slug": "plus-c-est-la-meme-chose",
+  "organization": "gotocph",
+  "year": 2026,
+  "session_id": 4156,
+  "extracted": true,
+  "title": "Plus c'est la même chose",
+  "section": "Conference Talk",
+  "format": null,
+  "track": null,
+  "tags": [
+    "code quality"
+  ],
+  "day": "Wednesday",
+  "start": "15:45",
+  "end": "16:30",
+  "room": "TAP1, Main Stage",
+  "abstract": "\"It doesn't matter: The only thing that'll read this code is another AI.\"\n\nI hear people say it all the time. And they might be correct that their code will only ever be consumed by Claude or Codex. But that definitely doesn't mean the code's quality is irrelevant. Just about every good practice we've settled on over the last 50 years still applies when machines write our code. In fact, I believe that many of these principles are even more important, because (not surprisingly) AIs are making the same mistakes we make. They're just doing it faster.\n\nLet me show you some ways to hold your AI coding buddy to a higher standard.",
+  "speakers": [
+    {
+      "slug": "dave-thomas",
+      "name": "Dave Thomas",
+      "role_company": "Pragmatic programming in the ages of AI"
+    }
+  ],
+  "session_url": "https://gotocph.com/2026/sessions/4156/plus-c-est-la-meme-chose",
+  "video_url": null,
+  "other_links": [],
+  "slides_url": "__PENDING__",
+  "slides_file": null
+}

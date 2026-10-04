@@ -1,0 +1,34 @@
+{
+  "slug": "lexical-vector-and-hybrid-search-with-elasticsearch",
+  "organization": "gotocph",
+  "year": 2025,
+  "session_id": 3606,
+  "extracted": true,
+  "title": "Lexical, Vector and Hybrid Search with Elasticsearch",
+  "section": "Conference Talk",
+  "format": null,
+  "track": null,
+  "tags": [
+    "data",
+    "artificial intelligence (AI)"
+  ],
+  "day": "Thursday Oct 2",
+  "start": "10:15",
+  "end": "11:00",
+  "room": "TAP1, Room 1",
+  "abstract": "Search is not just traditional TF/IDF anymore! The current trend of machine learning and models has opened another dimension for search. Generative AI, specifically LLMs, continues to dominate news headlines, marking a turning point in building search applications and finding data. Yet, concerns exist about adapting search solutions to perform semantic searches against our private data.\n\nThis talk gives an overview of traditional lexical search and its limitations. I'll explain how vector search can be combined with traditional lexical search to form a hybrid approach using Elasticsearch. Finally, I'll discuss where LLMs come into play with search and how they can be grounded using RAG.",
+  "speakers": [
+    {
+      "slug": "carly-richmond",
+      "name": "Carly Richmond",
+      "role_company": "Manager at Elastic"
+    }
+  ],
+  "session_url": "https://gotocph.com/2025/sessions/3606/lexical-vector-and-hybrid-search-with-elasticsearch",
+  "video_url": "https://www.youtube-nocookie.com/embed/DeEkA9cunB4",
+  "other_links": [
+    "https://gotocph.com/2025/sessions/3606/slides"
+  ],
+  "slides_url": null,
+  "slides_file": null
+}

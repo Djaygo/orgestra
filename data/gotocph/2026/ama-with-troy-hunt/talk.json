@@ -1,0 +1,33 @@
+{
+  "slug": "ama-with-troy-hunt",
+  "organization": "gotocph",
+  "year": 2026,
+  "session_id": 4229,
+  "extracted": true,
+  "title": "AMA with Troy Hunt",
+  "section": "Conference Talk",
+  "format": "AMA",
+  "track": null,
+  "tags": [
+    "security",
+    "breaches",
+    "web security"
+  ],
+  "day": "Thursday Oct 1",
+  "start": "16:45",
+  "end": "17:30",
+  "room": "Thoughtworks Live Stage",
+  "abstract": "Troy Hunt runs Have I Been Pwned. Ask him about your own incident, the one keeping you up, what it's like being the person who breaks the news, or something else completely. No slides, no script. The agenda is up to you.",
+  "speakers": [
+    {
+      "slug": "troy-hunt",
+      "name": "Troy Hunt",
+      "role_company": null
+    }
+  ],
+  "session_url": "https://gotocph.com/2026/sessions/4229/ama-with-troy-hunt",
+  "video_url": null,
+  "other_links": [],
+  "slides_url": null,
+  "slides_file": null
+}

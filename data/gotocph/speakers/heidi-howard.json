@@ -1,0 +1,17 @@
+{
+  "slug": "heidi-howard",
+  "name": "Heidi Howard",
+  "role_company": "Researching the theory and practice of distributed systems",
+  "role": null,
+  "company": null,
+  "bio": null,
+  "email": null,
+  "photo_url": null,
+  "links": {},
+  "profiles": {
+    "2026": "https://gotocph.com/2026/speakers/4314"
+  },
+  "talks": [
+    "2026/making-the-impossible-possible-ten-years-of-flexible-paxos"
+  ]
+}

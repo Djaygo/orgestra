@@ -1,0 +1,19 @@
+{
+  "slug": "barry-o-reilly",
+  "name": "Barry O'Reilly",
+  "role_company": "Designing resilient software for complex domains",
+  "role": null,
+  "company": null,
+  "bio": null,
+  "email": null,
+  "photo_url": null,
+  "links": {},
+  "profiles": {
+    "2026": "https://gotocph.com/2026/speakers/4264"
+  },
+  "talks": [
+    "2026/the-philosophy-of-software-architecture",
+    "2026/unscripted-overengineering-isn-t-what-you-think-it-is",
+    "2026/unscripted-we-don-t-understand-our-history"
+  ]
+}

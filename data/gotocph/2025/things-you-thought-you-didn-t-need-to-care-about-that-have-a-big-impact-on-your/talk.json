@@ -1,0 +1,32 @@
+{
+  "slug": "things-you-thought-you-didn-t-need-to-care-about-that-have-a-big-impact-on-your",
+  "organization": "gotocph",
+  "year": 2025,
+  "session_id": 3623,
+  "extracted": true,
+  "title": "Things You Thought You Didn't Need To Care About That Have a Big Impact On Your Job",
+  "section": "Keynote",
+  "format": "Keynote",
+  "track": null,
+  "tags": [
+    "Keynote",
+    "the world around us"
+  ],
+  "day": "Thursday Oct 2",
+  "start": "13:00",
+  "end": "14:00",
+  "room": "TAP1, Main Stage",
+  "abstract": "Development is about working with computers, right? Well, not quite. Development is all about working with computers (easy), and working with people (hard). Oh, and it's about physics.\n\nThings like the speed of light and thermodynamics influence APIs, because they influence hardware and networking. If, like Holly, you slept through statistics modules in university, it will be a surprise to discover how statistics has changed our development workflows. Finally, we mustn't forget economics. The end of zero-interest-rates has changed the employment landscape for many of us. In this wide-ranging talk, Holly will cover why the end of Moore's law means we might finally need to get to grips with concurrent programming, why is Loom a good idea now when green threads were a bad idea, why is AOT a good idea now when it used to be a bad idea, and how much you should care about business studies, finance, and statistics.",
+  "speakers": [
+    {
+      "slug": "holly-cummins",
+      "name": "Holly Cummins",
+      "role_company": "JavaOne Rock Star. Building Quarkus to make the cloud cloudier, PC member"
+    }
+  ],
+  "session_url": "https://gotocph.com/2025/sessions/3623/things-you-thought-you-didn-t-need-to-care-about-that-have-a-big-impact-on-your-job",
+  "video_url": "https://www.youtube-nocookie.com/embed/OkVjqwkveiY",
+  "other_links": [],
+  "slides_url": null,
+  "slides_file": null
+}

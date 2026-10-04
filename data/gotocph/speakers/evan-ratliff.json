@@ -1,0 +1,19 @@
+{
+  "slug": "evan-ratliff",
+  "name": "Evan Ratliff",
+  "role_company": "Building a company run entirely by AI",
+  "role": null,
+  "company": null,
+  "bio": null,
+  "email": null,
+  "photo_url": null,
+  "links": {},
+  "profiles": {
+    "2026": "https://gotocph.com/2026/speakers/4316"
+  },
+  "talks": [
+    "2026/among-the-agents-what-its-like-inside-a-company-staffed-almost-entirely-by-ai",
+    "2026/unscripted-stuck-the-neuroscience-of-stepping-away",
+    "2026/unscripted-which-part-of-this-moment-will-look-obvious-in-twenty-years-and-which"
+  ]
+}

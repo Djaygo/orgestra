@@ -1,0 +1,17 @@
+{
+  "slug": "holly-cummins",
+  "name": "Holly Cummins",
+  "role_company": "JavaOne Rock Star. Building Quarkus to make the cloud cloudier, PC member",
+  "role": null,
+  "company": null,
+  "bio": null,
+  "email": null,
+  "photo_url": null,
+  "links": {},
+  "profiles": {
+    "2025": "https://gotocph.com/2025/speakers/3884"
+  },
+  "talks": [
+    "2025/things-you-thought-you-didn-t-need-to-care-about-that-have-a-big-impact-on-your"
+  ]
+}

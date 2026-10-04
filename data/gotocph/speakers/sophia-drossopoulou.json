@@ -1,0 +1,17 @@
+{
+  "slug": "sophia-drossopoulou",
+  "name": "Sophia Drossopoulou",
+  "role_company": "Professor at Imperial College London",
+  "role": null,
+  "company": null,
+  "bio": null,
+  "email": null,
+  "photo_url": null,
+  "links": {},
+  "profiles": {
+    "2026": "https://gotocph.com/2026/speakers/4556"
+  },
+  "talks": [
+    "2026/specification-and-verification-of-robust-open-systems-capabilities-effects-and-t"
+  ]
+}

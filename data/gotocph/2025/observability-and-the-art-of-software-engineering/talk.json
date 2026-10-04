@@ -1,0 +1,37 @@
+{
+  "slug": "observability-and-the-art-of-software-engineering",
+  "organization": "gotocph",
+  "year": 2025,
+  "session_id": 3742,
+  "extracted": true,
+  "title": "Observability and the art of Software Engineering",
+  "section": "Conference Talk",
+  "format": null,
+  "track": null,
+  "tags": [
+    "observability",
+    "software engineering"
+  ],
+  "day": "Thursday",
+  "start": "16:15",
+  "end": "17:00",
+  "room": "TAP1, Room 1",
+  "abstract": "Testability, Readability, Reliability... Observability? Why isn't Observability considered with the same level of attention by software developers?\n\nI'm going to convince you that engineers should care just as much writing observable software as they do about TDD. We'll talk about Data Strategy, coding practices, and ultimately how it helps people do more of the thing they love, which is writing code.",
+  "speakers": [
+    {
+      "slug": "martin-thwaites",
+      "name": "Martin Thwaites",
+      "role_company": "Hands-on Observability Engineer"
+    }
+  ],
+  "session_url": "https://gotocph.com/2025/sessions/3742/observability-and-the-art-of-software-engineering",
+  "video_url": "https://player.vimeo.com/video/1125906932",
+  "other_links": [
+    "https://twitter.com/MartinDotNet",
+    "https://www.linkedin.com/in/martin-thwaites-ab445120",
+    "https://martinjt.me",
+    "https://mastodon.social/@Martindotnet@hachyderm.io"
+  ],
+  "slides_url": null,
+  "slides_file": null
+}

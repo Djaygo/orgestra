@@ -1,0 +1,32 @@
+{
+  "slug": "compliant-not-slow-shipping-every-day-in-a-highly-regulated-environment",
+  "organization": "gotocph",
+  "year": 2026,
+  "session_id": 4176,
+  "extracted": true,
+  "title": "Compliant, Not Slow: Shipping Every Day in a Highly Regulated Environment",
+  "section": "Conference Talk",
+  "format": null,
+  "track": null,
+  "tags": [
+    "strategy",
+    "responsibility"
+  ],
+  "day": "Thursday Oct 1",
+  "start": "14:30",
+  "end": "15:15",
+  "room": "TAP1, Stage 1",
+  "abstract": "On a team inside BankID, Norway's biggest authentication scheme, we ship to production several times a day. Inside a heavily regulated corner of software. Compliance usually gets blamed for making that impossible. It doesn't have to.\n\nWe recently went through a certification, and the real lesson wasn't the paperwork. It was learning to read past the pages of requirements to what they're actually trying to achieve. Getting certified turned out to be a process worked through together with the auditor, not a verdict handed down.\n\nSome things aren't worth fighting because the control behind them is real. Other things are worth a second look: our network segmentation control was written with traditional firewalls in mind, but by looking at what needed to be controlled we found more modern and streamlined solutions.\n\nI'll walk you through some of the mechanisms we use and the thought process behind them so you can pick up some tips to apply. The routines must be followed, but they don't have to be complicated. Some requirements can be satisfied in surprising ways, and there's a good chance you can do it with software you already have.",
+  "speakers": [
+    {
+      "slug": "anders-sveen",
+      "name": "Anders Sveen",
+      "role_company": "Advisor, Developer, Mentor and speaker"
+    }
+  ],
+  "session_url": "https://gotocph.com/2026/sessions/4176/compliant-not-slow-shipping-every-day-in-a-highly-regulated-environment",
+  "video_url": null,
+  "other_links": [],
+  "slides_url": null,
+  "slides_file": null
+}

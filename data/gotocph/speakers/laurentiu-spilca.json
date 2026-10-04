@@ -1,0 +1,17 @@
+{
+  "slug": "laurentiu-spilca",
+  "name": "Laurentiu Spilcă",
+  "role_company": "Security fundamentals for developers",
+  "role": null,
+  "company": null,
+  "bio": null,
+  "email": null,
+  "photo_url": null,
+  "links": {},
+  "profiles": {
+    "2026": "https://gotocph.com/2026/speakers/4277"
+  },
+  "talks": [
+    "2026/security-is-no-longer-for-security-teams-its-for-everyone"
+  ]
+}

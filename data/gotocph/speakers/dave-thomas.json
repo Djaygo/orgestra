@@ -1,0 +1,17 @@
+{
+  "slug": "dave-thomas",
+  "name": "Dave Thomas",
+  "role_company": "Pragmatic programming in the ages of AI",
+  "role": null,
+  "company": null,
+  "bio": null,
+  "email": null,
+  "photo_url": null,
+  "links": {},
+  "profiles": {
+    "2026": "https://gotocph.com/2026/speakers/4275"
+  },
+  "talks": [
+    "2026/plus-c-est-la-meme-chose"
+  ]
+}

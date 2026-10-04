@@ -1,0 +1,17 @@
+{
+  "slug": "daniel-lutgehetmann",
+  "name": "Daniel Lütgehetmann",
+  "role_company": "Leading AI Research & Innovation",
+  "role": null,
+  "company": null,
+  "bio": null,
+  "email": null,
+  "photo_url": null,
+  "links": {},
+  "profiles": {
+    "2025": "https://gotocph.com/2025/speakers/4171"
+  },
+  "talks": [
+    "2025/from-neural-networks-to-digital-brains-the-next-leap-in-ai"
+  ]
+}

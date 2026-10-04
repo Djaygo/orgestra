@@ -1,0 +1,33 @@
+{
+  "slug": "beyond-chat-bringing-models-to-the-canvas",
+  "organization": "gotocph",
+  "year": 2025,
+  "session_id": 3773,
+  "extracted": true,
+  "title": "Beyond Chat: Bringing Models to The Canvas",
+  "section": "Keynote",
+  "format": "Keynote",
+  "track": null,
+  "tags": [
+    "Keynote",
+    "artificial intelligence (AI)",
+    "programming"
+  ],
+  "day": "Friday Oct 3",
+  "start": "13:00",
+  "end": "14:00",
+  "room": "TAP1, Main Stage",
+  "abstract": "Whenever a new technology appears, our first instinct as developers is to offer \"text\" as the primary method of interaction. This has happened throughout computing history, with the computer terminal, with early smartphones, and now it's happening again with AI.\n\nAt tldraw, we've been working on moving AI interaction away from the chat-based interface, towards a richer canvas environment. It hasn't been easy! I'll show you all the challenges we've faced, and how we're currently overcoming them. Some of the solutions have been surprising.",
+  "speakers": [
+    {
+      "slug": "lu-wilson",
+      "name": "Lu Wilson",
+      "role_company": "Software Engineer at tldraw"
+    }
+  ],
+  "session_url": "https://gotocph.com/2025/sessions/3773/beyond-chat-bringing-models-to-the-canvas",
+  "video_url": "https://www.youtube-nocookie.com/embed/pSTOENRgt7g",
+  "other_links": [],
+  "slides_url": null,
+  "slides_file": null
+}

@@ -1,0 +1,32 @@
+{
+  "slug": "connection-is-everything",
+  "organization": "gotocph",
+  "year": 2025,
+  "session_id": 3777,
+  "extracted": true,
+  "title": "Connection is Everything",
+  "section": "Keynote",
+  "format": "Keynote",
+  "track": null,
+  "tags": [
+    "Keynote",
+    "user experience"
+  ],
+  "day": "Wednesday Oct 1",
+  "start": "09:00",
+  "end": "10:00",
+  "room": "TAP1, Main Stage",
+  "abstract": "In an ever increasing digital world, human connection is everything. As AI, quantum computing and robotics converge, our human user experience becomes paramount.\n\nThis performance will explore the nature of connection, discuss the values of the modern consumer, and challenge all to refocus on the essence of experience, rather than software, technology or code.\n\nConnection is Everything.",
+  "speakers": [
+    {
+      "slug": "ken-hughes",
+      "name": "Ken Hughes",
+      "role_company": "The King of Customer Experience"
+    }
+  ],
+  "session_url": "https://gotocph.com/2025/sessions/3777/connection-is-everything",
+  "video_url": "https://www.youtube-nocookie.com/embed/tHf-BFM2CNM",
+  "other_links": [],
+  "slides_url": null,
+  "slides_file": null
+}

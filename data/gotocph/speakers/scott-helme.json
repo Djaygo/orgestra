@@ -1,0 +1,17 @@
+{
+  "slug": "scott-helme",
+  "name": "Scott Helme",
+  "role_company": "Security from the attacker's perspective",
+  "role": null,
+  "company": null,
+  "bio": null,
+  "email": null,
+  "photo_url": null,
+  "links": {},
+  "profiles": {
+    "2026": "https://gotocph.com/2026/speakers/4289"
+  },
+  "talks": [
+    "2026/everything-is-cyber-broken"
+  ]
+}

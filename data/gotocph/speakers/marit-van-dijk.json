@@ -1,0 +1,17 @@
+{
+  "slug": "marit-van-dijk",
+  "name": "Marit van Dijk",
+  "role_company": "Senior Developer Advocate at JetBrains | Java Champion",
+  "role": null,
+  "company": null,
+  "bio": null,
+  "email": null,
+  "photo_url": null,
+  "links": {},
+  "profiles": {
+    "2026": "https://gotocph.com/2026/speakers/4331"
+  },
+  "talks": [
+    "2026/learning-modern-java-the-playful-way"
+  ]
+}

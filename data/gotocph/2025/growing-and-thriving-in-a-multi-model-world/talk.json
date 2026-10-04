@@ -1,0 +1,31 @@
+{
+  "slug": "growing-and-thriving-in-a-multi-model-world",
+  "organization": "gotocph",
+  "year": 2025,
+  "session_id": 3866,
+  "extracted": true,
+  "title": "Growing and Thriving in a Multi-model World",
+  "section": "Conference Talk",
+  "format": null,
+  "track": null,
+  "tags": [],
+  "day": "Thursday Oct 2",
+  "start": "14:15",
+  "end": "15:00",
+  "room": "TAP1, Main Stage",
+  "abstract": "Without a constant design effort, models will tend to rot, irresistibly attracted to the Big Ball of Mud.\n\nPartitioning the model early on could be the solution, but many forces are conspiring in the wrong direction.\n\nHow can we establish solid foundations for our software to avoid becoming bloated and unmanageable?\n\nHow can we detect the signals we need to split a model? How and where should we split?\n\nIn this talk, we'll see how practices for model decomposition need to consider the whole sociotechnical stack, including architecture, domain, organisation, teams and human brain, and how different strategies will fit in at different moments of our software evolution.",
+  "speakers": [
+    {
+      "slug": "alberto-brandolini",
+      "name": "Alberto Brandolini",
+      "role_company": "Creator of EventStorming"
+    }
+  ],
+  "session_url": "https://gotocph.com/2025/sessions/3866/growing-and-thriving-in-a-multi-model-world",
+  "video_url": "https://www.youtube-nocookie.com/embed/D6hXy75DO1o",
+  "other_links": [
+    "https://gotocph.com/2025/sessions/3866/slides"
+  ],
+  "slides_url": null,
+  "slides_file": null
+}

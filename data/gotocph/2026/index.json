@@ -1,0 +1,742 @@
+{
+  "year": 2026,
+  "talks": [
+    {
+      "slug": "building-composable-platforms-patterns-practices-and-pratfalls",
+      "session_id": 3973,
+      "title": null,
+      "speakers": [],
+      "extracted": false,
+      "slides_url": null,
+      "slides_file": null
+    },
+    {
+      "slug": "what-if-your-biggest-technical-debt-is-social",
+      "session_id": 3974,
+      "title": "What If Your Biggest Technical Debt Is Social?",
+      "speakers": [
+        "Xin Yao"
+      ],
+      "extracted": true,
+      "slides_url": "__PENDING__",
+      "slides_file": null
+    },
+    {
+      "slug": "playing-the-long-game-a-hobby-project-for-2029",
+      "session_id": 3975,
+      "title": "Playing The Long Game: A Hobby Project For 2029",
+      "speakers": [
+        "Jon Skeet"
+      ],
+      "extracted": true,
+      "slides_url": "__PENDING__",
+      "slides_file": null
+    },
+    {
+      "slug": "security-is-no-longer-for-security-teams-its-for-everyone",
+      "session_id": 3976,
+      "title": "Security Is No Longer For Security Teams. It's For Everyone",
+      "speakers": [
+        "Laurentiu Spilcă"
+      ],
+      "extracted": true,
+      "slides_url": "__PENDING__",
+      "slides_file": null
+    },
+    {
+      "slug": "keeping-humans-in-the-loop-with-ai-coding-agents",
+      "session_id": 3977,
+      "title": "Keeping Humans In The Loop With AI Coding Agents",
+      "speakers": [
+        "Gojko Adzic"
+      ],
+      "extracted": true,
+      "slides_url": "__PENDING__",
+      "slides_file": null
+    },
+    {
+      "slug": "generating-test-inputs-and-interactions-with-the-fandango-fuzzer",
+      "session_id": 3978,
+      "title": "Generating Test Inputs and Interactions with the Fandango Fuzzer",
+      "speakers": [
+        "Andreas Zeller"
+      ],
+      "extracted": true,
+      "slides_url": "__PENDING__",
+      "slides_file": null
+    },
+    {
+      "slug": "ai-friendly-code-the-missing-link-for-speed-with-quality",
+      "session_id": 3981,
+      "title": "AI-Friendly Code: The Missing Link for Speed with Quality",
+      "speakers": [
+        "Adam Tornhill"
+      ],
+      "extracted": true,
+      "slides_url": null,
+      "slides_file": null
+    },
+    {
+      "slug": "the-pub-time-parliament",
+      "session_id": 3984,
+      "title": null,
+      "speakers": [],
+      "extracted": false,
+      "slides_url": null,
+      "slides_file": null
+    },
+    {
+      "slug": "spotting-digital-waste-in-code-gives-you-energy",
+      "session_id": 3985,
+      "title": null,
+      "speakers": [],
+      "extracted": false,
+      "slides_url": null,
+      "slides_file": null
+    },
+    {
+      "slug": "biocomputers-when-living-neurons-become-hardware",
+      "session_id": 3988,
+      "title": null,
+      "speakers": [],
+      "extracted": false,
+      "slides_url": null,
+      "slides_file": null
+    },
+    {
+      "slug": "functional-programming-for-parallel-and-concurrent-systems-theory-and-practice",
+      "session_id": 3992,
+      "title": "Functional Programming for Parallel and Concurrent Systems - Theory and Practice",
+      "speakers": [
+        "Gabriele Keller"
+      ],
+      "extracted": true,
+      "slides_url": "__PENDING__",
+      "slides_file": null
+    },
+    {
+      "slug": "all-about-dependencies",
+      "session_id": 3995,
+      "title": null,
+      "speakers": [],
+      "extracted": false,
+      "slides_url": null,
+      "slides_file": null
+    },
+    {
+      "slug": "rethinking-observability-as-a-platform-product",
+      "session_id": 3999,
+      "title": "Rethinking Observability as a Platform Product",
+      "speakers": [
+        "Kasper Borg Nissen"
+      ],
+      "extracted": true,
+      "slides_url": "https://files.gotocon.com/uploads/slides/conference_135/3999/original/GOTO%20Copenhagen_%20Rethinking%20Observability%20as%20a%20Platform%20Product.pdf",
+      "slides_file": null
+    },
+    {
+      "slug": "learning-modern-java-the-playful-way",
+      "session_id": 4000,
+      "title": "Learning Modern Java The Playful Way",
+      "speakers": [
+        "Marit van Dijk",
+        "Piotr Przybyl"
+      ],
+      "extracted": true,
+      "slides_url": "https://files.gotocon.com/uploads/slides/conference_135/4000/original/Learning%20modern%20Java%20%20the%20playful%20way%20-%20GOTO%20Copenhagen.pdf",
+      "slides_file": null
+    },
+    {
+      "slug": "to-rag-or-not-to-rag",
+      "session_id": 4001,
+      "title": "To RAG Or Not To RAG",
+      "speakers": [
+        "Piotr Przybyl"
+      ],
+      "extracted": true,
+      "slides_url": null,
+      "slides_file": null
+    },
+    {
+      "slug": "ai-engineering-from-first-llm-call-to-multi-agent-chaos",
+      "session_id": 4005,
+      "title": null,
+      "speakers": [],
+      "extracted": false,
+      "slides_url": null,
+      "slides_file": null
+    },
+    {
+      "slug": "ai-as-an-amplifier-state-of-ai-assisted-software-development",
+      "session_id": 4007,
+      "title": "AI as an Amplifier: State of AI-assisted Software Development",
+      "speakers": [
+        "Nathen Harvey"
+      ],
+      "extracted": true,
+      "slides_url": "https://files.gotocon.com/uploads/slides/conference_135/4007/original/Nathen%20Harvey%20GOTO%20-%202026.pdf",
+      "slides_file": null
+    },
+    {
+      "slug": "a-brief-history-of-artificial-intelligence",
+      "session_id": 4010,
+      "title": "A Brief History of Artificial Intelligence",
+      "speakers": [
+        "Tim Berglund"
+      ],
+      "extracted": true,
+      "slides_url": null,
+      "slides_file": null
+    },
+    {
+      "slug": "when-every-flops-counts-gpu-sharing-strategies-at-cern",
+      "session_id": 4032,
+      "title": "When every FLOPS counts: GPU Sharing Strategies at CERN",
+      "speakers": [
+        "Diana Gaponcic"
+      ],
+      "extracted": true,
+      "slides_url": null,
+      "slides_file": null
+    },
+    {
+      "slug": "engineer-confidence-with-reliable-training-programs",
+      "session_id": 4033,
+      "title": "Engineer Confidence with Reliable Training Programs",
+      "speakers": [
+        "Jennifer Petoff"
+      ],
+      "extracted": true,
+      "slides_url": "https://files.gotocon.com/uploads/slides/conference_135/4033/original/%5BJennifer%20Petoff%20GOTO%20Copenhagen%202026%5D%20Engineer%20Confidence%20with%20Reliable%20Training%20Programs.pdf",
+      "slides_file": null
+    },
+    {
+      "slug": "dark-modules-cobots-and-architecting-for-ai",
+      "session_id": 4042,
+      "title": "Dark modules, Cobots, and Architecting for AI",
+      "speakers": [
+        "Sam Newman"
+      ],
+      "extracted": true,
+      "slides_url": null,
+      "slides_file": null
+    },
+    {
+      "slug": "green-ai-making-machine-learning-environmentally-sustainable",
+      "session_id": 4118,
+      "title": null,
+      "speakers": [],
+      "extracted": false,
+      "slides_url": null,
+      "slides_file": null
+    },
+    {
+      "slug": "watch-your-language",
+      "session_id": 4124,
+      "title": null,
+      "speakers": [],
+      "extracted": false,
+      "slides_url": null,
+      "slides_file": null
+    },
+    {
+      "slug": "grokking-the-brain-what-ai-reveals-about-how-you-really-learn",
+      "session_id": 4125,
+      "title": "Grokking the Brain: What AI Reveals About How You Really Learn",
+      "speakers": [
+        "Barbara Oakley"
+      ],
+      "extracted": true,
+      "slides_url": null,
+      "slides_file": null
+    },
+    {
+      "slug": "the-philosophy-of-software-architecture",
+      "session_id": 4139,
+      "title": "The Philosophy of Software Architecture",
+      "speakers": [
+        "Barry O'Reilly"
+      ],
+      "extracted": true,
+      "slides_url": null,
+      "slides_file": null
+    },
+    {
+      "slug": "basics-designs-and-how-we-got-them-wrong",
+      "session_id": 4151,
+      "title": "Basics Designs and How We Got Them Wrong",
+      "speakers": [
+        "Adam Furmanek"
+      ],
+      "extracted": true,
+      "slides_url": "__PENDING__",
+      "slides_file": null
+    },
+    {
+      "slug": "jam-oriented-programming-bringing-improvizational-jazz-to-engineering",
+      "session_id": 4153,
+      "title": "Jam-oriented programming: Bringing improvizational jazz to engineering",
+      "speakers": [
+        "Lu Wilson"
+      ],
+      "extracted": true,
+      "slides_url": "https://files.gotocon.com/uploads/slides/conference_135/4153/original/Jam-oriented%20programming.pdf",
+      "slides_file": null
+    },
+    {
+      "slug": "am-i-holding-this-right",
+      "session_id": 4154,
+      "title": "Am I holding this right?",
+      "speakers": [
+        "Daniel Terhorst-North"
+      ],
+      "extracted": true,
+      "slides_url": null,
+      "slides_file": null
+    },
+    {
+      "slug": "the-validation-first-loop-how-to-ship-production-code-with-ai-coding-assistants",
+      "session_id": 4155,
+      "title": "The Validation-First Loop: How to Ship Production Code with AI Coding Assistants",
+      "speakers": [
+        "Cole Medin"
+      ],
+      "extracted": true,
+      "slides_url": null,
+      "slides_file": null
+    },
+    {
+      "slug": "plus-c-est-la-meme-chose",
+      "session_id": 4156,
+      "title": "Plus c'est la même chose",
+      "speakers": [
+        "Dave Thomas"
+      ],
+      "extracted": true,
+      "slides_url": "__PENDING__",
+      "slides_file": null
+    },
+    {
+      "slug": "group-intelligence-what-science-says-about-the-intelligence-of-groups",
+      "session_id": 4157,
+      "title": "Group Intelligence: What Science Says About the Intelligence of Groups",
+      "speakers": [
+        "Linda Rising"
+      ],
+      "extracted": true,
+      "slides_url": null,
+      "slides_file": null
+    },
+    {
+      "slug": "everything-is-cyber-broken",
+      "session_id": 4159,
+      "title": "Everything is Cyber-Broken",
+      "speakers": [
+        "Troy Hunt",
+        "Scott Helme"
+      ],
+      "extracted": true,
+      "slides_url": null,
+      "slides_file": null
+    },
+    {
+      "slug": "making-the-impossible-possible-ten-years-of-flexible-paxos",
+      "session_id": 4160,
+      "title": "Making the Impossible Possible: Ten Years of Flexible Paxos",
+      "speakers": [
+        "Heidi Howard"
+      ],
+      "extracted": true,
+      "slides_url": null,
+      "slides_file": null
+    },
+    {
+      "slug": "what-are-your-experiences-with-ai-supported-development",
+      "session_id": 4161,
+      "title": "What are YOUR experiences with AI supported development?",
+      "speakers": [
+        "Cole Medin",
+        "Gojko Adzic",
+        "Marie-Alice Blete",
+        "Adam Tornhill"
+      ],
+      "extracted": true,
+      "slides_url": null,
+      "slides_file": null
+    },
+    {
+      "slug": "among-the-agents-what-its-like-inside-a-company-staffed-almost-entirely-by-ai",
+      "session_id": 4164,
+      "title": "Among the Agents: What it's like inside a company staffed (almost) entirely by AI",
+      "speakers": [
+        "Evan Ratliff"
+      ],
+      "extracted": true,
+      "slides_url": null,
+      "slides_file": null
+    },
+    {
+      "slug": "climbing-inside-the-machine",
+      "session_id": 4166,
+      "title": "Climbing inside the machine",
+      "speakers": [
+        "Linda Liukas"
+      ],
+      "extracted": true,
+      "slides_url": null,
+      "slides_file": null
+    },
+    {
+      "slug": "nobody-reads-the-code-anymore-quality-engineering-for-the-software-factory",
+      "session_id": 4167,
+      "title": null,
+      "speakers": [],
+      "extracted": false,
+      "slides_url": null,
+      "slides_file": null
+    },
+    {
+      "slug": "software-is-not-soft",
+      "session_id": 4169,
+      "title": null,
+      "speakers": [],
+      "extracted": false,
+      "slides_url": null,
+      "slides_file": null
+    },
+    {
+      "slug": "the-augmented-forest",
+      "session_id": 4170,
+      "title": "The Augmented Forest",
+      "speakers": [
+        "Kent Beck"
+      ],
+      "extracted": true,
+      "slides_url": null,
+      "slides_file": null
+    },
+    {
+      "slug": "the-making-of-a-decision",
+      "session_id": 4172,
+      "title": null,
+      "speakers": [],
+      "extracted": false,
+      "slides_url": null,
+      "slides_file": null
+    },
+    {
+      "slug": "your-teams-aren-t-the-problem-your-system-is-why-most-software-leaders-optimise",
+      "session_id": 4173,
+      "title": null,
+      "speakers": [],
+      "extracted": false,
+      "slides_url": null,
+      "slides_file": null
+    },
+    {
+      "slug": "compliant-not-slow-shipping-every-day-in-a-highly-regulated-environment",
+      "session_id": 4176,
+      "title": "Compliant, Not Slow: Shipping Every Day in a Highly Regulated Environment",
+      "speakers": [
+        "Anders Sveen"
+      ],
+      "extracted": true,
+      "slides_url": null,
+      "slides_file": null
+    },
+    {
+      "slug": "specification-and-verification-of-robust-open-systems-capabilities-effects-and-t",
+      "session_id": 4182,
+      "title": "Specification and Verification of Robust Open Systems: Capabilities, Effects, and Trusted Mediation",
+      "speakers": [
+        "Sophia Drossopoulou"
+      ],
+      "extracted": true,
+      "slides_url": null,
+      "slides_file": null
+    },
+    {
+      "slug": "lightning-talks-separating-protocol-logic-from-i-o-for-deterministic-testing",
+      "session_id": 4183,
+      "title": null,
+      "speakers": [],
+      "extracted": false,
+      "slides_url": null,
+      "slides_file": null
+    },
+    {
+      "slug": "lightning-talks-from-unit-tests-to-synthetic-canaries-implementation-agnostic-te",
+      "session_id": 4184,
+      "title": null,
+      "speakers": [],
+      "extracted": false,
+      "slides_url": null,
+      "slides_file": null
+    },
+    {
+      "slug": "beyond-the-scanner-security-infrastructure-for-ai-generated-software",
+      "session_id": 4185,
+      "title": "Beyond the Scanner: Security Infrastructure for AI-Generated Software",
+      "speakers": [
+        "Clément Pascutto",
+        "Samuel Kelemen"
+      ],
+      "extracted": true,
+      "slides_url": null,
+      "slides_file": null
+    },
+    {
+      "slug": "designing-and-building-for-public-service-users",
+      "session_id": 4212,
+      "title": null,
+      "speakers": [],
+      "extracted": false,
+      "slides_url": null,
+      "slides_file": null
+    },
+    {
+      "slug": "what-we-should-have-learned-from-lord-of-the-rings",
+      "session_id": 4213,
+      "title": null,
+      "speakers": [],
+      "extracted": false,
+      "slides_url": null,
+      "slides_file": null
+    },
+    {
+      "slug": "friday-standup-what-exactly-will-happen-you-ll-have-to-show-up-and-find-out",
+      "session_id": 4214,
+      "title": null,
+      "speakers": [],
+      "extracted": false,
+      "slides_url": null,
+      "slides_file": null
+    },
+    {
+      "slug": "building-a-reliable-database-protocol-with-ai-formal-methods-and-a-simulation-fr",
+      "session_id": 4215,
+      "title": null,
+      "speakers": [],
+      "extracted": false,
+      "slides_url": null,
+      "slides_file": null
+    },
+    {
+      "slug": "the-birth-and-death-of-a-jam",
+      "session_id": 4217,
+      "title": null,
+      "speakers": [],
+      "extracted": false,
+      "slides_url": null,
+      "slides_file": null
+    },
+    {
+      "slug": "how-do-you-define-responsible-software",
+      "session_id": 4218,
+      "title": null,
+      "speakers": [],
+      "extracted": false,
+      "slides_url": null,
+      "slides_file": null
+    },
+    {
+      "slug": "don-t-become-case-15-why-ai-projects-fail-even-when-the-systems-are-right",
+      "session_id": 4219,
+      "title": null,
+      "speakers": [],
+      "extracted": false,
+      "slides_url": null,
+      "slides_file": null
+    },
+    {
+      "slug": "garbage-context-garbage-code",
+      "session_id": 4220,
+      "title": "Garbage context, garbage code",
+      "speakers": [
+        "Luca Mezzalira"
+      ],
+      "extracted": true,
+      "slides_url": null,
+      "slides_file": null
+    },
+    {
+      "slug": "the-smoothest-reorg-i-ve-ever-seen-lessons-in-collaborative-org-design",
+      "session_id": 4221,
+      "title": null,
+      "speakers": [],
+      "extracted": false,
+      "slides_url": null,
+      "slides_file": null
+    },
+    {
+      "slug": "then-or-now-e2-80-94-velocity-through-rigour",
+      "session_id": 4222,
+      "title": null,
+      "speakers": [],
+      "extracted": false,
+      "slides_url": null,
+      "slides_file": null
+    },
+    {
+      "slug": "watts-matter-the-energy-cost-of-software-architecture",
+      "session_id": 4223,
+      "title": null,
+      "speakers": [],
+      "extracted": false,
+      "slides_url": null,
+      "slides_file": null
+    },
+    {
+      "slug": "unscripted-stuck-the-neuroscience-of-stepping-away",
+      "session_id": 4224,
+      "title": "Unscripted: Stuck? The Neuroscience of Stepping Away.",
+      "speakers": [
+        "Barbara Oakley",
+        "Evan Ratliff"
+      ],
+      "extracted": true,
+      "slides_url": "__PENDING__",
+      "slides_file": null
+    },
+    {
+      "slug": "unscripted-we-don-t-understand-our-history",
+      "session_id": 4225,
+      "title": "Unscripted: We Don't Understand Our History",
+      "speakers": [
+        "Barry O'Reilly",
+        "Kevlin Henney"
+      ],
+      "extracted": true,
+      "slides_url": null,
+      "slides_file": null
+    },
+    {
+      "slug": "unscripted-which-part-of-this-moment-will-look-obvious-in-twenty-years-and-which",
+      "session_id": 4226,
+      "title": "Unscripted: Which part of this moment will look obvious in twenty years and which will look absurd?",
+      "speakers": [
+        "Evan Ratliff",
+        "Tim Berglund"
+      ],
+      "extracted": true,
+      "slides_url": "__PENDING__",
+      "slides_file": null
+    },
+    {
+      "slug": "unscripted-do-groups-think-better-than-the-people-in-them-or-worse",
+      "session_id": 4227,
+      "title": null,
+      "speakers": [],
+      "extracted": false,
+      "slides_url": null,
+      "slides_file": null
+    },
+    {
+      "slug": "ama-with-wilco-burgraaf",
+      "session_id": 4228,
+      "title": null,
+      "speakers": [],
+      "extracted": false,
+      "slides_url": null,
+      "slides_file": null
+    },
+    {
+      "slug": "ama-with-troy-hunt",
+      "session_id": 4229,
+      "title": "AMA with Troy Hunt",
+      "speakers": [
+        "Troy Hunt"
+      ],
+      "extracted": true,
+      "slides_url": null,
+      "slides_file": null
+    },
+    {
+      "slug": "unscripted-what-do-children-understand-about-computers-that-adults-have-forgotte",
+      "session_id": 4230,
+      "title": "Unscripted: What do children understand about computers that adults have forgotten?",
+      "speakers": [
+        "Barbara Oakley",
+        "Linda Liukas"
+      ],
+      "extracted": true,
+      "slides_url": "__PENDING__",
+      "slides_file": null
+    },
+    {
+      "slug": "unscripted-domain-driven-design-vs-spec-driven-development-are-they-melting-into",
+      "session_id": 4231,
+      "title": "Unscripted: Domain-Driven Design vs. Spec-Driven Development, are they melting into the same coin in the age of AI?",
+      "speakers": [
+        "Xin Yao",
+        "Alberto Brandolini"
+      ],
+      "extracted": true,
+      "slides_url": "__PENDING__",
+      "slides_file": null
+    },
+    {
+      "slug": "the-agentic-automation-revolution",
+      "session_id": 4232,
+      "title": null,
+      "speakers": [],
+      "extracted": false,
+      "slides_url": null,
+      "slides_file": null
+    },
+    {
+      "slug": "unscripted-overengineering-isn-t-what-you-think-it-is",
+      "session_id": 4234,
+      "title": "Unscripted: Overengineering Isn't What You Think It Is",
+      "speakers": [
+        "Barry O'Reilly",
+        "Andrea Magnorsky"
+      ],
+      "extracted": true,
+      "slides_url": null,
+      "slides_file": null
+    },
+    {
+      "slug": "unscripted-three-java-champions-walk-into-a-room",
+      "session_id": 4235,
+      "title": null,
+      "speakers": [],
+      "extracted": false,
+      "slides_url": null,
+      "slides_file": null
+    },
+    {
+      "slug": "unscripted-whose-job-is-security-when-nobody-wrote-the-code",
+      "session_id": 4236,
+      "title": null,
+      "speakers": [],
+      "extracted": false,
+      "slides_url": null,
+      "slides_file": null
+    },
+    {
+      "slug": "unscripted-are-you-measuring-the-right-thing",
+      "session_id": 4242,
+      "title": "Unscripted: Are you measuring the right thing?",
+      "speakers": [
+        "Nathen Harvey",
+        "Simon White"
+      ],
+      "extracted": true,
+      "slides_url": null,
+      "slides_file": null
+    },
+    {
+      "slug": "unscripted-what-can-software-learn-from-improvisation",
+      "session_id": 4243,
+      "title": "Unscripted: What can software learn from improvisation?",
+      "speakers": [
+        "Kent Beck",
+        "Charles Humble"
+      ],
+      "extracted": true,
+      "slides_url": null,
+      "slides_file": null
+    }
+  ]
+}

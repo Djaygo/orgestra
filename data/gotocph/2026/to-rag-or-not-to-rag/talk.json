@@ -1,0 +1,33 @@
+{
+  "slug": "to-rag-or-not-to-rag",
+  "organization": "gotocph",
+  "year": 2026,
+  "session_id": 4001,
+  "extracted": true,
+  "title": "To RAG Or Not To RAG",
+  "section": "Conference Talk",
+  "format": "Code walkthrough with editing, practical implementation discussion, real-world engineering considerations",
+  "track": null,
+  "tags": [
+    "architecture",
+    "programming",
+    "AI systems"
+  ],
+  "day": "Friday Oct 2",
+  "start": "10:15",
+  "end": "11:00",
+  "room": "TAP1, Stage 2",
+  "abstract": "Artificial intelligence is everywhere right now, and one of the most frequently recommended patterns for building AI-powered applications is Retrieval-Augmented Generation (RAG).\n\nBut what does that actually mean in practice? How do you implement it? What does it require? And perhaps most importantly, do you really need it?\n\nIn this session, Piotr explores the practical side of Retrieval-Augmented Generation.\n\nInstead of treating RAG as a buzzword or default architecture, the talk examines when it is useful, what it takes to implement it, and when it may not be the right solution.\n\nThrough working code examples, you'll see how RAG systems are built and what trade-offs they introduce.",
+  "speakers": [
+    {
+      "slug": "piotr-przybyl",
+      "name": "Piotr Przybyl",
+      "role_company": "Software Gardener"
+    }
+  ],
+  "session_url": "https://gotocph.com/2026/sessions/4001/to-rag-or-not-to-rag",
+  "video_url": null,
+  "other_links": [],
+  "slides_url": null,
+  "slides_file": null
+}

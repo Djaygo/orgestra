@@ -1,0 +1,29 @@
+{
+  "slug": "from-human-promise-to-digital-twin-predicting-personality-with-ai-a-case-story",
+  "organization": "gotocph",
+  "year": 2025,
+  "session_id": 3774,
+  "extracted": true,
+  "title": "From Human Promise to Digital Twin: Predicting Personality with AI. A Case Story",
+  "section": "Conference Talk",
+  "format": null,
+  "track": null,
+  "tags": [],
+  "day": "Thursday Oct 2",
+  "start": "10:15",
+  "end": "11:00",
+  "room": "TAP1, Room 2",
+  "abstract": "Imagine this: You receive a death sentence—and decide to create your own digital avatar to remain a part of the future. To help your wife and son cope with their grief. It might sound like the plot of a Hollywood movie, but this is a real-life case story.\n\nWhen Stephan Martinussen and his wife Katrine asked me to help create a digital version of Stephan before he died, I thought it was impossible – and perhaps even wrong. But I began the journey of creating ai-Stephan in close collaboration with him and his wife.\n\nThe early attempts failed. The breakthrough came when we shifted focus: from storing memories to predicting choices, from information to personality. That shift created not just ai-Stephan, but a new AI architecture. This project began with grief, but it ended with a vision for the future of AI.\n\nToday, the same principles are behind what we call Extra Mind: AI that is proactive, personal, and shaped by who you are.\n\nIn this talk, I'll share the story of ai-Stephan — the technical challenges and the ethical dilemmas we face.",
+  "speakers": [
+    {
+      "slug": "anders-hasle-nielsen",
+      "name": "Anders Hasle Nielsen",
+      "role_company": "Takes human avatars to another level"
+    }
+  ],
+  "session_url": "https://gotocph.com/2025/sessions/3774/from-human-promise-to-digital-twin-predicting-personality-with-ai-a-case-story",
+  "video_url": "https://player.vimeo.com/video/1125840559",
+  "other_links": [],
+  "slides_url": null,
+  "slides_file": null
+}

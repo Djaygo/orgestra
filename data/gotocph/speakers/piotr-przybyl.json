@@ -1,0 +1,18 @@
+{
+  "slug": "piotr-przybyl",
+  "name": "Piotr Przybyl",
+  "role_company": "Software Gardener",
+  "role": null,
+  "company": null,
+  "bio": null,
+  "email": null,
+  "photo_url": null,
+  "links": {},
+  "profiles": {
+    "2026": "https://gotocph.com/2026/speakers/4332"
+  },
+  "talks": [
+    "2026/learning-modern-java-the-playful-way",
+    "2026/to-rag-or-not-to-rag"
+  ]
+}

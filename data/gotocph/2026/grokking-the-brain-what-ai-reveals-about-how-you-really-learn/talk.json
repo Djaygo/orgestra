@@ -1,0 +1,31 @@
+{
+  "slug": "grokking-the-brain-what-ai-reveals-about-how-you-really-learn",
+  "organization": "gotocph",
+  "year": 2026,
+  "session_id": 4125,
+  "extracted": true,
+  "title": "Grokking the Brain: What AI Reveals About How You Really Learn",
+  "section": "Keynote",
+  "format": "Keynote",
+  "track": null,
+  "tags": [
+    "Keynote"
+  ],
+  "day": "Wednesday Sep 30",
+  "start": "09:00",
+  "end": "10:00",
+  "room": "TAP1, Main Stage",
+  "abstract": "Train an AI model long past the point where it has memorized its examples, and something strange happens — it stops memorizing and suddenly \"groks\" the pattern beneath them. That hard-won pattern can then be \"distilled\" into a smaller, faster model that runs it with ease. These are ideas from AI — but they may give us our clearest view yet of the human brain. We grok a hard skill slowly, with conscious effort, then distill it into a fast, automatic system that needs no effort at all. That is what expertise is.\n\nThe same \"machinery\" has a quieter side. A model is aligned by its training data — and in an analogous fashion, so are humans. Give me a child to the age of seven, the old saying goes, and I'll show you the adult. But adults are aligned too, usually without knowing it — and a brain aligned a little too well can harden into a mental fortress, deflecting new ideas.\n\nCuriosity provides a way out. Dopamine—reward-based learning—fuels the brain's ability to rewire — it helps us build new links, keeps the fortress gate open, and keeps hard-won knowledge from setting into a wall. We'll look at what all this means for how you learn, how you use AI, and how you keep thinking for yourself in an age that makes it easy not to.",
+  "speakers": [
+    {
+      "slug": "barbara-oakley",
+      "name": "Barbara Oakley",
+      "role_company": "Professor of Engineering at Oakland University"
+    }
+  ],
+  "session_url": "https://gotocph.com/2026/sessions/4125/grokking-the-brain-what-ai-reveals-about-how-you-really-learn",
+  "video_url": null,
+  "other_links": [],
+  "slides_url": null,
+  "slides_file": null
+}

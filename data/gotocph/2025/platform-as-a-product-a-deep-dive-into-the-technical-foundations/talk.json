@@ -1,0 +1,33 @@
+{
+  "slug": "platform-as-a-product-a-deep-dive-into-the-technical-foundations",
+  "organization": "gotocph",
+  "year": 2025,
+  "session_id": 3732,
+  "extracted": true,
+  "title": "Platform as a Product: A Deep Dive into the Technical Foundations",
+  "section": "Conference Talk",
+  "format": null,
+  "track": null,
+  "tags": [
+    "platform engineering",
+    "observability",
+    "software testing"
+  ],
+  "day": "Friday Oct 3",
+  "start": "10:15",
+  "end": "11:00",
+  "room": "TAP1, Room 1",
+  "abstract": "There's no shortage of advice urging platform teams to treat their internal platform like a product, emphasising user empathy, prioritising value over requests, and building trust through consistent care. These are essential practices, but most conversations lean heavily into the socio side of the socio-technical balance.\n\nThis talk shifts the spotlight to the technical side of platform-as-a-product. Abby will explore what Developer Experience (DevEx) looks like for platform builders themselves, and the often-overlooked technical foundations that make great internal platforms possible.\n\nTopics will include:\n\n- What observability and testability look like in a platform\n- How architectural principles (like service design and interface boundaries) shape platform resilience and usability\n- The tooling and feedback loops platform teams need to stay effective\n\nIf you're building internal tools and infrastructure, this talk is for you. Let's talk about improving your developer experience.",
+  "speakers": [
+    {
+      "slug": "abby-bangser",
+      "name": "Abby Bangser",
+      "role_company": "Platform Engineering Insights from Syntasso delivering Kratix"
+    }
+  ],
+  "session_url": "https://gotocph.com/2025/sessions/3732/platform-as-a-product-a-deep-dive-into-the-technical-foundations",
+  "video_url": "https://player.vimeo.com/video/1125898697",
+  "other_links": [],
+  "slides_url": "https://files.gotocon.com/uploads/slides/conference_105/3732/original/2025-10_goto_Platform%20as%20a%20Product_%20A%20Deep%20Dive%20into%20the%20Technical%20Foundations_printable.pdf",
+  "slides_file": null
+}

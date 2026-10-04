@@ -1,0 +1,33 @@
+{
+  "slug": "am-i-holding-this-right",
+  "organization": "gotocph",
+  "year": 2026,
+  "session_id": 4154,
+  "extracted": true,
+  "title": "Am I holding this right?",
+  "section": "Conference Talk",
+  "format": null,
+  "track": null,
+  "tags": [
+    "strategy",
+    "quality",
+    "productivity"
+  ],
+  "day": "Wednesday",
+  "start": "14:30",
+  "end": "15:15",
+  "room": "TAP1, Main Stage",
+  "abstract": "Oh great, another session about AI. Your social media feeds are already flooded with agentic this and spec-driven that; one-shot rewrites and everyone-is-a-programmer-now.\n\nI am not using genAI to go faster but to go broader. It lets me offload (significant) side concerns in areas where I am competent but have no wish to become proficient; the time-sink supporting work that I would either hack together badly myself or side-step altogether.\n\nI want to share some models and metaphors that are helping me make sense of this new world: why Ward Cunningham hates printers; how riding a fixie isn't really cycling; why I'm treating Claude as a fantastic researcher and a terrible programmer; how test-first is the new TDD.\n\nI am calling this adjacent engineering. Sometimes these side quests become significant enough to spin off into their own entire product, which I call adjacent discovery.\n\nMy goal is to give you a more nuanced take on generative AI, to help you cut through all the noise and get actual work done.",
+  "speakers": [
+    {
+      "slug": "daniel-terhorst-north",
+      "name": "Daniel Terhorst-North",
+      "role_company": "Originator of Behavior Driven Development (BDD) & Principal at Dan North & Associates"
+    }
+  ],
+  "session_url": "https://gotocph.com/2026/sessions/4154/am-i-holding-this-right",
+  "video_url": null,
+  "other_links": [],
+  "slides_url": null,
+  "slides_file": null
+}

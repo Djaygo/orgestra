@@ -1,0 +1,36 @@
+{
+  "slug": "the-way-the-future-was",
+  "organization": "gotocph",
+  "year": 2025,
+  "session_id": 3839,
+  "extracted": true,
+  "title": "The Way the Future Was",
+  "section": "Keynote",
+  "format": "Keynote",
+  "track": null,
+  "tags": [
+    "Keynote"
+  ],
+  "day": "Thursday Oct 2",
+  "start": "17:15",
+  "end": "18:15",
+  "room": "TAP1, Main Stage",
+  "abstract": "The future is not what it used to be. From the end of the 19th century, through the dawn of the Atomic Age and past the rush of the Space Race, the future was painted as a place of possibility and optimism. But now? Not so much. Our view of the future lies somewhere between neutral and gloomy. Why the change? That question has come up almost every time our Program Committee has met. Back in the good old days the future was always bright. Innovation and craftsmanship was blooming. Failure not a topic.\n\nSo, if the future is not what it used to be, what is it? In this keynote, PC members Kevlin Henney and James Lewis will look at the future seen through the eyes of the past.",
+  "speakers": [
+    {
+      "slug": "james-lewis",
+      "name": "James Lewis",
+      "role_company": "Director at Thoughtworks, Coined the Term Microservices, PC Member"
+    },
+    {
+      "slug": "kevlin-henney",
+      "name": "Kevlin Henney",
+      "role_company": "Speaker, Writer, Author and Trainer, PC Member"
+    }
+  ],
+  "session_url": "https://gotocph.com/2025/sessions/3839/the-way-the-future-was",
+  "video_url": "https://www.youtube-nocookie.com/embed/ZTfnRXtIFEo",
+  "other_links": [],
+  "slides_url": "https://files.gotocon.com/uploads/slides/conference_105/3839/original/The%20Way%20the%20Future%20Was.pdf",
+  "slides_file": null
+}

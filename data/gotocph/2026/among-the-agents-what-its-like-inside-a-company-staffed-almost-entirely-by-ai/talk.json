@@ -1,0 +1,34 @@
+{
+  "slug": "among-the-agents-what-its-like-inside-a-company-staffed-almost-entirely-by-ai",
+  "organization": "gotocph",
+  "year": 2026,
+  "session_id": 4164,
+  "extracted": true,
+  "title": "Among the Agents: What it's like inside a company staffed (almost) entirely by AI",
+  "section": "Keynote",
+  "format": null,
+  "track": null,
+  "tags": [
+    "AI",
+    "AI agents",
+    "workplace",
+    "startup"
+  ],
+  "day": "Wednesday",
+  "start": "17:45",
+  "end": "18:45",
+  "room": "TAP1, Main Stage",
+  "abstract": "Over the past two years, for his podcast Shell Game, journalist Evan Ratliff has been exploring the frontiers of how AI agents are filtering into our lives and work. After creating an agent clone of himself in season 1 and turning it loose on the world, in season 2 he set about building a one-person, agent-led startup with a team of AI executives and employees of his own creation. Together they formed an idea, launched a web site, hired a single human employee, launched a product, and attempted to raise money.\n\nHere he will take you inside the how it feels to work alongside an entirely AI team, what happens when things get out of control, and what it might mean for the future of the workplace.",
+  "speakers": [
+    {
+      "slug": "evan-ratliff",
+      "name": "Evan Ratliff",
+      "role_company": "Building a company run entirely by AI"
+    }
+  ],
+  "session_url": "https://gotocph.com/2026/sessions/4164/among-the-agents-what-its-like-inside-a-company-staffed-almost-entirely-by-ai",
+  "video_url": null,
+  "other_links": [],
+  "slides_url": null,
+  "slides_file": null
+}

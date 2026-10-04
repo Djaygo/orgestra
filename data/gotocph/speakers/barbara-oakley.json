@@ -1,0 +1,19 @@
+{
+  "slug": "barbara-oakley",
+  "name": "Barbara Oakley",
+  "role_company": "Professor of Engineering at Oakland University",
+  "role": null,
+  "company": null,
+  "bio": null,
+  "email": null,
+  "photo_url": null,
+  "links": {},
+  "profiles": {
+    "2026": "https://gotocph.com/2026/speakers/4420"
+  },
+  "talks": [
+    "2026/grokking-the-brain-what-ai-reveals-about-how-you-really-learn",
+    "2026/unscripted-stuck-the-neuroscience-of-stepping-away",
+    "2026/unscripted-what-do-children-understand-about-computers-that-adults-have-forgotte"
+  ]
+}

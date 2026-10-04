@@ -1,0 +1,18 @@
+{
+  "slug": "troy-hunt",
+  "name": "Troy Hunt",
+  "role_company": "What real-world breaches teach us about web security",
+  "role": null,
+  "company": null,
+  "bio": null,
+  "email": null,
+  "photo_url": null,
+  "links": {},
+  "profiles": {
+    "2026": "https://gotocph.com/2026/speakers/4295"
+  },
+  "talks": [
+    "2026/everything-is-cyber-broken",
+    "2026/ama-with-troy-hunt"
+  ]
+}

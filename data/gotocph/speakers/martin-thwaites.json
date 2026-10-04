@@ -1,0 +1,17 @@
+{
+  "slug": "martin-thwaites",
+  "name": "Martin Thwaites",
+  "role_company": "Hands-on Observability Engineer",
+  "role": null,
+  "company": null,
+  "bio": null,
+  "email": null,
+  "photo_url": null,
+  "links": {},
+  "profiles": {
+    "2025": "https://gotocph.com/2025/speakers/3934"
+  },
+  "talks": [
+    "2025/observability-and-the-art-of-software-engineering"
+  ]
+}

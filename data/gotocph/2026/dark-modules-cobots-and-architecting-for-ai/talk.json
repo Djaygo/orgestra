@@ -1,0 +1,31 @@
+{
+  "slug": "dark-modules-cobots-and-architecting-for-ai",
+  "organization": "gotocph",
+  "year": 2026,
+  "session_id": 4042,
+  "extracted": true,
+  "title": "Dark modules, Cobots, and Architecting for AI",
+  "section": "Conference Talk",
+  "format": null,
+  "track": null,
+  "tags": [
+    "ways of working"
+  ],
+  "day": "Thursday Oct 1",
+  "start": "16:45",
+  "end": "17:30",
+  "room": "TAP1, Main Stage",
+  "abstract": "Whatever your views are on the value of AI, it is certainly helping us create *more* code. But is more code better? Studies appear to show very little impact in actual improved end-to-end productivity, despite us producing more code than ever before. This is leading more people to examine the other bottlenecks that exist in how we develop software, which in turn is causing us to re-examine how we write code to see if things need to change.\n\nIn this talk, I look at the challenges being created by AI-authored code, and how it is overwhelming the human developers. Looking at concepts from robotics and automation to I see if there are lessons to take from that domain that can change how we think of working with AI coding agents. I'll also be exploring the question \"Should humans read code anymore?\".\n\nI'll also show how changing the architecture of our systems can open up new ways of thinking about how we develop software, whilst also helping deal with the uncertainty created by our use of AI models.",
+  "speakers": [
+    {
+      "slug": "sam-newman",
+      "name": "Sam Newman",
+      "role_company": "Building and evolving distributed systems"
+    }
+  ],
+  "session_url": "https://gotocph.com/2026/sessions/4042/dark-modules-cobots-and-architecting-for-ai",
+  "video_url": null,
+  "other_links": [],
+  "slides_url": null,
+  "slides_file": null
+}
