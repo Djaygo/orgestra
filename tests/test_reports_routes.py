@@ -45,7 +45,18 @@ def test_the_form_keeps_the_page_it_came_from(client):
     assert 'maxlength="5000"' in html
 
 
-@pytest.mark.parametrize("origin", ["//evil.com", "/\\evil.com", "https://evil.com", "javascript:alert(1)"])
+ORIGINS = [
+    "//evil.com",
+    "/\\evil.com",
+    "https://evil.com",
+    "javascript:alert(1)",
+    "/\t/evil.com",  # browsers strip tabs and line breaks from a URL, leaving //evil.com
+    "/\n/evil.com",
+    "/\r/evil.com",
+]
+
+
+@pytest.mark.parametrize("origin", ORIGINS)
 def test_an_external_origin_is_dropped(client, origin):
     html = client.get("/report", params={"from": origin}).text
 
@@ -66,10 +77,12 @@ def test_filing_a_report_shows_the_issue_number_and_sends_the_context(client, tr
     assert "Browser: TestBrowser/1.0" in body
 
 
-def test_an_external_page_in_the_post_is_dropped_from_the_issue(client, tracker):
-    client.post("/report", data=VALID | {"page": "//evil.com"})
+@pytest.mark.parametrize("origin", ORIGINS)
+def test_an_external_page_in_the_post_is_dropped_from_the_issue_and_the_thank_you(client, tracker, origin):
+    response = client.post("/report", data=VALID | {"page": origin})
 
     assert "evil.com" not in tracker.calls[0][1]
+    assert "evil.com" not in response.text
 
 
 def test_a_forge_failure_shows_a_plain_page_and_nothing_secret(tmp_path, caplog):
@@ -99,6 +112,17 @@ def test_blank_and_over_long_fields_are_rejected_and_nothing_is_filed(client, tr
 
     assert response.status_code == 422
     assert tracker.calls == []
+
+
+def test_line_breaks_count_once_toward_the_description_limit(client, tracker):
+    # A browser submits each line break as CRLF although its maxlength counted it as one character.
+    description = "\r\n".join(["x" * 24] * 200)
+    assert len(description) > 5000
+
+    response = client.post("/report", data=VALID | {"description": description})
+
+    assert response.status_code == 200
+    assert "\r" not in tracker.calls[0][1]
 
 
 def test_the_button_links_to_the_current_page(client):

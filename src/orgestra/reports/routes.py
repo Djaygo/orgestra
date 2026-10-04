@@ -3,11 +3,12 @@
 from __future__ import annotations
 
 import logging
+import re
 from typing import Annotated, Any
 
 from fastapi import APIRouter, Depends, Form, HTTPException, Query, Request
 from fastapi.responses import HTMLResponse
-from pydantic import BaseModel, StringConstraints
+from pydantic import BaseModel, BeforeValidator, StringConstraints
 
 from orgestra.discussion.models import utc_now
 from orgestra.reports.body import issue_body, issue_title
@@ -15,9 +16,22 @@ from orgestra.reports.tracker import IssueTracker, TrackerError
 
 logger = logging.getLogger(__name__)
 MAX_PAGE_CHARS = 500
+# One slash, then no second slash or backslash and no control character or space: browsers strip tabs and
+# line breaks from a URL, so "/<tab>/host" would otherwise become "//host".
+LOCAL_PATH = re.compile(r"/(?![/\\])[^\x00-\x20\x7f]*")
+
+
+def unix_newlines(value: object) -> object:
+    """A browser submits each line break as CRLF although the form's maxlength counted one character."""
+    return value.replace("\r\n", "\n") if isinstance(value, str) else value
+
 
 Title = Annotated[str, StringConstraints(strip_whitespace=True, min_length=1, max_length=120)]
-Description = Annotated[str, StringConstraints(strip_whitespace=True, min_length=1, max_length=5000)]
+Description = Annotated[
+    str,
+    StringConstraints(strip_whitespace=True, min_length=1, max_length=5000),
+    BeforeValidator(unix_newlines),
+]
 
 
 class Report(BaseModel):
@@ -31,8 +45,7 @@ router = APIRouter()
 
 def safe_page(value: str) -> str:
     """A path on this site, or empty: external, protocol-relative and backslash forms are dropped."""
-    local = value.startswith("/") and value[1:2] not in ("/", "\\")
-    return value if local and len(value) <= MAX_PAGE_CHARS else ""
+    return value if LOCAL_PATH.fullmatch(value) and len(value) <= MAX_PAGE_CHARS else ""
 
 
 def require_tracker(request: Request) -> IssueTracker:
