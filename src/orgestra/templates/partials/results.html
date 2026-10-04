@@ -1,0 +1,35 @@
+<div id="results" class="results">
+  <p class="summary">
+    {{ result.hits|length }} talk{{ "" if result.hits|length == 1 else "s" }} for “{{ result.query }}”.
+    {% for concept in result.concepts if concept.alternatives %}
+      {% if loop.first %}Also searched:{% endif %}
+      <span class="expansion"><strong>{{ concept.label }}</strong> ≈ {{ concept.alternatives|join(", ") }}</span>
+    {% endfor %}
+  </p>
+  <ol class="hits">
+    {% for hit in result.hits %}
+      <li class="hit">
+        <h3>
+          <a href="/talks/{{ hit.talk.ref }}">{{ hit.talk.display_title }}</a>
+        </h3>
+        <p class="meta">
+          {{ hit.talk.year }} · {{ hit.talk.section or "Talk" }}
+          {% for tag in hit.talk.tags %}<span class="tag">{{ tag }}</span>{% endfor %}
+        </p>
+        <p class="people">
+          {% for person in hit.talk.speakers %}
+            {% include "partials/persona_chip.html" %}
+          {% endfor %}
+        </p>
+        {% for question in hit.questions %}
+          <details class="question">
+            <summary>{{ question.text }}</summary>
+            <p>{{ question.answer }}</p>
+          </details>
+        {% endfor %}
+      </li>
+    {% else %}
+      <li class="empty">No talks match yet. Try another word: synonyms and typos are handled.</li>
+    {% endfor %}
+  </ol>
+</div>

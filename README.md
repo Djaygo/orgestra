@@ -1,1 +1,60 @@
-# orgestra
+# Orgestra
+
+Search and personas over the talks and slides of a conference (GOTO Copenhagen to start with).
+
+- **Search**: one search bar; questions are extracted from every talk, and the query is expanded with
+  a thesaurus and typo correction, so "llm agnts" also finds "large language model" and "agents".
+- **Sources**: a sidebar indexes every edition, talk and speaker.
+- **Personas**: each speaker has a page with role, links and contact details (email when public).
+- **Stage**: the speakers walk around a three.js plaza and talk to each other about their talks.
+
+## Run it
+
+```sh
+uv sync                                   # Python 3.11+, uv
+(cd frontend && npm ci && npm run build)  # optional: builds the three.js stage
+uv run orgestra                           # http://127.0.0.1:8000
+```
+
+Without the frontend build the app still works; the stage shows the conversation transcript only.
+
+Settings (environment): `ORGESTRA_DATA_DIR` (default `data/`), `ORGESTRA_TURN_INTERVAL` (seconds
+between conversation turns, default 3.5), `ORGESTRA_HOST`, `ORGESTRA_PORT`, `ORGESTRA_RELOAD`.
+
+## Checks
+
+```sh
+uv run pytest && uv run ruff check && uv run ty check
+cd frontend && npm run check && npm test
+```
+
+## How it fits together
+
+HTMX pages plus one three.js island:
+
+| Part | Where | Notes |
+|---|---|---|
+| Dataset | `data/<organization>/` | talk and speaker JSON, see `data/gotocph/README.md` |
+| Loading | `src/orgestra/dataset.py` | pydantic models at the edge, one in-memory `Catalog` |
+| Questions | `src/orgestra/questions.py` | from the abstract today, slide text once decks are downloaded |
+| Search | `search.py`, `thesaurus.py`, `resources/thesaurus.toml` | weighted fields, synonym groups, rapidfuzz typo fixes |
+| Conversations | `conversations.py` | the server decides who says what and streams turns over SSE |
+| Routes | `app.py` | full pages for navigation, fragments for htmx, `/conversations/stream` for SSE |
+| Templates | `src/orgestra/templates/` | Jinja2; htmx and its SSE extension are vendored in `static/vendor/` |
+| Stage | `frontend/src/` | TypeScript + Vite, built into `src/orgestra/static/dist/` |
+
+The search box swaps results into `#main` (`hx-get`, debounced, `hx-push-url`). Sidebar and result
+links are boosted into the same `#main`, so the stage, kept outside every swap target with
+`hx-preserve`, keeps its WebGL context across navigation.
+
+Server and stage talk only through DOM events, defined in `src/orgestra/events.py` and
+`frontend/src/events.ts`:
+
+- `character:spotlight` `{speakers: string[]}`: sent in the `HX-Trigger` header of a search result;
+  the matching speakers' characters hop and show their names.
+- `character:say` `{speaker, listener, text}`: each SSE `turn` swaps in the transcript; the newest
+  line carries `data-say-*` attributes, which the stage turns into this event, and the speaker walks
+  up to the listener with a speech bubble.
+
+`stage.js` is 2 kB; three.js (about 135 kB gzipped) loads as a separate chunk only once the stage is on
+screen.

@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block title %}{{ talk.display_title }} · Orgestra{% endblock %}
+{% block content %}
+  <article class="talk">
+    <p class="meta">
+      {{ talk.organization|upper }} {{ talk.year }} · {{ talk.section or "Talk" }}
+      {% if talk.day %}· {{ talk.day }} {{ talk.start }}–{{ talk.end }}{% endif %}
+      {% if talk.room %}· {{ talk.room }}{% endif %}
+    </p>
+    <h1>{{ talk.display_title }}</h1>
+    <p class="people">
+      {% for person in talk.speakers %}
+        {% include "partials/persona_chip.html" %}
+      {% endfor %}
+    </p>
+    {% if talk.tags %}
+      <p>
+        {% for tag in talk.tags %}<span class="tag">{{ tag }}</span>{% endfor %}
+      </p>
+    {% endif %}
+    {% if talk.abstract %}
+      {% for paragraph in talk.abstract.split("\n\n") %}<p>{{ paragraph }}</p>{% endfor %}
+    {% elif not talk.extracted %}
+      <p class="notice">The details of this talk have not been extracted yet.</p>
+    {% endif %}
+    <h2>Sources</h2>
+    <ul class="links">
+      <li>
+        <a href="{{ talk.session_url }}" rel="noopener">Schedule page</a>
+      </li>
+      {% if talk.slides_url %}
+        <li>
+          <a href="{{ talk.slides_url }}" rel="noopener">Slides</a>
+        </li>
+      {% endif %}
+      {% if talk.video_url %}
+        <li>
+          <a href="{{ talk.video_url }}" rel="noopener">Video</a>
+        </li>
+      {% endif %}
+      {% for link in talk.other_links %}
+        <li>
+          <a href="{{ link }}" rel="noopener">{{ link }}</a>
+        </li>
+      {% endfor %}
+    </ul>
+    {% if questions %}
+      <h2>Questions this talk answers</h2>
+      {% for question in questions %}
+        <details class="question">
+          <summary>{{ question.text }}</summary>
+          <p>{{ question.answer }}</p>
+        </details>
+      {% endfor %}
+    {% endif %}
+  </article>
+{% endblock %}

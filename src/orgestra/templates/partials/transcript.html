@@ -1,0 +1,14 @@
+{% for turn in turns %}
+  <li class="turn{% if loop.last %} turn-new{% endif %}"
+      {% if loop.last %}data-say-speaker="{{ turn.speaker_slug }}" data-say-listener="{{ turn.listener_slug }}" data-say-text="{{ turn.text }}"{% endif %}>
+    <span class="avatar small" style="--hue: {{ turn.speaker_slug|hue }}" aria-hidden="true"></span>
+    <a class="who"
+       href="/speakers/{{ turn.speaker_slug }}"
+       hx-get="/speakers/{{ turn.speaker_slug }}"
+       hx-target="#main"
+       hx-select="#main"
+       hx-swap="outerHTML"
+       hx-push-url="true">{{ turn.speaker_name }}</a>
+    <span class="said">{{ turn.text }}</span>
+  </li>
+{% endfor %}

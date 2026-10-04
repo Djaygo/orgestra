@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}{{ result.query ~ " · " if result else "" }}Orgestra{% endblock %}
+{% block content %}
+  {% if result %}
+    {% include "partials/results.html" %}
+  {% else %}
+    <section class="intro">
+      <h1>Ask the conference</h1>
+      <p>
+        Search {{ catalog.talks|length }} talks by {{ catalog.speakers|length }} speakers. Questions are extracted
+        from every talk, and your words are expanded with synonyms, so “llm” also finds “large language model”.
+      </p>
+      <ul class="editions">
+        {% for organization in catalog.organizations %}
+          {% for edition in organization.editions %}
+            <li>
+              <strong>{{ organization.name }} {{ edition.year }}</strong>: {{ edition.talks }} talks,
+              {{ edition.extracted }} with details, {{ edition.slides_known }} with slides
+            </li>
+          {% endfor %}
+        {% endfor %}
+      </ul>
+    </section>
+  {% endif %}
+{% endblock %}
