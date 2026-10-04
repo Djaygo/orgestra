@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Orgestra{% endblock %}</title>
+    <link rel="icon" href="data:,">
+    <link rel="stylesheet" href="/static/css/app.css">
+    <script src="/static/vendor/htmx.min.js" defer></script>
+    <script src="/static/vendor/sse.js" defer></script>
+    {% if scene_available %}<script type="module" src="/static/dist/stage.js"></script>{% endif %}
+  </head>
+  <body>
+    <input type="checkbox" id="sources-toggle" class="visually-hidden">
+    <div id="app" class="layout" hx-boost="true" hx-target="#main" hx-select="#main" hx-swap="outerHTML">
+      {% include "partials/sidebar.html" %}
+      <main id="main" class="{% block main_class %}page{% endblock %}">
+        {% block header %}
+          <header class="topbar">
+            <a href="/" class="logo small" aria-label="Orgestra home">{% include "partials/logo.html" %}</a>
+            {% block searchbox %}
+              {% with live=false, query="" %}
+                {% include "partials/searchbox.html" %}
+              {% endwith %}
+            {% endblock %}
+            {% include "partials/report_button.html" %}
+            <label for="sources-toggle" class="sources-button">Sources</label>
+          </header>
+        {% endblock %}
+        {% block content %}{% endblock %}
+      </main>
+    </div>
+    {% include "partials/stage.html" %}
+  </body>
+</html>
