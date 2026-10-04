@@ -1,0 +1,17 @@
+{
+  "slug": "roy-van-rijn",
+  "name": "Roy van Rijn",
+  "role_company": "Robotics Enthusiast, Hobby Mathematician",
+  "role": null,
+  "company": null,
+  "bio": null,
+  "email": null,
+  "photo_url": null,
+  "links": {},
+  "profiles": {
+    "2025": "https://gotocph.com/2025/speakers/3828"
+  },
+  "talks": [
+    "2025/how-fast-can-you-parse-a-file-with-1-billion-rows-of-weather-data-using-java"
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "slug": "extended-keynote-qanda-3778",
+  "organization": "gotocph",
+  "year": 2025,
+  "session_id": 3778,
+  "extracted": true,
+  "title": "Extended keynote Q&A",
+  "section": "Conference Talk",
+  "format": "Q&A",
+  "track": null,
+  "tags": [],
+  "day": "Wednesday Oct 1",
+  "start": "10:15",
+  "end": "11:00",
+  "room": "TAP1, Thoughtworks Live Stage",
+  "abstract": "Ken Hughes will move to the Thoughtworks Live Stage for a Q&A session with the audience. If you have questions about the keynote, or simply want to explore the topic further, come and join us!",
+  "speakers": [
+    {
+      "slug": "ken-hughes",
+      "name": "Ken Hughes",
+      "role_company": "The King of Customer Experience"
+    }
+  ],
+  "session_url": "https://gotocph.com/2025/sessions/3778/extended-keynote-qanda",
+  "video_url": "https://www.youtube-nocookie.com/embed/qrcVvo6BQVw",
+  "other_links": [],
+  "slides_url": null,
+  "slides_file": null
+}

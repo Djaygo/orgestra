@@ -1,0 +1,17 @@
+{
+  "slug": "aubrey-chipman",
+  "name": "Aubrey Chipman",
+  "role_company": "Keeper of the Netflix Developer Productivity Secrets",
+  "role": null,
+  "company": null,
+  "bio": null,
+  "email": null,
+  "photo_url": null,
+  "links": {},
+  "profiles": {
+    "2025": "https://gotocph.com/2025/speakers/3930"
+  },
+  "talks": [
+    "2025/from-lag-to-lightning-confident-automated-changes-at-scale"
+  ]
+}

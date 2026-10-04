@@ -1,0 +1,17 @@
+{
+  "slug": "rod-johnson",
+  "name": "Rod Johnson",
+  "role_company": "Building the future of agent frameworks at Embabel",
+  "role": null,
+  "company": null,
+  "bio": null,
+  "email": null,
+  "photo_url": null,
+  "links": {},
+  "profiles": {
+    "2025": "https://gotocph.com/2025/speakers/4206"
+  },
+  "talks": [
+    "2025/gen-ai-grows-up-building-production-ready-agents-on-the-jvm"
+  ]
+}

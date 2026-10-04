@@ -1,0 +1,32 @@
+{
+  "slug": "navigating-uncharted-waters-coding-agents-and-language-evolution",
+  "organization": "gotocph",
+  "year": 2025,
+  "session_id": 3740,
+  "extracted": true,
+  "title": "Navigating Uncharted Waters: Coding Agents & Language Evolution",
+  "section": "Conference Talk",
+  "format": null,
+  "track": null,
+  "tags": [
+    "programming",
+    "live demo"
+  ],
+  "day": "Friday Oct 3",
+  "start": "15:15",
+  "end": "16:00",
+  "room": "TAP1, Main Stage",
+  "abstract": "As AI agents become increasingly integrated into software development, we find ourselves facing questions about how our programming languages and tools should evolve, in order to make coding agents and ourselves more productive.\n\nThis talk breaks down coding agents into distinct axes (instructions, tools, and runtimes) and discusses practical solutions (AGENTS.md, runtime introspection, etc) to improve both developer and agentic experiences, whether you're using AI tools daily or building developer tooling.",
+  "speakers": [
+    {
+      "slug": "jose-valim",
+      "name": "José Valim",
+      "role_company": "Creator of Elixir, Author of Three Technical Books"
+    }
+  ],
+  "session_url": "https://gotocph.com/2025/sessions/3740/navigating-uncharted-waters-coding-agents-and-language-evolution",
+  "video_url": "https://www.youtube-nocookie.com/embed/VZcDxkFj_9E",
+  "other_links": [],
+  "slides_url": "https://files.gotocon.com/uploads/slides/conference_105/3740/original/2025.09.25%20-%20Navigating%20uncharted%20waters%20%40%20GoTo.pdf",
+  "slides_file": null
+}

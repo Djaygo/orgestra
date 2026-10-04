@@ -1,0 +1,39 @@
+{
+  "slug": "unscripted-what-can-software-learn-from-improvisation",
+  "organization": "gotocph",
+  "year": 2026,
+  "session_id": 4243,
+  "extracted": true,
+  "title": "Unscripted: What can software learn from improvisation?",
+  "section": "Conference Talk",
+  "format": "Unscripted stage. No slides, no script.",
+  "track": null,
+  "tags": [
+    "improvisation",
+    "software development",
+    "extreme programming",
+    "agile"
+  ],
+  "day": "Wednesday Sep 30",
+  "start": "10:15",
+  "end": "11:00",
+  "room": "Thoughtworks Live Stage",
+  "abstract": "Kent Beck plays guitar. Charles Humble is half of the ambient techno duo Twofish. Between them they've also spent about sixty years building software and thinking about how it gets built.\n\nShort loops, listening, recovering from mistakes in front of people. How big is the overlap? And what can software learn from improvisation?\n\nThis is our unscripted stage. No slides, no script, and no idea where it ends up.",
+  "speakers": [
+    {
+      "slug": "kent-beck",
+      "name": "Kent Beck",
+      "role_company": "Creator of Extreme Programming, Co-authored the Agile Manifesto"
+    },
+    {
+      "slug": "charles-humble",
+      "name": "Charles Humble",
+      "role_company": "Designing and running sustainable software systems"
+    }
+  ],
+  "session_url": "https://gotocph.com/2026/sessions/4243/unscripted-what-can-software-learn-from-improvisation",
+  "video_url": null,
+  "other_links": [],
+  "slides_url": null,
+  "slides_file": null
+}

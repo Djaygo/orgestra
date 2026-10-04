@@ -1,0 +1,639 @@
+{
+  "year": 2025,
+  "talks": [
+    {
+      "slug": "a-fun-and-absurd-introduction-to-vector-databases",
+      "session_id": 3588,
+      "title": null,
+      "speakers": [],
+      "extracted": false,
+      "slides_url": null,
+      "slides_file": null
+    },
+    {
+      "slug": "residues-time-change-and-uncertainty-in-software-architecture",
+      "session_id": 3595,
+      "title": null,
+      "speakers": [],
+      "extracted": false,
+      "slides_url": null,
+      "slides_file": null
+    },
+    {
+      "slug": "lexical-vector-and-hybrid-search-with-elasticsearch",
+      "session_id": 3606,
+      "title": "Lexical, Vector and Hybrid Search with Elasticsearch",
+      "speakers": [
+        "Carly Richmond"
+      ],
+      "extracted": true,
+      "slides_url": null,
+      "slides_file": null
+    },
+    {
+      "slug": "every-event-everywhere-all-at-once",
+      "session_id": 3611,
+      "title": null,
+      "speakers": [],
+      "extracted": false,
+      "slides_url": null,
+      "slides_file": null
+    },
+    {
+      "slug": "modern-enterprise-architecture-architecting-for-outcomes",
+      "session_id": 3621,
+      "title": null,
+      "speakers": [],
+      "extracted": false,
+      "slides_url": null,
+      "slides_file": null
+    },
+    {
+      "slug": "things-you-thought-you-didn-t-need-to-care-about-that-have-a-big-impact-on-your",
+      "session_id": 3623,
+      "title": "Things You Thought You Didn't Need To Care About That Have a Big Impact On Your Job",
+      "speakers": [
+        "Holly Cummins"
+      ],
+      "extracted": true,
+      "slides_url": null,
+      "slides_file": null
+    },
+    {
+      "slug": "tdd-and-ddd-from-the-ground-up",
+      "session_id": 3624,
+      "title": null,
+      "speakers": [],
+      "extracted": false,
+      "slides_url": null,
+      "slides_file": null
+    },
+    {
+      "slug": "getting-buy-in-overcoming-larmans-law",
+      "session_id": 3628,
+      "title": "Getting Buy-In: Overcoming Larman's Law",
+      "speakers": [
+        "Allen Holub"
+      ],
+      "extracted": true,
+      "slides_url": "https://files.gotocon.com/uploads/slides/conference_105/3628/original/OvercomingLarmansLaw-GotoCPH-2025.pdf",
+      "slides_file": null
+    },
+    {
+      "slug": "how-debuggers-work",
+      "session_id": 3629,
+      "title": "How Debuggers Work",
+      "speakers": [
+        "Sy Brand"
+      ],
+      "extracted": true,
+      "slides_url": "https://files.gotocon.com/uploads/slides/conference_105/3629/original/How%20Debuggers%20Work%20-%20GOTO%20-%20PDF.pdf",
+      "slides_file": null
+    },
+    {
+      "slug": "level-up-choosing-the-technical-leadership-path",
+      "session_id": 3638,
+      "title": "Level Up: Choosing The Technical Leadership Path",
+      "speakers": [
+        "Patrick Kua"
+      ],
+      "extracted": true,
+      "slides_url": "https://files.gotocon.com/uploads/slides/conference_105/3638/original/2025-10-GotoCPH-LevelUp-ChoosingTheTechnicalLeadershipPath.pdf",
+      "slides_file": null
+    },
+    {
+      "slug": "why-governance-matters-the-key-to-reducing-risk-without-slowing-down",
+      "session_id": 3645,
+      "title": null,
+      "speakers": [],
+      "extracted": false,
+      "slides_url": null,
+      "slides_file": null
+    },
+    {
+      "slug": "hacking-ai-systems-how-to-still-trick-artificial-intelligence",
+      "session_id": 3653,
+      "title": "Hacking AI Systems: How to (Still) Trick Artificial Intelligence",
+      "speakers": [
+        "Katharine Jarmul"
+      ],
+      "extracted": true,
+      "slides_url": "https://files.gotocon.com/uploads/slides/conference_105/3653/original/GOTO%20Cph%202025%20-%20Jarmul.pdf",
+      "slides_file": null
+    },
+    {
+      "slug": "are-your-tests-slowing-you-down",
+      "session_id": 3654,
+      "title": null,
+      "speakers": [],
+      "extracted": false,
+      "slides_url": null,
+      "slides_file": null
+    },
+    {
+      "slug": "the-forest-and-the-desert-are-parallel-universes",
+      "session_id": 3659,
+      "title": "The Forest & The Desert Are Parallel Universes",
+      "speakers": [
+        "Kent Beck"
+      ],
+      "extracted": true,
+      "slides_url": "https://files.gotocon.com/uploads/slides/conference_105/3659/original/Forest%20and%20Desert%20Parallel%20Universes.pdf",
+      "slides_file": null
+    },
+    {
+      "slug": "master-software-architecture-from-simplicity-to-complexity",
+      "session_id": 3660,
+      "title": "Master Software Architecture: From Simplicity to Complexity",
+      "speakers": [
+        "Maciej Jedrzejewski"
+      ],
+      "extracted": true,
+      "slides_url": "https://files.gotocon.com/uploads/slides/conference_105/3660/original/GOTO%20Conference%202025%20-%20Maciej%20Jedrzejewski.pdf",
+      "slides_file": null
+    },
+    {
+      "slug": "the-evolution-of-user-interfaces",
+      "session_id": 3666,
+      "title": null,
+      "speakers": [],
+      "extracted": false,
+      "slides_url": null,
+      "slides_file": null
+    },
+    {
+      "slug": "beyond-uptime-what-the-metric-is-going-on-with-green-software",
+      "session_id": 3669,
+      "title": null,
+      "speakers": [],
+      "extracted": false,
+      "slides_url": null,
+      "slides_file": null
+    },
+    {
+      "slug": "how-fast-can-you-parse-a-file-with-1-billion-rows-of-weather-data-using-java",
+      "session_id": 3671,
+      "title": "How Fast Can You Parse a File with 1 Billion Rows of Weather Data Using Java?",
+      "speakers": [
+        "Roy van Rijn"
+      ],
+      "extracted": true,
+      "slides_url": "https://files.gotocon.com/uploads/slides/conference_105/3671/original/1brc_goto.pdf",
+      "slides_file": null
+    },
+    {
+      "slug": "platforms-build-abstractions-not-illusions",
+      "session_id": 3672,
+      "title": null,
+      "speakers": [],
+      "extracted": false,
+      "slides_url": null,
+      "slides_file": null
+    },
+    {
+      "slug": "towards-safety-and-security-in-c-26",
+      "session_id": 3728,
+      "title": null,
+      "speakers": [],
+      "extracted": false,
+      "slides_url": null,
+      "slides_file": null
+    },
+    {
+      "slug": "webassembly-on-kubernetes",
+      "session_id": 3729,
+      "title": null,
+      "speakers": [],
+      "extracted": false,
+      "slides_url": null,
+      "slides_file": null
+    },
+    {
+      "slug": "a-long-spring-19-years-of-living-with-your-past-mistakes",
+      "session_id": 3731,
+      "title": null,
+      "speakers": [],
+      "extracted": false,
+      "slides_url": null,
+      "slides_file": null
+    },
+    {
+      "slug": "platform-as-a-product-a-deep-dive-into-the-technical-foundations",
+      "session_id": 3732,
+      "title": "Platform as a Product: A Deep Dive into the Technical Foundations",
+      "speakers": [
+        "Abby Bangser"
+      ],
+      "extracted": true,
+      "slides_url": "https://files.gotocon.com/uploads/slides/conference_105/3732/original/2025-10_goto_Platform%20as%20a%20Product_%20A%20Deep%20Dive%20into%20the%20Technical%20Foundations_printable.pdf",
+      "slides_file": null
+    },
+    {
+      "slug": "from-lag-to-lightning-confident-automated-changes-at-scale",
+      "session_id": 3733,
+      "title": "From Lag to Lightning: Confident, Automated Changes at Scale",
+      "speakers": [
+        "Aubrey Chipman",
+        "Roberto Perez Alcolea"
+      ],
+      "extracted": true,
+      "slides_url": "https://files.gotocon.com/uploads/slides/conference_105/3733/original/GOTO_Copenhagen_2025_From_Lag_to_Lightning_Confident_Automated_Changes_at_Scale.pdf",
+      "slides_file": null
+    },
+    {
+      "slug": "platform-engineering-for-software-developers-architects-and-the-rest-of-us",
+      "session_id": 3734,
+      "title": null,
+      "speakers": [],
+      "extracted": false,
+      "slides_url": null,
+      "slides_file": null
+    },
+    {
+      "slug": "developer-productivity-at-a-developer-productivity-startup",
+      "session_id": 3736,
+      "title": null,
+      "speakers": [],
+      "extracted": false,
+      "slides_url": null,
+      "slides_file": null
+    },
+    {
+      "slug": "best-simple-system-for-now",
+      "session_id": 3737,
+      "title": null,
+      "speakers": [],
+      "extracted": false,
+      "slides_url": null,
+      "slides_file": null
+    },
+    {
+      "slug": "ai-corporate-responsibility-and-democratic-legitimacy-e2-80-93-is-devops-the-ans",
+      "session_id": 3739,
+      "title": "AI, Corporate Responsibility, and Democratic Legitimacy – Is DevOps the Answer?",
+      "speakers": [
+        "Joanna Bryson"
+      ],
+      "extracted": true,
+      "slides_url": null,
+      "slides_file": null
+    },
+    {
+      "slug": "navigating-uncharted-waters-coding-agents-and-language-evolution",
+      "session_id": 3740,
+      "title": "Navigating Uncharted Waters: Coding Agents & Language Evolution",
+      "speakers": [
+        "José Valim"
+      ],
+      "extracted": true,
+      "slides_url": "https://files.gotocon.com/uploads/slides/conference_105/3740/original/2025.09.25%20-%20Navigating%20uncharted%20waters%20%40%20GoTo.pdf",
+      "slides_file": null
+    },
+    {
+      "slug": "making-ai-personal-building-context-rich-ai-tools-with-mcp",
+      "session_id": 3741,
+      "title": "Making AI Personal: Building Context-Rich AI Tools with MCP",
+      "speakers": [
+        "Kris Jenkins"
+      ],
+      "extracted": true,
+      "slides_url": null,
+      "slides_file": null
+    },
+    {
+      "slug": "observability-and-the-art-of-software-engineering",
+      "session_id": 3742,
+      "title": "Observability and the art of Software Engineering",
+      "speakers": [
+        "Martin Thwaites"
+      ],
+      "extracted": true,
+      "slides_url": null,
+      "slides_file": null
+    },
+    {
+      "slug": "reflections-of-ai-a-trilogy-in-four-parts",
+      "session_id": 3743,
+      "title": null,
+      "speakers": [],
+      "extracted": false,
+      "slides_url": null,
+      "slides_file": null
+    },
+    {
+      "slug": "beyond-sonic-pi-tau5-and-the-art-of-coding-with-ai",
+      "session_id": 3744,
+      "title": "Beyond Sonic Pi: Tau5 and the Art of Coding with AI",
+      "speakers": [
+        "Sam Aaron"
+      ],
+      "extracted": true,
+      "slides_url": null,
+      "slides_file": null
+    },
+    {
+      "slug": "the-green-shift-transitioning-net-services-across-architectures",
+      "session_id": 3745,
+      "title": null,
+      "speakers": [],
+      "extracted": false,
+      "slides_url": null,
+      "slides_file": null
+    },
+    {
+      "slug": "13-years-of-cryptocurrency-de-anonymization-and-counting",
+      "session_id": 3746,
+      "title": "13 years of cryptocurrency de-anonymization (and counting)",
+      "speakers": [
+        "Sarah Meiklejohn"
+      ],
+      "extracted": true,
+      "slides_url": null,
+      "slides_file": null
+    },
+    {
+      "slug": "ai-agents-in-practice",
+      "session_id": 3766,
+      "title": null,
+      "speakers": [],
+      "extracted": false,
+      "slides_url": null,
+      "slides_file": null
+    },
+    {
+      "slug": "beyond-chat-bringing-models-to-the-canvas",
+      "session_id": 3773,
+      "title": "Beyond Chat: Bringing Models to The Canvas",
+      "speakers": [
+        "Lu Wilson"
+      ],
+      "extracted": true,
+      "slides_url": null,
+      "slides_file": null
+    },
+    {
+      "slug": "from-human-promise-to-digital-twin-predicting-personality-with-ai-a-case-story",
+      "session_id": 3774,
+      "title": "From Human Promise to Digital Twin: Predicting Personality with AI. A Case Story",
+      "speakers": [
+        "Anders Hasle Nielsen"
+      ],
+      "extracted": true,
+      "slides_url": null,
+      "slides_file": null
+    },
+    {
+      "slug": "ye-cannae-change-the-laws-of-physics",
+      "session_id": 3775,
+      "title": null,
+      "speakers": [],
+      "extracted": false,
+      "slides_url": null,
+      "slides_file": null
+    },
+    {
+      "slug": "connection-is-everything",
+      "session_id": 3777,
+      "title": "Connection is Everything",
+      "speakers": [
+        "Ken Hughes"
+      ],
+      "extracted": true,
+      "slides_url": null,
+      "slides_file": null
+    },
+    {
+      "slug": "extended-keynote-qanda-3778",
+      "session_id": 3778,
+      "title": "Extended keynote Q&A",
+      "speakers": [
+        "Ken Hughes"
+      ],
+      "extracted": true,
+      "slides_url": null,
+      "slides_file": null
+    },
+    {
+      "slug": "continuous-delivery-in-a-world-of-constant-change",
+      "session_id": 3779,
+      "title": null,
+      "speakers": [],
+      "extracted": false,
+      "slides_url": null,
+      "slides_file": null
+    },
+    {
+      "slug": "the-tech-truth-circle-3780",
+      "session_id": 3780,
+      "title": "The Tech Truth Circle",
+      "speakers": [
+        "Kent Beck",
+        "Martin Fowler"
+      ],
+      "extracted": true,
+      "slides_url": null,
+      "slides_file": null
+    },
+    {
+      "slug": "every-software-org-is-dysfunctional",
+      "session_id": 3782,
+      "title": null,
+      "speakers": [],
+      "extracted": false,
+      "slides_url": null,
+      "slides_file": null
+    },
+    {
+      "slug": "extended-keynote-qanda-3783",
+      "session_id": 3783,
+      "title": null,
+      "speakers": [],
+      "extracted": false,
+      "slides_url": null,
+      "slides_file": null
+    },
+    {
+      "slug": "security-and-developer-experience-can-we-have-both",
+      "session_id": 3784,
+      "title": null,
+      "speakers": [],
+      "extracted": false,
+      "slides_url": null,
+      "slides_file": null
+    },
+    {
+      "slug": "three-words-to-remember-when-working-with-peoples-motivation-and-productivity-au",
+      "session_id": 3799,
+      "title": null,
+      "speakers": [],
+      "extracted": false,
+      "slides_url": null,
+      "slides_file": null
+    },
+    {
+      "slug": "a-commune-in-the-ivory-tower",
+      "session_id": 3816,
+      "title": null,
+      "speakers": [],
+      "extracted": false,
+      "slides_url": null,
+      "slides_file": null
+    },
+    {
+      "slug": "leading-3000-developers-into-the-next-era-of-software-engineering",
+      "session_id": 3823,
+      "title": "Leading 3000 Developers into the Next Era of Software Engineering",
+      "speakers": [
+        "Garth Gilmour",
+        "Stuart Greenlees"
+      ],
+      "extracted": true,
+      "slides_url": "https://files.gotocon.com/uploads/slides/conference_105/3823/original/Leading%20Devs%20Into%20The%20Next%20Era%20Of%20Engineering.pdf",
+      "slides_file": null
+    },
+    {
+      "slug": "supply-chain-security-and-the-real-world-lessons-from-incidents",
+      "session_id": 3831,
+      "title": null,
+      "speakers": [],
+      "extracted": false,
+      "slides_url": null,
+      "slides_file": null
+    },
+    {
+      "slug": "the-way-the-future-was",
+      "session_id": 3839,
+      "title": "The Way the Future Was",
+      "speakers": [
+        "James Lewis",
+        "Kevlin Henney"
+      ],
+      "extracted": true,
+      "slides_url": "https://files.gotocon.com/uploads/slides/conference_105/3839/original/The%20Way%20the%20Future%20Was.pdf",
+      "slides_file": null
+    },
+    {
+      "slug": "from-neural-networks-to-digital-brains-the-next-leap-in-ai",
+      "session_id": 3858,
+      "title": "From Neural Networks to Digital Brains: The Next Leap in AI",
+      "speakers": [
+        "Daniel Lütgehetmann"
+      ],
+      "extracted": true,
+      "slides_url": "https://files.gotocon.com/uploads/slides/conference_105/3858/original/GOTO%20Slides%20%E2%80%93%C2%A0Daniel%20Lu%CC%88tgehetmann.pdf",
+      "slides_file": null
+    },
+    {
+      "slug": "growing-and-thriving-in-a-multi-model-world",
+      "session_id": 3866,
+      "title": "Growing and Thriving in a Multi-model World",
+      "speakers": [
+        "Alberto Brandolini"
+      ],
+      "extracted": true,
+      "slides_url": null,
+      "slides_file": null
+    },
+    {
+      "slug": "gen-ai-grows-up-building-production-ready-agents-on-the-jvm",
+      "session_id": 3893,
+      "title": "Gen AI Grows Up: Building Production-Ready Agents on the JVM",
+      "speakers": [
+        "Rod Johnson"
+      ],
+      "extracted": true,
+      "slides_url": "https://files.gotocon.com/uploads/slides/conference_105/3893/original/goto.pdf",
+      "slides_file": null
+    },
+    {
+      "slug": "why-do-we-need-an-agent-framework",
+      "session_id": 3926,
+      "title": null,
+      "speakers": [],
+      "extracted": false,
+      "slides_url": null,
+      "slides_file": null
+    },
+    {
+      "slug": "spring-then-and-now-whats-next",
+      "session_id": 3927,
+      "title": null,
+      "speakers": [],
+      "extracted": false,
+      "slides_url": null,
+      "slides_file": null
+    },
+    {
+      "slug": "engineering-leadership-in-turbulent-times",
+      "session_id": 3928,
+      "title": null,
+      "speakers": [],
+      "extracted": false,
+      "slides_url": null,
+      "slides_file": null
+    },
+    {
+      "slug": "sustainability",
+      "session_id": 3929,
+      "title": null,
+      "speakers": [],
+      "extracted": false,
+      "slides_url": null,
+      "slides_file": null
+    },
+    {
+      "slug": "the-tech-truth-circle-3930",
+      "session_id": 3930,
+      "title": null,
+      "speakers": [],
+      "extracted": false,
+      "slides_url": null,
+      "slides_file": null
+    },
+    {
+      "slug": "rewriting-the-sdlc-playbook-with-genai-e2-80-94how-to-build-a-genai-augmented-so",
+      "session_id": 3931,
+      "title": null,
+      "speakers": [],
+      "extracted": false,
+      "slides_url": null,
+      "slides_file": null
+    },
+    {
+      "slug": "software-design-architecture-and-giving-clarity-at-scale",
+      "session_id": 3932,
+      "title": null,
+      "speakers": [],
+      "extracted": false,
+      "slides_url": null,
+      "slides_file": null
+    },
+    {
+      "slug": "application-driven-infrastructure-deployment-enabling-more-effective-software-de",
+      "session_id": 3935,
+      "title": null,
+      "speakers": [],
+      "extracted": false,
+      "slides_url": null,
+      "slides_file": null
+    },
+    {
+      "slug": "building-data-visualisations-in-python-in-minutes",
+      "session_id": 3936,
+      "title": null,
+      "speakers": [],
+      "extracted": false,
+      "slides_url": null,
+      "slides_file": null
+    },
+    {
+      "slug": "cloud-containers-security-and-ai-whats-now-whats-next",
+      "session_id": 3938,
+      "title": null,
+      "speakers": [],
+      "extracted": false,
+      "slides_url": null,
+      "slides_file": null
+    }
+  ]
+}

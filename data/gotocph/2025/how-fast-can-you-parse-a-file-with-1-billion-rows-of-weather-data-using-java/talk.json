@@ -1,0 +1,31 @@
+{
+  "slug": "how-fast-can-you-parse-a-file-with-1-billion-rows-of-weather-data-using-java",
+  "organization": "gotocph",
+  "year": 2025,
+  "session_id": 3671,
+  "extracted": true,
+  "title": "How Fast Can You Parse a File with 1 Billion Rows of Weather Data Using Java?",
+  "section": "Conference Talk",
+  "format": null,
+  "track": null,
+  "tags": [
+    "programming"
+  ],
+  "day": "Thursday Oct 2",
+  "start": "15:15",
+  "end": "16:00",
+  "room": "TAP1, Main Stage",
+  "abstract": "Last January a challenge was posted online by Gunnar Morling: How fast can you parse a file with one billion rows of weather data using Java?\n\nLittle did I know this deceivingly simple question would lead me down a path that taught me all about: parallelism, memory mapped files, SWAR techniques (SIMD as a register), bit twiddling, branchless code, mechanical sympathy, Graal native compilation and finally... I even turned to the dark side: using sun.misc.Unsafe.\n\nJoin me in this deep dive where I'll explain all the code changes and tricks that took me from the reference implementation which processes the billion records in >4 minutes, to processing everything in under two seconds.\n\nWho knew Java could be *this* fast?",
+  "speakers": [
+    {
+      "slug": "roy-van-rijn",
+      "name": "Roy van Rijn",
+      "role_company": "Robotics Enthusiast, Hobby Mathematician"
+    }
+  ],
+  "session_url": "https://gotocph.com/2025/sessions/3671/how-fast-can-you-parse-a-file-with-1-billion-rows-of-weather-data-using-java",
+  "video_url": "https://www.youtube-nocookie.com/embed/pHZF-zJ3Bpg",
+  "other_links": [],
+  "slides_url": "https://files.gotocon.com/uploads/slides/conference_105/3671/original/1brc_goto.pdf",
+  "slides_file": null
+}

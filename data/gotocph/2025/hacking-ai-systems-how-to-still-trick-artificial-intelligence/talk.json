@@ -1,0 +1,39 @@
+{
+  "slug": "hacking-ai-systems-how-to-still-trick-artificial-intelligence",
+  "organization": "gotocph",
+  "year": 2025,
+  "session_id": 3653,
+  "extracted": true,
+  "title": "Hacking AI Systems: How to (Still) Trick Artificial Intelligence",
+  "section": "Conference Talk",
+  "format": null,
+  "track": null,
+  "tags": [
+    "artificial intelligence (AI)",
+    "security"
+  ],
+  "day": "Thursday, October 2",
+  "start": "11:15",
+  "end": "12:00",
+  "room": "TAP1, Room 1",
+  "abstract": "How easy is it to fool or trick today's AI systems? In this talk, we'll wander through the field of adversarial AI/ML, looking at how attacks and AI systems have evolved over the past 10 years. You'll learn more about how deep learning works by investigating how, when and why it breaks and walk away with open security questions and some notebooks to keep learning and hacking!",
+  "speakers": [
+    {
+      "slug": "katharine-jarmul",
+      "name": "Katharine Jarmul",
+      "role_company": "Building Privacy-first Data and AI/ML Systems, Products and Platforms"
+    }
+  ],
+  "session_url": "https://gotocph.com/2025/sessions/3653/hacking-ai-systems-how-to-still-trick-artificial-intelligence",
+  "video_url": "https://www.youtube-nocookie.com/embed/lz0L0rRV7RE",
+  "other_links": [
+    "https://www.youtube-nocookie.com/embed/lz0L0rRV7RE",
+    "https://twitter.com/kjam",
+    "https://www.linkedin.com/in/katharinejarmul",
+    "https://kjamistan.com",
+    "https://probablyprivate.com",
+    "https://github.com/kjam"
+  ],
+  "slides_url": "https://files.gotocon.com/uploads/slides/conference_105/3653/original/GOTO%20Cph%202025%20-%20Jarmul.pdf",
+  "slides_file": null
+}

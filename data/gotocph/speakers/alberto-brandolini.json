@@ -1,0 +1,19 @@
+{
+  "slug": "alberto-brandolini",
+  "name": "Alberto Brandolini",
+  "role_company": "Creator of EventStorming",
+  "role": null,
+  "company": null,
+  "bio": null,
+  "email": null,
+  "photo_url": null,
+  "links": {},
+  "profiles": {
+    "2025": "https://gotocph.com/2025/speakers/3826",
+    "2026": "https://gotocph.com/2026/speakers/4234"
+  },
+  "talks": [
+    "2025/growing-and-thriving-in-a-multi-model-world",
+    "2026/unscripted-domain-driven-design-vs-spec-driven-development-are-they-melting-into"
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "slug": "maciej-jedrzejewski",
+  "name": "Maciej Jedrzejewski",
+  "role_company": "Author of Evolutionary Architecture by Example",
+  "role": null,
+  "company": null,
+  "bio": null,
+  "email": null,
+  "photo_url": null,
+  "links": {},
+  "profiles": {
+    "2025": "https://gotocph.com/2025/speakers/3894"
+  },
+  "talks": [
+    "2025/master-software-architecture-from-simplicity-to-complexity"
+  ]
+}

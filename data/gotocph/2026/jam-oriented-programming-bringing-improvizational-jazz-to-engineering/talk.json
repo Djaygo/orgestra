@@ -1,0 +1,35 @@
+{
+  "slug": "jam-oriented-programming-bringing-improvizational-jazz-to-engineering",
+  "organization": "gotocph",
+  "year": 2026,
+  "session_id": 4153,
+  "extracted": true,
+  "title": "Jam-oriented programming: Bringing improvizational jazz to engineering",
+  "section": "Keynote",
+  "format": "Keynote",
+  "track": null,
+  "tags": [
+    "software development",
+    "collaboration",
+    "hierarchy",
+    "jazz",
+    "improvisation"
+  ],
+  "day": "Wednesday",
+  "start": "13:15",
+  "end": "14:15",
+  "room": "TAP1, Main Stage",
+  "abstract": "\"Jam-oriented programming\" is the joke name of a new style of software development that is no joke at all. It adopts the practices and mentalities of an informal jam session to an extreme extent.\n\nIn a typical jam, there is no one in charge and anyone can make any sound they want at any time they choose. In jam-oriented programming, it's the same. Anyone can add, edit or delete code without any permission. Everyone is admin, nothing is certain and anything can happen. It sounds like chaos and it is. But it's also surprisingly successful, with entire music-making tools appearing overnight out of the multi-headed process and even a published academic paper to accompany it all.\n\nHow and why is this even possible? And what does it tell us about the way we collaborate as developers?",
+  "speakers": [
+    {
+      "slug": "lu-wilson",
+      "name": "Lu Wilson",
+      "role_company": "Organizing without hierarchy"
+    }
+  ],
+  "session_url": "https://gotocph.com/2026/sessions/4153/jam-oriented-programming-bringing-improvizational-jazz-to-engineering",
+  "video_url": null,
+  "other_links": [],
+  "slides_url": "https://files.gotocon.com/uploads/slides/conference_135/4153/original/Jam-oriented%20programming.pdf",
+  "slides_file": null
+}

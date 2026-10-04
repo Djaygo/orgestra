@@ -1,0 +1,31 @@
+{
+  "slug": "ai-corporate-responsibility-and-democratic-legitimacy-e2-80-93-is-devops-the-ans",
+  "organization": "gotocph",
+  "year": 2025,
+  "session_id": 3739,
+  "extracted": true,
+  "title": "AI, Corporate Responsibility, and Democratic Legitimacy – Is DevOps the Answer?",
+  "section": "Keynote",
+  "format": "Keynote",
+  "track": null,
+  "tags": [
+    "Keynote"
+  ],
+  "day": "Thursday Oct 2",
+  "start": "09:00",
+  "end": "10:00",
+  "room": "TAP1, Main Stage",
+  "abstract": "Those engaged in regulatory disruption often allege that AI is opaque. Yet far more complex human institutions function adequately, despite being never fully comprehended in every detail by any one individual.\n\nIn this talk I discuss legitimacy and responsibility as a design requirement for both governments and AI systems, and how good systems engineering practice can deploy AI for *increased* transparency.",
+  "speakers": [
+    {
+      "slug": "joanna-bryson",
+      "name": "Joanna Bryson",
+      "role_company": "Professor of Ethics and Technology, Responsible Data Science for Human Development"
+    }
+  ],
+  "session_url": "https://gotocph.com/2025/sessions/3739/ai-corporate-responsibility-and-democratic-legitimacy-%E2%80%93-is-devops-the-answer",
+  "video_url": "https://www.youtube-nocookie.com/embed/9Yc7Mi7yW7g",
+  "other_links": [],
+  "slides_url": null,
+  "slides_file": null
+}

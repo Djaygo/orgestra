@@ -1,0 +1,33 @@
+{
+  "slug": "security-is-no-longer-for-security-teams-its-for-everyone",
+  "organization": "gotocph",
+  "year": 2026,
+  "session_id": 3976,
+  "extracted": true,
+  "title": "Security Is No Longer For Security Teams. It's For Everyone",
+  "section": "Conference Talk",
+  "format": null,
+  "track": null,
+  "tags": [
+    "security"
+  ],
+  "day": "Thursday Oct 1",
+  "start": "15:45",
+  "end": "16:30",
+  "room": "TAP1, Stage 2",
+  "abstract": "Security is now a core engineering skill, not a niche specialization. Modern developers are expected to understand not only how to build systems, but how to build them securely.\n\nThis talk provides a practical, developer-oriented overview of the essential security knowledge every engineer should possess: core cryptography concepts, authentication and authorization models, secure communication with TLS, common vulnerability classes, relevant standards, and secure ways of working in real teams and pipelines.\n\nThis session emphasizes how security applies to everyday development decisions, from API design and key management to CI/CD integration and code reviews. The goal is to equip developers with a solid security foundation that improves both code quality and system resilience.\n\nAttendees will leave with a clear mental map of modern application security and concrete guidance they can immediately apply in their daily work.",
+  "speakers": [
+    {
+      "slug": "laurentiu-spilca",
+      "name": "Laurentiu Spilcă",
+      "role_company": "Security fundamentals for developers"
+    }
+  ],
+  "session_url": "https://gotocph.com/2026/sessions/3976/security-is-no-longer-for-security-teams-its-for-everyone",
+  "video_url": null,
+  "other_links": [
+    "https://gotocph.com/2026/sessions/3976/slides"
+  ],
+  "slides_url": "__PENDING__",
+  "slides_file": null
+}

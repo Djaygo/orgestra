@@ -1,0 +1,37 @@
+{
+  "slug": "beyond-the-scanner-security-infrastructure-for-ai-generated-software",
+  "organization": "gotocph",
+  "year": 2026,
+  "session_id": 4185,
+  "extracted": true,
+  "title": "Beyond the Scanner: Security Infrastructure for AI-Generated Software",
+  "section": "Conference Talk",
+  "format": null,
+  "track": null,
+  "tags": [
+    "security",
+    "artificial intelligence (AI)"
+  ],
+  "day": "Friday Oct 2",
+  "start": "10:15",
+  "end": "11:00",
+  "room": "TAP1, Main Stage",
+  "abstract": "AI-generated software changes the economics of security. At Lovable scale -- 60M+ generated apps, 1M+ new apps per week, and 700TB+ of code -- traditional DevSecOps assumptions fail: there may be no pull request, no expert developer, and no practical way to deeply scan or manually triage every change.\n\nThis talk shows how Lovable built a fleet-scale security scanning architecture for that reality. We combine deterministic scanners for cheap, broad, repeatable coverage with selectively invoked LLM reasoning for context, intent, reachability, and remediation. The interesting engineering is in the seam: deterministic scanners ground and gate the LLM; validation loops keep LLM findings honest; confidence buckets, re-scanning, and blast-radius controls make automated remediation safe enough to operate across millions of applications.\n\nThis is a practitioner talk about the infrastructure behind AI-scale security: scan scheduling, cost control, false-positive containment, validation, remediation, and the operating model for securing generated software when human review no longer scales.",
+  "speakers": [
+    {
+      "slug": "clement-pascutto",
+      "name": "Clément Pascutto",
+      "role_company": "Computer Scientist — Software Engineer"
+    },
+    {
+      "slug": "samuel-kelemen",
+      "name": "Samuel Kelemen",
+      "role_company": "Principal Security Engineer at Lovable"
+    }
+  ],
+  "session_url": "https://gotocph.com/2026/sessions/4185/beyond-the-scanner-security-infrastructure-for-ai-generated-software",
+  "video_url": null,
+  "other_links": [],
+  "slides_url": null,
+  "slides_file": null
+}

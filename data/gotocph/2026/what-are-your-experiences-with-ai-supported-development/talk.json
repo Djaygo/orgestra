@@ -1,0 +1,46 @@
+{
+  "slug": "what-are-your-experiences-with-ai-supported-development",
+  "organization": "gotocph",
+  "year": 2026,
+  "session_id": 4161,
+  "extracted": true,
+  "title": "What are YOUR experiences with AI supported development?",
+  "section": "Keynote",
+  "format": "Keynote",
+  "track": null,
+  "tags": [
+    "Keynote"
+  ],
+  "day": "Thursday Oct 1",
+  "start": "09:00",
+  "end": "10:00",
+  "room": "TAP1, Main Stage",
+  "abstract": "Information doesn't just flow from the stage down to the audience. We invite you to an open and honest exchange of experiences with AI-driven development. Speakers from diverse backgrounds are ready to listen and offer guidance.",
+  "speakers": [
+    {
+      "slug": "cole-medin",
+      "name": "Cole Medin",
+      "role_company": "Founder of Dynamous AI"
+    },
+    {
+      "slug": "gojko-adzic",
+      "name": "Gojko Adzic",
+      "role_company": "Human-centered software delivery in the age of AI"
+    },
+    {
+      "slug": "marie-alice-blete",
+      "name": "Marie-Alice Blete",
+      "role_company": "Bridging AI and software"
+    },
+    {
+      "slug": "adam-tornhill",
+      "name": "Adam Tornhill",
+      "role_company": "Software X-Ray in the AI ages"
+    }
+  ],
+  "session_url": "https://gotocph.com/2026/sessions/4161/what-are-your-experiences-with-ai-supported-development",
+  "video_url": null,
+  "other_links": [],
+  "slides_url": null,
+  "slides_file": null
+}

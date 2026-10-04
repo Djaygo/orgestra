@@ -1,0 +1,33 @@
+{
+  "slug": "rethinking-observability-as-a-platform-product",
+  "organization": "gotocph",
+  "year": 2026,
+  "session_id": 3999,
+  "extracted": true,
+  "title": "Rethinking Observability as a Platform Product",
+  "section": "Conference Talk",
+  "format": null,
+  "track": null,
+  "tags": [
+    "platforms",
+    "architecture",
+    "observability"
+  ],
+  "day": "Friday Oct 2",
+  "start": "11:30",
+  "end": "12:15",
+  "room": "TAP1, Stage 1",
+  "abstract": "Many organizations still treat observability as a tooling decision: select a vendor, deploy agents, and expect insight to follow. Yet teams continue to struggle with fragmented signals, rising complexity, and slow incident response. The real issue is rarely the tool itself - it's the absence of a shared foundation and a coherent product experience.\n\nThis talk reframes observability as an internal platform product, designed with clear users, sane defaults, and long-term evolution in mind. Drawing parallels to Kubernetes and platform engineering, we'll explore why powerful primitives are not enough - and why standardization, correlation, and paved paths matter more than features.\n\nWe'll look at how OpenTelemetry provides a vendor-neutral foundation for structured telemetry, decoupling instrumentation from backends and enabling correlation by default. This structured approach not only reduces cognitive load and improves reliability, it also lays the groundwork for AI-assisted debugging and natural language interaction with production systems.\n\nObservability isn't just about collecting more data. It's about designing a platform that makes understanding systems easier - for both humans and machines.",
+  "speakers": [
+    {
+      "slug": "kasper-borg-nissen",
+      "name": "Kasper Borg Nissen",
+      "role_company": "Observability as a platform product"
+    }
+  ],
+  "session_url": "https://gotocph.com/2026/sessions/3999/rethinking-observability-as-a-platform-product",
+  "video_url": null,
+  "other_links": [],
+  "slides_url": "https://files.gotocon.com/uploads/slides/conference_135/3999/original/GOTO%20Copenhagen_%20Rethinking%20Observability%20as%20a%20Platform%20Product.pdf",
+  "slides_file": null
+}

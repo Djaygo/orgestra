@@ -1,0 +1,17 @@
+{
+  "slug": "garth-gilmour",
+  "name": "Garth Gilmour",
+  "role_company": "Learning Consultant at Liberty IT",
+  "role": null,
+  "company": null,
+  "bio": null,
+  "email": null,
+  "photo_url": null,
+  "links": {},
+  "profiles": {
+    "2025": "https://gotocph.com/2025/speakers/4150"
+  },
+  "talks": [
+    "2025/leading-3000-developers-into-the-next-era-of-software-engineering"
+  ]
+}

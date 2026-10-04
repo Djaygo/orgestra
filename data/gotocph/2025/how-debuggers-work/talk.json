@@ -1,0 +1,34 @@
+{
+  "slug": "how-debuggers-work",
+  "organization": "gotocph",
+  "year": 2025,
+  "session_id": 3629,
+  "extracted": true,
+  "title": "How Debuggers Work",
+  "section": "Conference Talk",
+  "format": null,
+  "track": null,
+  "tags": [
+    "programming",
+    "debugging"
+  ],
+  "day": "Wednesday Oct 1",
+  "start": "16:15",
+  "end": "17:00",
+  "room": "TAP1, Room 2",
+  "abstract": "Have you ever set a breakpoint and wondered \"how does this work?\"\n\nSy will demystify the internal workings of debuggers, showing you what's under the hood of tools you use every day.\n\nYou'll learn how debuggers step through code, inspect memory, call functions in the running program and more, giving you a deeper mastery of your debugger and an understanding of fundamental operating systems technologies.",
+  "speakers": [
+    {
+      "slug": "sy-brand",
+      "name": "Sy Brand",
+      "role_company": "C++ Debugger Expert"
+    }
+  ],
+  "session_url": "https://gotocph.com/2025/sessions/3629/how-debuggers-work",
+  "video_url": "https://www.youtube-nocookie.com/embed/-czq9nJQops",
+  "other_links": [
+    "https://gotocph.com/2025/sessions/3629/slides"
+  ],
+  "slides_url": "https://files.gotocon.com/uploads/slides/conference_105/3629/original/How%20Debuggers%20Work%20-%20GOTO%20-%20PDF.pdf",
+  "slides_file": null
+}

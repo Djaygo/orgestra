@@ -1,0 +1,17 @@
+{
+  "slug": "adam-furmanek",
+  "name": "Adam Furmanek",
+  "role_company": "Diving deep into the machine room",
+  "role": null,
+  "company": null,
+  "bio": null,
+  "email": null,
+  "photo_url": null,
+  "links": {},
+  "profiles": {
+    "2026": "https://gotocph.com/2026/speakers/4285"
+  },
+  "talks": [
+    "2026/basics-designs-and-how-we-got-them-wrong"
+  ]
+}

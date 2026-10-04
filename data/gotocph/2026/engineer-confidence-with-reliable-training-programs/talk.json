@@ -1,0 +1,32 @@
+{
+  "slug": "engineer-confidence-with-reliable-training-programs",
+  "organization": "gotocph",
+  "year": 2026,
+  "session_id": 4033,
+  "extracted": true,
+  "title": "Engineer Confidence with Reliable Training Programs",
+  "section": "Conference Talk",
+  "format": null,
+  "track": null,
+  "tags": [
+    "software teams",
+    "strategy"
+  ],
+  "day": "Wednesday",
+  "start": "14:30",
+  "end": "15:15",
+  "room": "TAP1, Stage 2",
+  "abstract": "In 2026, \"Engineering for Reality\" means acknowledging that software ownership is a human challenge as much as a technical one. The mantra \"you ship it, you own it\" only works if engineers have the confidence to face production without fear. Confidence isn't a personality trait—it is an engineered outcome of focused training.\n\nWhen engineers are left to \"sink or swim\", it breeds stress, imposter syndrome, and attrition. To enable them to build and operate software with confidence, we must build their confidence through targeted and reliable learning programs underpinned by Site Reliability Engineering (SRE) principles and best practices.\n\nDrawing on proven methodologies from Google's SRE EDU program, this session provides a blueprint for transforming training from a passive lecture into a reliability-critical asset, one where learning drives confidence, confidence drives behavior, and that behavior repeated over time enables a \"you build it, you ship it, you own it\" culture.\n\nIn this session, you will learn how to:\n\n- Articulate actionable learning objectives that drive confidence. Move beyond vague understanding to concrete, behavior-driven goals—e.g., \"A Student Should Be Able To\" mitigate a realistic production outage in five minutes.\n- Operationalize the training lifecycle. Apply SRE principles to education using the ADDIE model to analyze, design, and implement a curriculum that is instrumented for observability to enable continuous improvement and scale.\n- Make the right level of human investment. Use organizational size and growth rates to determine the appropriate scope and approach to training.\n- Bridge different audiences. Tailor your program to different cohorts who may be more or less excited about new ways of working.",
+  "speakers": [
+    {
+      "slug": "jennifer-petoff",
+      "name": "Jennifer Petoff",
+      "role_company": "Co-Editor, Site Reliability Engineering"
+    }
+  ],
+  "session_url": "https://gotocph.com/2026/sessions/4033/engineer-confidence-with-reliable-training-programs",
+  "video_url": null,
+  "other_links": [],
+  "slides_url": "https://files.gotocon.com/uploads/slides/conference_135/4033/original/%5BJennifer%20Petoff%20GOTO%20Copenhagen%202026%5D%20Engineer%20Confidence%20with%20Reliable%20Training%20Programs.pdf",
+  "slides_file": null
+}

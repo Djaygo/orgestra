@@ -1,0 +1,33 @@
+{
+  "slug": "master-software-architecture-from-simplicity-to-complexity",
+  "organization": "gotocph",
+  "year": 2025,
+  "session_id": 3660,
+  "extracted": true,
+  "title": "Master Software Architecture: From Simplicity to Complexity",
+  "section": "Conference Talk",
+  "format": null,
+  "track": null,
+  "tags": [
+    "architecture"
+  ],
+  "day": "Wednesday Oct 1",
+  "start": "14:15",
+  "end": "15:00",
+  "room": "TAP1, Room 1",
+  "abstract": "Software architecture is undergoing constant evolution. The sooner we understand this as software engineers, the better for us.\n\nInstead of over-complication and cognitive load from the very beginning, let's focus on how to make scaffolding that is easy to understand and develop. At the same time, it is worth remembering not to close the door on ourselves - keep it open as long as possible.\n\nHow do our brains' shortcuts lead us into architectural traps—and paradoxically, how not leveraging these heuristics can be just as dangerous? How does the environment around us shape what is possible, forcing us to adapt or fail?\n\nSmart deployment and release strategies aren't bureaucratic obstacles—they are the very mechanisms that enable painless evolution. Testing isn't just about catching bugs; it is the safety net that lets you swing from simple to complex without breaking your neck. And security? It belongs in every stage of evolution, not just bolted on when you are already struggling under technical debt.\n\nI will share battle scars from projects where we built distributed systems we didn't need, added fancy components that solved imaginary problems, and the surprising success stories where embracing constraints led to elegant solutions.",
+  "speakers": [
+    {
+      "slug": "maciej-jedrzejewski",
+      "name": "Maciej Jedrzejewski",
+      "role_company": "Author of Evolutionary Architecture by Example"
+    }
+  ],
+  "session_url": "https://gotocph.com/2025/sessions/3660/master-software-architecture-from-simplicity-to-complexity",
+  "video_url": "https://www.youtube-nocookie.com/embed/ZCrCqbblXjk",
+  "other_links": [
+    "https://gotocph.com/2025/sessions/3660/slides"
+  ],
+  "slides_url": "https://files.gotocon.com/uploads/slides/conference_105/3660/original/GOTO%20Conference%202025%20-%20Maciej%20Jedrzejewski.pdf",
+  "slides_file": null
+}

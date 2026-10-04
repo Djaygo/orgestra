@@ -1,0 +1,17 @@
+{
+  "slug": "sarah-meiklejohn",
+  "name": "Sarah Meiklejohn",
+  "role_company": "Professor in Cryptography and Security",
+  "role": null,
+  "company": null,
+  "bio": null,
+  "email": null,
+  "photo_url": null,
+  "links": {},
+  "profiles": {
+    "2025": "https://gotocph.com/2025/speakers/3890"
+  },
+  "talks": [
+    "2025/13-years-of-cryptocurrency-de-anonymization-and-counting"
+  ]
+}

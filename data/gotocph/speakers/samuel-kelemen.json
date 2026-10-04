@@ -1,0 +1,17 @@
+{
+  "slug": "samuel-kelemen",
+  "name": "Samuel Kelemen",
+  "role_company": "Principal Security Engineer at Lovable",
+  "role": null,
+  "company": null,
+  "bio": null,
+  "email": null,
+  "photo_url": null,
+  "links": {},
+  "profiles": {
+    "2026": "https://gotocph.com/2026/speakers/4568"
+  },
+  "talks": [
+    "2026/beyond-the-scanner-security-infrastructure-for-ai-generated-software"
+  ]
+}

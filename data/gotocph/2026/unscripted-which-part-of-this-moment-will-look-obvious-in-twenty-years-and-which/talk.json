@@ -1,0 +1,39 @@
+{
+  "slug": "unscripted-which-part-of-this-moment-will-look-obvious-in-twenty-years-and-which",
+  "organization": "gotocph",
+  "year": 2026,
+  "session_id": 4226,
+  "extracted": true,
+  "title": "Unscripted: Which part of this moment will look obvious in twenty years and which will look absurd?",
+  "section": "Conference Talk",
+  "format": "Unscripted stage",
+  "track": null,
+  "tags": [
+    "AI",
+    "Technology",
+    "Future Trends",
+    "AI Agents"
+  ],
+  "day": "Thursday Oct 1",
+  "start": "10:15",
+  "end": "11:00",
+  "room": "Thoughtworks Live Stage",
+  "abstract": "Evan Ratliff spent a year running a company staffed almost entirely by AI agents. Tim Berglund has spent his career explaining new technology to developers, long enough to have watched a few waves come and go.\n\nTwo people with a lot of recent evidence, trying to sort the durable from the ridiculous. No predictions promised.\n\nThis is our unscripted stage. No slides, no script, and no idea where it ends up.",
+  "speakers": [
+    {
+      "slug": "evan-ratliff",
+      "name": "Evan Ratliff",
+      "role_company": "Building a company run entirely by AI"
+    },
+    {
+      "slug": "tim-berglund",
+      "name": "Tim Berglund",
+      "role_company": "VP Developer Relations at IBM"
+    }
+  ],
+  "session_url": "https://gotocph.com/2026/sessions/4226/unscripted-which-part-of-this-moment-will-look-obvious-in-twenty-years-and-which-will-look-absurd",
+  "video_url": null,
+  "other_links": [],
+  "slides_url": "__PENDING__",
+  "slides_file": null
+}

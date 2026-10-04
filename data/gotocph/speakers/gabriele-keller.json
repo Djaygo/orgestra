@@ -1,0 +1,17 @@
+{
+  "slug": "gabriele-keller",
+  "name": "Gabriele Keller",
+  "role_company": "Researching type systems and functional languages",
+  "role": null,
+  "company": null,
+  "bio": null,
+  "email": null,
+  "photo_url": null,
+  "links": {},
+  "profiles": {
+    "2026": "https://gotocph.com/2026/speakers/4290"
+  },
+  "talks": [
+    "2026/functional-programming-for-parallel-and-concurrent-systems-theory-and-practice"
+  ]
+}

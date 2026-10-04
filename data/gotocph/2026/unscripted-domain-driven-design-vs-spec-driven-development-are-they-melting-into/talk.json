@@ -1,0 +1,39 @@
+{
+  "slug": "unscripted-domain-driven-design-vs-spec-driven-development-are-they-melting-into",
+  "organization": "gotocph",
+  "year": 2026,
+  "session_id": 4231,
+  "extracted": true,
+  "title": "Unscripted: Domain-Driven Design vs. Spec-Driven Development, are they melting into the same coin in the age of AI?",
+  "section": "Conference Talk",
+  "format": "Unscripted",
+  "track": null,
+  "tags": [
+    "Domain-Driven Design",
+    "Spec-Driven Development",
+    "AI",
+    "Software Architecture"
+  ],
+  "day": "Friday Oct 2",
+  "start": "14:30",
+  "end": "15:15",
+  "room": null,
+  "abstract": "The question on the table: with AI in the mix, are domain-driven design and spec-driven development still two different things? This is our unscripted stage. No slides, no script, and no idea where it ends up.",
+  "speakers": [
+    {
+      "slug": "xin-yao",
+      "name": "Xin Yao",
+      "role_company": "Bringing sociotechnical thinking into software architecture"
+    },
+    {
+      "slug": "alberto-brandolini",
+      "name": "Alberto Brandolini",
+      "role_company": "EventStorming with its creator"
+    }
+  ],
+  "session_url": "https://gotocph.com/2026/sessions/4231/unscripted-domain-driven-design-vs-spec-driven-development-are-they-melting-into-the-same-coin-in-the-age-of-ai",
+  "video_url": null,
+  "other_links": [],
+  "slides_url": "__PENDING__",
+  "slides_file": null
+}

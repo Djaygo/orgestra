@@ -1,0 +1,31 @@
+{
+  "slug": "a-brief-history-of-artificial-intelligence",
+  "organization": "gotocph",
+  "year": 2026,
+  "session_id": 4010,
+  "extracted": true,
+  "title": "A Brief History of Artificial Intelligence",
+  "section": "Keynote",
+  "format": "Keynote",
+  "track": null,
+  "tags": [
+    "artificial intelligence (AI)"
+  ],
+  "day": "Friday Oct 2",
+  "start": "13:15",
+  "end": "14:15",
+  "room": "TAP1, Main Stage",
+  "abstract": "Up until early 2023, I regularly said AI would always have a bright future—and I didn't mean that as a compliment. Sure, deep learning had made us good at building very impressive classifiers in the decade or so prior, but for so long, human-like intelligence was just five years in the future—and that made me a skeptic. Things are different now, but how much skepticism is still warranted? What is it that we've got on our hands? What changes is modern AI bringing with it? Like with so many other questions, the answers are easier if we understand where we've come from.\n\nBeginning with the Turing Test itself, the famous Dartmouth Conference of 1956, and the Perceptron of 1957, we'll trace decades of disappointment and broken promises as we tried to realize the true potential of computing, at the same time grasping for an understanding of what it means to be human. Taking a close look at various technologies along the way, we'll arrive in the 21st century, the revival of neural networks, the advent of the Transformer, and a revolutionary new technology category that has prompted oracles of weal and woe from our most optimistic and apocalyptic technology prophets.\n\nStanding on the edge of the unknown, what elements of the 75-year-old promise have we realized? A close examination gives us a better view of our immediate future as technologists and insight into what it means to be human.",
+  "speakers": [
+    {
+      "slug": "tim-berglund",
+      "name": "Tim Berglund",
+      "role_company": "VP Developer Relations at IBM"
+    }
+  ],
+  "session_url": "https://gotocph.com/2026/sessions/4010/a-brief-history-of-artificial-intelligence",
+  "video_url": null,
+  "other_links": [],
+  "slides_url": null,
+  "slides_file": null
+}

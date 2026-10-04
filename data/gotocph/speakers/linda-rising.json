@@ -1,0 +1,17 @@
+{
+  "slug": "linda-rising",
+  "name": "Linda Rising",
+  "role_company": "Understanding how human biases shape decisions",
+  "role": null,
+  "company": null,
+  "bio": null,
+  "email": null,
+  "photo_url": null,
+  "links": {},
+  "profiles": {
+    "2026": "https://gotocph.com/2026/speakers/4254"
+  },
+  "talks": [
+    "2026/group-intelligence-what-science-says-about-the-intelligence-of-groups"
+  ]
+}

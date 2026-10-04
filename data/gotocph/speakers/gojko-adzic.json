@@ -1,0 +1,18 @@
+{
+  "slug": "gojko-adzic",
+  "name": "Gojko Adzic",
+  "role_company": "Human-centered software delivery in the age of AI",
+  "role": null,
+  "company": null,
+  "bio": null,
+  "email": null,
+  "photo_url": null,
+  "links": {},
+  "profiles": {
+    "2026": "https://gotocph.com/2026/speakers/4270"
+  },
+  "talks": [
+    "2026/what-are-your-experiences-with-ai-supported-development",
+    "2026/keeping-humans-in-the-loop-with-ai-coding-agents"
+  ]
+}

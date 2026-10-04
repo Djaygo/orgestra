@@ -1,0 +1,17 @@
+{
+  "slug": "marie-alice-blete",
+  "name": "Marie-Alice Blete",
+  "role_company": "Bridging AI and software",
+  "role": null,
+  "company": null,
+  "bio": null,
+  "email": null,
+  "photo_url": null,
+  "links": {},
+  "profiles": {
+    "2026": "https://gotocph.com/2026/speakers/4322"
+  },
+  "talks": [
+    "2026/what-are-your-experiences-with-ai-supported-development"
+  ]
+}

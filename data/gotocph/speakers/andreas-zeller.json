@@ -1,0 +1,17 @@
+{
+  "slug": "andreas-zeller",
+  "name": "Andreas Zeller",
+  "role_company": "Fuzzing and automated debugging in modern software",
+  "role": null,
+  "company": null,
+  "bio": null,
+  "email": null,
+  "photo_url": null,
+  "links": {},
+  "profiles": {
+    "2026": "https://gotocph.com/2026/speakers/4276"
+  },
+  "talks": [
+    "2026/generating-test-inputs-and-interactions-with-the-fandango-fuzzer"
+  ]
+}

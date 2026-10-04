@@ -1,0 +1,33 @@
+{
+  "slug": "the-augmented-forest",
+  "organization": "gotocph",
+  "year": 2026,
+  "session_id": 4170,
+  "extracted": true,
+  "title": "The Augmented Forest",
+  "section": "Keynote",
+  "format": "Keynote",
+  "track": null,
+  "tags": [
+    "AI",
+    "software development",
+    "programming"
+  ],
+  "day": "Friday Oct 2",
+  "start": "16:45",
+  "end": "17:45",
+  "room": "TAP1, Main Stage",
+  "abstract": "As AI genies make programming more joyful in some ways, more fraught in others, how can we as individuals & teams adapt?\n\nHow can we track a rapidly changing landscape of tools & still get stuff done?\n\nHow can we communicate our new powers, strengths & weaknesses, to those without direct experience of programming?\n\nThe Forest & Desert is a dialectical framing of software development as either resource-rich & resource replenishing or continually near starvation.\n\nThe genie promises to intensify both experiences.",
+  "speakers": [
+    {
+      "slug": "kent-beck",
+      "name": "Kent Beck",
+      "role_company": "Creator of Extreme Programming, Co-authored the Agile Manifesto"
+    }
+  ],
+  "session_url": "https://gotocph.com/2026/sessions/4170/the-augmented-forest",
+  "video_url": null,
+  "other_links": [],
+  "slides_url": null,
+  "slides_file": null
+}

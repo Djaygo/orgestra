@@ -1,0 +1,17 @@
+{
+  "slug": "anders-hasle-nielsen",
+  "name": "Anders Hasle Nielsen",
+  "role_company": "Takes human avatars to another level",
+  "role": null,
+  "company": null,
+  "bio": null,
+  "email": null,
+  "photo_url": null,
+  "links": {},
+  "profiles": {
+    "2025": "https://gotocph.com/2025/speakers/4218"
+  },
+  "talks": [
+    "2025/from-human-promise-to-digital-twin-predicting-personality-with-ai-a-case-story"
+  ]
+}

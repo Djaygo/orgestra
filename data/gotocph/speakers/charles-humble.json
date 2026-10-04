@@ -1,0 +1,17 @@
+{
+  "slug": "charles-humble",
+  "name": "Charles Humble",
+  "role_company": "Designing and running sustainable software systems",
+  "role": null,
+  "company": null,
+  "bio": null,
+  "email": null,
+  "photo_url": null,
+  "links": {},
+  "profiles": {
+    "2026": "https://gotocph.com/2026/speakers/4313"
+  },
+  "talks": [
+    "2026/unscripted-what-can-software-learn-from-improvisation"
+  ]
+}

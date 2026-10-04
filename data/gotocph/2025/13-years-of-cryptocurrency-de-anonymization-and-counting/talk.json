@@ -1,0 +1,33 @@
+{
+  "slug": "13-years-of-cryptocurrency-de-anonymization-and-counting",
+  "organization": "gotocph",
+  "year": 2025,
+  "session_id": 3746,
+  "extracted": true,
+  "title": "13 years of cryptocurrency de-anonymization (and counting)",
+  "section": "Keynote",
+  "format": "Keynote",
+  "track": null,
+  "tags": [
+    "blockchain",
+    "Keynote",
+    "security"
+  ],
+  "day": "Wednesday",
+  "start": "17:15",
+  "end": "18:15",
+  "room": "TAP1, Main Stage",
+  "abstract": "Since the early days of Bitcoin, research has shown that it does not achieve meaningful anonymity in terms of allowing its users to spend money without linking their transactions together or back to their real-world identity.\n\nToday, blockchain analysis is a large industry and there are many heuristics that are used in practice to de-anonymize Bitcoin and other cryptocurrencies. This talk presents an overview of this evolution, covering the heuristics that have been developed and analyzing their effectiveness and the confidence we can have in their results.",
+  "speakers": [
+    {
+      "slug": "sarah-meiklejohn",
+      "name": "Sarah Meiklejohn",
+      "role_company": "Professor in Cryptography and Security"
+    }
+  ],
+  "session_url": "https://gotocph.com/2025/sessions/3746/13-years-of-cryptocurrency-de-anonymization-and-counting",
+  "video_url": null,
+  "other_links": [],
+  "slides_url": null,
+  "slides_file": null
+}

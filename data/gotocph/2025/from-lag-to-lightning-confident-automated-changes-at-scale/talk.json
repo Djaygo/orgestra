@@ -1,0 +1,37 @@
+{
+  "slug": "from-lag-to-lightning-confident-automated-changes-at-scale",
+  "organization": "gotocph",
+  "year": 2025,
+  "session_id": 3733,
+  "extracted": true,
+  "title": "From Lag to Lightning: Confident, Automated Changes at Scale",
+  "section": "Conference Talk",
+  "format": null,
+  "track": null,
+  "tags": [
+    "productivity",
+    "(tech) teams"
+  ],
+  "day": "Thursday Oct 2",
+  "start": "15:15",
+  "end": "16:00",
+  "room": "TAP1, Room 2",
+  "abstract": "How do you confidently deploy automated changes—such as dependency updates—across thousands of repositories, in hours instead of weeks? At Netflix, we've reimagined the way code changes and dependency updates are delivered—swiftly, safely, and at scale. In this talk, we'll share how we reimagined our approach to automated changes at scale, blending technical innovation with a focus on developer trust and safety.\n\nWe'll dive into the systems and strategies that enabled us to move from manual, slow updates to a fully automated, zero-touch process. Key to this transformation were advanced dependency management resolution rules, automated SCM changes, and comprehensive artifact observability, allowing us to track and validate every change across a vast codebase.\n\nBut automating at scale only works if engineers are confident in the process. Drawing from Netflix's experience, we'll explore how sharing validation results, feedback loops, and impact analysis data builds trust in automation—empowering teams to embrace rapid, platform-driven changes. We'll discuss how shifting verification left, providing developer self-service insights, and analyzing failure impacts enable both high velocity and robust quality, even as the number of automated changes grows.\n\nFinally, we'll highlight future directions—such as language-agnostic tooling and proactive security measures—offering practical takeaways for any organization looking to accelerate and scale their automated change management with confidence.",
+  "speakers": [
+    {
+      "slug": "aubrey-chipman",
+      "name": "Aubrey Chipman",
+      "role_company": "Keeper of the Netflix Developer Productivity Secrets"
+    },
+    {
+      "slug": "roberto-perez-alcolea",
+      "name": "Roberto Perez Alcolea",
+      "role_company": "Software Engineer at Netflix"
+    }
+  ],
+  "session_url": "https://gotocph.com/2025/sessions/3733/from-lag-to-lightning-confident-automated-changes-at-scale",
+  "video_url": "https://www.youtube-nocookie.com/embed/rfjpzCqBH0k",
+  "other_links": [],
+  "slides_url": "https://files.gotocon.com/uploads/slides/conference_105/3733/original/GOTO_Copenhagen_2025_From_Lag_to_Lightning_Confident_Automated_Changes_at_Scale.pdf",
+  "slides_file": null
+}

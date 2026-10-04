@@ -1,0 +1,32 @@
+{
+  "slug": "making-the-impossible-possible-ten-years-of-flexible-paxos",
+  "organization": "gotocph",
+  "year": 2026,
+  "session_id": 4160,
+  "extracted": true,
+  "title": "Making the Impossible Possible: Ten Years of Flexible Paxos",
+  "section": "Conference Talk",
+  "format": null,
+  "track": null,
+  "tags": [
+    "distributed systems",
+    "concurrency"
+  ],
+  "day": "Thursday",
+  "start": "10:15",
+  "end": "11:00",
+  "room": "TAP1, Stage 2",
+  "abstract": "Distributed consensus lies at the foundation of reliable distributed systems. For decades, Paxos has been the dominant solution. Its quorum requirements were treated as fundamental, shaping both theory and practice across distributed systems. In 2016, we showed that a core assumption behind Paxos was unnecessarily strict. By relaxing its quorum requirements, we introduced Flexible Paxos: a new way of thinking about consensus that opened up a broader design space for fault-tolerant systems.\n\nThis talk revisits the history of consensus, the reasoning that led to Flexible Paxos, and the impact of that result a decade later. Along the way, we will explore how questioning long-standing assumptions can reveal new possibilities in even the most established areas of computing.",
+  "speakers": [
+    {
+      "slug": "heidi-howard",
+      "name": "Heidi Howard",
+      "role_company": "Researching the theory and practice of distributed systems"
+    }
+  ],
+  "session_url": "https://gotocph.com/2026/sessions/4160/making-the-impossible-possible-ten-years-of-flexible-paxos",
+  "video_url": null,
+  "other_links": [],
+  "slides_url": null,
+  "slides_file": null
+}

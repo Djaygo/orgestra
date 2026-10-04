@@ -1,0 +1,31 @@
+{
+  "slug": "garbage-context-garbage-code",
+  "organization": "gotocph",
+  "year": 2026,
+  "session_id": 4220,
+  "extracted": true,
+  "title": "Garbage context, garbage code",
+  "section": "Conference Talk",
+  "format": null,
+  "track": null,
+  "tags": [
+    "code quality"
+  ],
+  "day": "Wednesday Sep 30",
+  "start": "16:45",
+  "end": "17:30",
+  "room": "TAP1, Stage 2",
+  "abstract": "Everyone is trying to get more out of their coding agents with better prompts, more guardrails, and cleverer loops, but the real bottleneck is upstream: what you feed the agent, and how you shape it for a memory that fills up and quietly forgets the middle. This talk is about the craft of turning what you know about your domain into context an agent can actually use, and about knowing when to hand it the reins and when to keep them. Get that right and the code follows; get it wrong, and no amount of clever prompting will save you.",
+  "speakers": [
+    {
+      "slug": "luca-mezzalira",
+      "name": "Luca Mezzalira",
+      "role_company": "Modernizing your system architecture"
+    }
+  ],
+  "session_url": "https://gotocph.com/2026/sessions/4220/garbage-context-garbage-code",
+  "video_url": null,
+  "other_links": [],
+  "slides_url": null,
+  "slides_file": null
+}

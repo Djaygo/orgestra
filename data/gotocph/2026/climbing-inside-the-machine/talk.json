@@ -1,0 +1,31 @@
+{
+  "slug": "climbing-inside-the-machine",
+  "organization": "gotocph",
+  "year": 2026,
+  "session_id": 4166,
+  "extracted": true,
+  "title": "Climbing inside the machine",
+  "section": "Keynote",
+  "format": "Keynote",
+  "track": null,
+  "tags": [
+    "Keynote"
+  ],
+  "day": "Friday Oct 2",
+  "start": "09:00",
+  "end": "10:00",
+  "room": "TAP1, Main Stage",
+  "abstract": "In Helsinki, there is a public playground where children learn how computers work. A six-metre tower you climb into as a data packet and slide out as output. A flowchart hopscotch where you jump through conditional statements. A binary abacus you move with your whole body.\n\nLinda Liukas designed this playground. Some computational ideas translated into physical space beautifully. Others fell apart the moment they had to survive a four-year-old. This is a talk about the distance between an abstraction and a body, and the oldest question in computing: how do you make something complex feel simple, without making it simple?",
+  "speakers": [
+    {
+      "slug": "linda-liukas",
+      "name": "Linda Liukas",
+      "role_company": "Author and co-founder of Rails Girls"
+    }
+  ],
+  "session_url": "https://gotocph.com/2026/sessions/4166/climbing-inside-the-machine",
+  "video_url": null,
+  "other_links": [],
+  "slides_url": null,
+  "slides_file": null
+}

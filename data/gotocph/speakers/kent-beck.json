@@ -1,0 +1,21 @@
+{
+  "slug": "kent-beck",
+  "name": "Kent Beck",
+  "role_company": "Creator of Extreme Programming, Co-authored the Agile Manifesto",
+  "role": null,
+  "company": null,
+  "bio": null,
+  "email": null,
+  "photo_url": null,
+  "links": {},
+  "profiles": {
+    "2025": "https://gotocph.com/2025/speakers/3851",
+    "2026": "https://gotocph.com/2026/speakers/4588"
+  },
+  "talks": [
+    "2025/the-tech-truth-circle-3780",
+    "2025/the-forest-and-the-desert-are-parallel-universes",
+    "2026/the-augmented-forest",
+    "2026/unscripted-what-can-software-learn-from-improvisation"
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "slug": "linda-liukas",
+  "name": "Linda Liukas",
+  "role_company": "Author and co-founder of Rails Girls",
+  "role": null,
+  "company": null,
+  "bio": null,
+  "email": null,
+  "photo_url": null,
+  "links": {},
+  "profiles": {
+    "2026": "https://gotocph.com/2026/speakers/4553"
+  },
+  "talks": [
+    "2026/climbing-inside-the-machine",
+    "2026/unscripted-what-do-children-understand-about-computers-that-adults-have-forgotte"
+  ]
+}

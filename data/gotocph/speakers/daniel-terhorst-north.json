@@ -1,0 +1,17 @@
+{
+  "slug": "daniel-terhorst-north",
+  "name": "Daniel Terhorst-North",
+  "role_company": "Originator of Behavior Driven Development (BDD) & Principal at Dan North & Associates",
+  "role": null,
+  "company": null,
+  "bio": null,
+  "email": null,
+  "photo_url": null,
+  "links": {},
+  "profiles": {
+    "2026": "https://gotocph.com/2026/speakers/4235"
+  },
+  "talks": [
+    "2026/am-i-holding-this-right"
+  ]
+}

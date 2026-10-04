@@ -1,0 +1,31 @@
+{
+  "slug": "making-ai-personal-building-context-rich-ai-tools-with-mcp",
+  "organization": "gotocph",
+  "year": 2025,
+  "session_id": 3741,
+  "extracted": true,
+  "title": "Making AI Personal: Building Context-Rich AI Tools with MCP",
+  "section": "Conference Talk",
+  "format": null,
+  "track": null,
+  "tags": [
+    "programming"
+  ],
+  "day": "Friday Oct 3",
+  "start": "11:15",
+  "end": "12:00",
+  "room": "TAP1, Main Stage",
+  "abstract": "We all have important questions about the data around us: \"What should I work on this week?\", \"How's my side project doing?\", \"Is anyone waiting on me to email them?\" These are perfect questions from a human perspective - natural language queries that get to the heart of what we actually want to know. But until recently, automating these kinds of questions was impossible. They're too ambiguous, they need domain-specific knowledge and external tools to even begin to form an answer. MCP changes that.\n\nBy building a simple server for your personal questions, you can literally ask \"What issues should I look at?\" and get sensible, accurate answers. Spend a couple of hours building your own oracle, and instead of combing through Jira manually, you could be making coffee while a machine does the research for you. In this talk, we'll dive into the Model Context Protocol (MCP) - a surprisingly simple JSON-RPC mechanism that gives AI tools focused access to your data.\n\nYou'll learn how to wrap existing functions or external APIs as MCP endpoints, turning any data source into something AI can query on your behalf. We'll walk through real examples of building agentic access to databases and REST APIs, discuss security considerations, and show the easiest way to build your personal MCP server from scratch.\n\nBy the end, you'll have everything needed to build a personalised MCP server. You'll understand the protocol, see practical implementation patterns, and leave with ideas for automating your workload. Whatever data you have, you'll be able to create AI tools that understand your context and answer the questions that actually matter to you.",
+  "speakers": [
+    {
+      "slug": "kris-jenkins",
+      "name": "Kris Jenkins",
+      "role_company": "Lifelong Computer Geek and Podcast Host"
+    }
+  ],
+  "session_url": "https://gotocph.com/2025/sessions/3741/making-ai-personal-building-context-rich-ai-tools-with-mcp",
+  "video_url": "https://www.youtube-nocookie.com/embed/ekOTT0siHSo",
+  "other_links": [],
+  "slides_url": null,
+  "slides_file": null
+}

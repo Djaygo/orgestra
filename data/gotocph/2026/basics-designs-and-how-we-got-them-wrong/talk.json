@@ -1,0 +1,32 @@
+{
+  "slug": "basics-designs-and-how-we-got-them-wrong",
+  "organization": "gotocph",
+  "year": 2026,
+  "session_id": 4151,
+  "extracted": true,
+  "title": "Basics Designs and How We Got Them Wrong",
+  "section": "Conference Talk",
+  "format": null,
+  "track": null,
+  "tags": [
+    "programming languages",
+    "code quality"
+  ],
+  "day": "Wednesday Sep 30",
+  "start": "10:15",
+  "end": "11:00",
+  "room": "TAP1, Stage 1",
+  "abstract": "We want to write clean code and design software that can last years. However, even basic constructs of programming languages are broken. Strings, collections, async, private members, equality checks and many more - all these things are ill-designed and should be reworked. Do you know why and how?\n\nIn this talk, we're going to revisit the basics of programming languages. We'll see why our interfaces are wrong, why async shouldn't use coroutines, why we shouldn't encapsulate with private members, or why we should replace strings with something better. We'll see the problems and then consider solutions that lead to better language design and better code quality.",
+  "speakers": [
+    {
+      "slug": "adam-furmanek",
+      "name": "Adam Furmanek",
+      "role_company": "Diving deep into the machine room"
+    }
+  ],
+  "session_url": "https://gotocph.com/2026/sessions/4151/basics-designs-and-how-we-got-them-wrong",
+  "video_url": null,
+  "other_links": [],
+  "slides_url": "__PENDING__",
+  "slides_file": null
+}

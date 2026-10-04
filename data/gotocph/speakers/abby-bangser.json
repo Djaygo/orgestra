@@ -1,0 +1,17 @@
+{
+  "slug": "abby-bangser",
+  "name": "Abby Bangser",
+  "role_company": "Platform Engineering Insights from Syntasso delivering Kratix",
+  "role": null,
+  "company": null,
+  "bio": null,
+  "email": null,
+  "photo_url": null,
+  "links": {},
+  "profiles": {
+    "2025": "https://gotocph.com/2025/speakers/3912"
+  },
+  "talks": [
+    "2025/platform-as-a-product-a-deep-dive-into-the-technical-foundations"
+  ]
+}

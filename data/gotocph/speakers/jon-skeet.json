@@ -1,0 +1,17 @@
+{
+  "slug": "jon-skeet",
+  "name": "Jon Skeet",
+  "role_company": "Rekindling your enthusiasm for coding",
+  "role": null,
+  "company": null,
+  "bio": null,
+  "email": null,
+  "photo_url": null,
+  "links": {},
+  "profiles": {
+    "2026": "https://gotocph.com/2026/speakers/4283"
+  },
+  "talks": [
+    "2026/playing-the-long-game-a-hobby-project-for-2029"
+  ]
+}

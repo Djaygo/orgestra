@@ -1,0 +1,19 @@
+{
+  "slug": "lu-wilson",
+  "name": "Lu Wilson",
+  "role_company": "Software Engineer at tldraw",
+  "role": null,
+  "company": null,
+  "bio": null,
+  "email": null,
+  "photo_url": null,
+  "links": {},
+  "profiles": {
+    "2025": "https://gotocph.com/2025/speakers/4056",
+    "2026": "https://gotocph.com/2026/speakers/4298"
+  },
+  "talks": [
+    "2025/beyond-chat-bringing-models-to-the-canvas",
+    "2026/jam-oriented-programming-bringing-improvizational-jazz-to-engineering"
+  ]
+}

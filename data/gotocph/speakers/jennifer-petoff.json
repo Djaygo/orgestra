@@ -1,0 +1,17 @@
+{
+  "slug": "jennifer-petoff",
+  "name": "Jennifer Petoff",
+  "role_company": "Co-Editor, Site Reliability Engineering",
+  "role": null,
+  "company": null,
+  "bio": null,
+  "email": null,
+  "photo_url": null,
+  "links": {},
+  "profiles": {
+    "2026": "https://gotocph.com/2026/speakers/4346"
+  },
+  "talks": [
+    "2026/engineer-confidence-with-reliable-training-programs"
+  ]
+}

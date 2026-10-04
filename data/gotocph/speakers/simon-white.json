@@ -1,0 +1,17 @@
+{
+  "slug": "simon-white",
+  "name": "Simon White",
+  "role_company": "Chairman of TOCICO and Senior Program Manager at WTG",
+  "role": null,
+  "company": null,
+  "bio": null,
+  "email": null,
+  "photo_url": null,
+  "links": {},
+  "profiles": {
+    "2026": "https://gotocph.com/2026/speakers/4564"
+  },
+  "talks": [
+    "2026/unscripted-are-you-measuring-the-right-thing"
+  ]
+}

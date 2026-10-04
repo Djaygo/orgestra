@@ -1,0 +1,31 @@
+{
+  "slug": "from-neural-networks-to-digital-brains-the-next-leap-in-ai",
+  "organization": "gotocph",
+  "year": 2025,
+  "session_id": 3858,
+  "extracted": true,
+  "title": "From Neural Networks to Digital Brains: The Next Leap in AI",
+  "section": "Conference Talk",
+  "format": null,
+  "track": null,
+  "tags": [
+    "artificial intelligence (AI)"
+  ],
+  "day": "Friday Oct 3",
+  "start": "11:15",
+  "end": "12:00",
+  "room": "TAP1, Room 2",
+  "abstract": "Today's machines are computationally powerful, yet they lack a fundamental feature that even the simplest animals possess: the ability to seamlessly interact with our complex and constantly changing world. They can calculate, but they cannot truly adapt.\n\nTo solve this, we looked to the only system known to have mastered this challenge: the brain. At inait, we are building AI with biologically accurate, digital copies of real brains–think physics simulation, not linear algebra equations.\n\nIn this presentation, we will pull back the curtain on these digital brains. We will detail what they are, how their biological accuracy has been validated in large-scale simulations, and how we teach them capabilities. You will learn about our proprietary learning rule—the conceptual equivalent of backpropagation—that enables these brains to learn from interaction and experience, and how this can solve the computational challenges holding back current AI for robotics and physical AI. We will talk about existing showcases of the brain's incredible efficiency of learning, and what the future of this new approach to AI looks like.",
+  "speakers": [
+    {
+      "slug": "daniel-lutgehetmann",
+      "name": "Daniel Lütgehetmann",
+      "role_company": "Leading AI Research & Innovation"
+    }
+  ],
+  "session_url": "https://gotocph.com/2025/sessions/3858/from-neural-networks-to-digital-brains-the-next-leap-in-ai",
+  "video_url": "https://www.youtube-nocookie.com/embed/SpY6dZID41A",
+  "other_links": [],
+  "slides_url": "https://files.gotocon.com/uploads/slides/conference_105/3858/original/GOTO%20Slides%20%E2%80%93%C2%A0Daniel%20Lu%CC%88tgehetmann.pdf",
+  "slides_file": null
+}

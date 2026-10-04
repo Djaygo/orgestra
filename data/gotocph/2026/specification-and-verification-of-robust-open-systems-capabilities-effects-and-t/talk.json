@@ -1,0 +1,29 @@
+{
+  "slug": "specification-and-verification-of-robust-open-systems-capabilities-effects-and-t",
+  "organization": "gotocph",
+  "year": 2026,
+  "session_id": 4182,
+  "extracted": true,
+  "title": "Specification and Verification of Robust Open Systems: Capabilities, Effects, and Trusted Mediation",
+  "section": "Conference Talk",
+  "format": null,
+  "track": null,
+  "tags": [],
+  "day": "Wednesday Sep 30",
+  "start": "10:15",
+  "end": "11:00",
+  "room": "TAP1, Balcony stage: Bug Bash EU",
+  "abstract": "Today's complex software is open: trusted internal code is tightly intertwined with untrusted external code whose behaviour may be unknown, or even adversarial. Writing robust internal code in such settings is challenging — programmers must account for the potential effects of calls to external code even when that code cannot be inspected or trusted. These effects can be limited if internal code is written defensively, restricting the effects of external calls by ensuring that these effects can only be caused through access to certain capabilities.\n\nThis work addresses the specification and verification of robust internal code that relies on encapsulation and object capabilities to limit the effects of external calls. We propose new assertions for capability access, new specifications for bounding the effects of external calls, and a Hoare logic for verifying that a module satisfies its specification even in the presence of external calls.\n\nWe then broaden our scope to the question of risk in the open world. Trusted mediators — such as an escrow — act as intermediaries between mutually distrusting parties who may or may not adhere to agreed protocols. Robust mediator code must not only fulfil its own obligations, but also limit the risk to which the parties are exposed. We address the questions of how such risk can be formally specified, and how we can verify that the mediator's code faithfully adheres to its specification.",
+  "speakers": [
+    {
+      "slug": "sophia-drossopoulou",
+      "name": "Sophia Drossopoulou",
+      "role_company": "Professor at Imperial College London"
+    }
+  ],
+  "session_url": "https://gotocph.com/2026/sessions/4182/specification-and-verification-of-robust-open-systems-capabilities-effects-and-trusted-mediation",
+  "video_url": null,
+  "other_links": [],
+  "slides_url": null,
+  "slides_file": null
+}

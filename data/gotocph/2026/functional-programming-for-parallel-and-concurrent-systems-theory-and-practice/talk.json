@@ -1,0 +1,32 @@
+{
+  "slug": "functional-programming-for-parallel-and-concurrent-systems-theory-and-practice",
+  "organization": "gotocph",
+  "year": 2026,
+  "session_id": 3992,
+  "extracted": true,
+  "title": "Functional Programming for Parallel and Concurrent Systems - Theory and Practice",
+  "section": "Conference Talk",
+  "format": null,
+  "track": null,
+  "tags": [
+    "programming",
+    "concurrency"
+  ],
+  "day": "Wednesday Sep 30",
+  "start": "15:45",
+  "end": "16:30",
+  "room": "TAP1, Stage 2",
+  "abstract": "Since its inception, functional programming has been hailed as an ideal match for parallel and concurrent systems, thanks to its lack of implicit side effects and inherently non-sequential semantics. However, the early promise of effortlessly achieving efficient non-sequential systems has not materialised —and for good reason. However, functional languages do still offer many benefits in this space.\n\nIn this talk, we will explore functional programming approaches for both concurrent and parallel applications, examining how they are applied in practice and why they remain a compelling choice.",
+  "speakers": [
+    {
+      "slug": "gabriele-keller",
+      "name": "Gabriele Keller",
+      "role_company": "Researching type systems and functional languages"
+    }
+  ],
+  "session_url": "https://gotocph.com/2026/sessions/3992/functional-programming-for-parallel-and-concurrent-systems-theory-and-practice",
+  "video_url": null,
+  "other_links": [],
+  "slides_url": "__PENDING__",
+  "slides_file": null
+}

@@ -1,0 +1,17 @@
+{
+  "slug": "diana-gaponcic",
+  "name": "Diana Gaponcic",
+  "role_company": "Designing systems for efficient GPU sharing",
+  "role": null,
+  "company": null,
+  "bio": null,
+  "email": null,
+  "photo_url": null,
+  "links": {},
+  "profiles": {
+    "2026": "https://gotocph.com/2026/speakers/4345"
+  },
+  "talks": [
+    "2026/when-every-flops-counts-gpu-sharing-strategies-at-cern"
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "slug": "the-tech-truth-circle-3780",
+  "organization": "gotocph",
+  "year": 2025,
+  "session_id": 3780,
+  "extracted": true,
+  "title": "The Tech Truth Circle",
+  "section": "Conference Talk",
+  "format": null,
+  "track": null,
+  "tags": [],
+  "day": "Thursday Oct 2",
+  "start": "14:15",
+  "end": "15:00",
+  "room": "TAP1, Thoughtworks Live Stage",
+  "abstract": null,
+  "speakers": [
+    {
+      "slug": "kent-beck",
+      "name": "Kent Beck",
+      "role_company": "Creator of Extreme Programming, Co-authored the Agile Manifesto"
+    },
+    {
+      "slug": "martin-fowler",
+      "name": "Martin Fowler",
+      "role_company": "Pioneer!"
+    }
+  ],
+  "session_url": "https://gotocph.com/2025/sessions/3780/the-tech-truth-circle",
+  "video_url": "https://www.youtube-nocookie.com/embed/ii_rLjQfjp0",
+  "other_links": [],
+  "slides_url": null,
+  "slides_file": null
+}

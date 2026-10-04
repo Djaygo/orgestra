@@ -1,0 +1,33 @@
+{
+  "slug": "when-every-flops-counts-gpu-sharing-strategies-at-cern",
+  "organization": "gotocph",
+  "year": 2026,
+  "session_id": 4032,
+  "extracted": true,
+  "title": "When every FLOPS counts: GPU Sharing Strategies at CERN",
+  "section": "Conference Talk",
+  "format": null,
+  "track": null,
+  "tags": [
+    "hardware",
+    "platforms",
+    "AI systems"
+  ],
+  "day": "Thursday Oct 1",
+  "start": "15:45",
+  "end": "16:30",
+  "room": "TAP1, Main Stage",
+  "abstract": "GPUs and accelerators are changing traditional High Energy Physics (HEP) deployments while also being the key to enabling efficient machine learning. However, their high cost and increasing demand oblige service managers to look into ways to maximize the HW utilization through sharing. While the existing methods are flexible and easy to use, complex use cases still require building custom components on top of the existing device plugin API.\n\nIn this talk we will explore interesting CERN GPU use cases, the infrastructure needed to accommodate them, and the new, exciting way of allocating and sharing GPUs - using Dynamic Resource Allocation (DRA). We go over the multiple options for GPU scheduling: time sharing, MPS, and MIG. We cover the features and limitations of each option and present extensive benchmark results that helped us assign each of our ML and scientific workloads to the most appropriate layout. Finally, we describe how managing GPUs in a centralized way improves resource utilization across interactive and batch workloads while optimizing costs in the long run.",
+  "speakers": [
+    {
+      "slug": "diana-gaponcic",
+      "name": "Diana Gaponcic",
+      "role_company": "Designing systems for efficient GPU sharing"
+    }
+  ],
+  "session_url": "https://gotocph.com/2026/sessions/4032/when-every-flops-counts-gpu-sharing-strategies-at-cern",
+  "video_url": null,
+  "other_links": [],
+  "slides_url": null,
+  "slides_file": null
+}

@@ -1,0 +1,17 @@
+{
+  "slug": "sy-brand",
+  "name": "Sy Brand",
+  "role_company": "C++ Debugger Expert",
+  "role": null,
+  "company": null,
+  "bio": null,
+  "email": null,
+  "photo_url": null,
+  "links": {},
+  "profiles": {
+    "2025": "https://gotocph.com/2025/speakers/3893"
+  },
+  "talks": [
+    "2025/how-debuggers-work"
+  ]
+}

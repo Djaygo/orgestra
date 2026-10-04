@@ -1,0 +1,17 @@
+{
+  "slug": "anders-sveen",
+  "name": "Anders Sveen",
+  "role_company": "Advisor, Developer, Mentor and speaker",
+  "role": null,
+  "company": null,
+  "bio": null,
+  "email": null,
+  "photo_url": null,
+  "links": {},
+  "profiles": {
+    "2026": "https://gotocph.com/2026/speakers/4565"
+  },
+  "talks": [
+    "2026/compliant-not-slow-shipping-every-day-in-a-highly-regulated-environment"
+  ]
+}

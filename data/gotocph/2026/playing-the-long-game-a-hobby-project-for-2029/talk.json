@@ -1,0 +1,31 @@
+{
+  "slug": "playing-the-long-game-a-hobby-project-for-2029",
+  "organization": "gotocph",
+  "year": 2026,
+  "session_id": 3975,
+  "extracted": true,
+  "title": "Playing The Long Game: A Hobby Project For 2029",
+  "section": "Conference Talk",
+  "format": "Slides, Live exploration of the site, Possibly live coding",
+  "track": "ways of working",
+  "tags": [
+    "ways of working"
+  ],
+  "day": "Thursday Oct 1",
+  "start": "14:30",
+  "end": "15:15",
+  "room": "TAP1, Stage 2",
+  "abstract": "When was the last time you built something just because it was interesting? Hobby projects give you something your day job rarely does: freedom. Different constraints, timelines, and motivations. In this session, Jon explores why long-term side projects are one of the best ways to rekindle enthusiasm for coding, and how working on something new can sharpen your craft in unexpected ways.\n\nIn 2024, when the UK general election was announced somewhat unexpectedly, Jon cobbled together a web site tracking the per-seat predictions of various polling companies and commentators. He had so much fun doing this that on the day of the election itself, he registered the domain of election2029.uk - admittedly making a fairly large assumption about the rough date of the next UK general election.\n\n5 years is a very long time in computing, even for a hobby project where time can only be dedicated in intermittent chunks. That leaves lots of time to rethink design choices, explore alternatives, expand the scope of the site beyond initial expectations, find ways of spreading the word about it (without spending much money) and learn all kinds of different lessons. Jon has always found that hobby projects have been an ideal way of learning about new technologies and honing his skills (which are very dubious in terms of web design and development) - doing so on a long timeline has already proven to be richly rewarding.\n\nIn this session we'll look at a few of the technical decisions that have already cropped up, but more importantly thinking about the benefits of hobby projects and how they can be tailored to your own individual whims.",
+  "speakers": [
+    {
+      "slug": "jon-skeet",
+      "name": "Jon Skeet",
+      "role_company": "Rekindling your enthusiasm for coding"
+    }
+  ],
+  "session_url": "https://gotocph.com/2026/sessions/3975/playing-the-long-game-a-hobby-project-for-2029",
+  "video_url": null,
+  "other_links": [],
+  "slides_url": "__PENDING__",
+  "slides_file": null
+}

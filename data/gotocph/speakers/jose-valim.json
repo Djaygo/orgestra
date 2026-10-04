@@ -1,0 +1,17 @@
+{
+  "slug": "jose-valim",
+  "name": "José Valim",
+  "role_company": "Creator of Elixir, Author of Three Technical Books",
+  "role": null,
+  "company": null,
+  "bio": null,
+  "email": null,
+  "photo_url": null,
+  "links": {},
+  "profiles": {
+    "2025": "https://gotocph.com/2025/speakers/3902"
+  },
+  "talks": [
+    "2025/navigating-uncharted-waters-coding-agents-and-language-evolution"
+  ]
+}

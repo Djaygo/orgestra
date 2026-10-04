@@ -1,0 +1,31 @@
+{
+  "slug": "the-validation-first-loop-how-to-ship-production-code-with-ai-coding-assistants",
+  "organization": "gotocph",
+  "year": 2026,
+  "session_id": 4155,
+  "extracted": true,
+  "title": "The Validation-First Loop: How to Ship Production Code with AI Coding Assistants",
+  "section": "Conference Talk",
+  "format": null,
+  "track": null,
+  "tags": [
+    "programming"
+  ],
+  "day": "Friday Oct 2",
+  "start": "11:30",
+  "end": "12:15",
+  "room": "TAP1, Main Stage",
+  "abstract": "AI coding assistants can generate code fast, but without a system around them, the output is unpredictable. Code reviews and tests help, but they don't solve the root problem: the coding agent doesn't understand your codebase, your patterns, or what 'done' looks like.\nThis session introduces a battle-tested engineering loop - Plan, Implement, Validate - that treats AI assistants as true engineers who need architecture docs, project rules, and a validation pipeline, not just a prompt. You'll see how to front-load context so the AI understands your codebase from minute one, structure implementation as manageable tasks the AI can execute reliably, and build a multi-layered validation system that catches issues before they hit production.\n\nThe real unlock isn't better prompts - it's building a system that evolves. When your coding agent makes a mistake, you don't just fix the code; you fix the system that allowed it. By the end, you'll have a concrete, tool-agnostic framework you can apply with any AI coding assistant to consistently ship production-ready code.",
+  "speakers": [
+    {
+      "slug": "cole-medin",
+      "name": "Cole Medin",
+      "role_company": "Founder of Dynamous AI"
+    }
+  ],
+  "session_url": "https://gotocph.com/2026/sessions/4155/the-validation-first-loop-how-to-ship-production-code-with-ai-coding-assistants",
+  "video_url": null,
+  "other_links": [],
+  "slides_url": null,
+  "slides_file": null
+}

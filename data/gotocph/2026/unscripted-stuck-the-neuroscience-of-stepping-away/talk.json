@@ -1,0 +1,38 @@
+{
+  "slug": "unscripted-stuck-the-neuroscience-of-stepping-away",
+  "organization": "gotocph",
+  "year": 2026,
+  "session_id": 4224,
+  "extracted": true,
+  "title": "Unscripted: Stuck? The Neuroscience of Stepping Away.",
+  "section": "Conference Talk",
+  "format": "Unscripted",
+  "track": null,
+  "tags": [
+    "neuroscience",
+    "problem-solving",
+    "learning"
+  ],
+  "day": "Wednesday Sep 30",
+  "start": "14:30",
+  "end": "15:15",
+  "room": "Thoughtworks Live Stage",
+  "abstract": "Stuck on a problem? Barbara Oakley's research says walking away might be the fix. She'll explain what your brain is doing, you might swap your own stories with the person next to you, and Evan Ratliff asks her the rest.\n\nUnscripted, no slides, no script, and no idea where it ends up.",
+  "speakers": [
+    {
+      "slug": "barbara-oakley",
+      "name": "Barbara Oakley",
+      "role_company": "Professor of Engineering at Oakland University"
+    },
+    {
+      "slug": "evan-ratliff",
+      "name": "Evan Ratliff",
+      "role_company": "Building a company run entirely by AI"
+    }
+  ],
+  "session_url": "https://gotocph.com/2026/sessions/4224/unscripted-stuck-the-neuroscience-of-stepping-away",
+  "video_url": null,
+  "other_links": [],
+  "slides_url": "__PENDING__",
+  "slides_file": null
+}

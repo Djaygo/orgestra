@@ -1,0 +1,18 @@
+{
+  "slug": "nathen-harvey",
+  "name": "Nathen Harvey",
+  "role_company": null,
+  "role": null,
+  "company": null,
+  "bio": null,
+  "email": null,
+  "photo_url": null,
+  "links": {},
+  "profiles": {
+    "2026": "https://gotocph.com/2026/speakers/4337"
+  },
+  "talks": [
+    "2026/ai-as-an-amplifier-state-of-ai-assisted-software-development",
+    "2026/unscripted-are-you-measuring-the-right-thing"
+  ]
+}

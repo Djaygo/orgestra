@@ -1,0 +1,33 @@
+{
+  "slug": "keeping-humans-in-the-loop-with-ai-coding-agents",
+  "organization": "gotocph",
+  "year": 2026,
+  "session_id": 3977,
+  "extracted": true,
+  "title": "Keeping Humans In The Loop With AI Coding Agents",
+  "section": "Conference Talk",
+  "format": null,
+  "track": null,
+  "tags": [
+    "quality",
+    "programming",
+    "human factor"
+  ],
+  "day": "Thursday Oct 1",
+  "start": "14:30",
+  "end": "15:15",
+  "room": "TAP1, Main Stage",
+  "abstract": "AI coding agents are becoming increasingly popular. They can dramatically reduce the time to a working prototype. But without structure, speed quickly turns into long-term maintenance risk.\n\nBased on industry research with early adopters, this talk introduces a performance path for AI coding agents. You'll see the different stages AI adopters move through, what benefits each stage unlocks, and the specific practices that help you and your team progress.\n\nExpect to learn how to add guardrails and constraints to automated AI coding agents so they can produce code as good as humans, but significantly faster. You'll explore patterns and practices for keeping humans in the loop, making key decisions deliberately, and creating effective feedback cycles that keep AI agents on the right path.",
+  "speakers": [
+    {
+      "slug": "gojko-adzic",
+      "name": "Gojko Adzic",
+      "role_company": "Human-centered software delivery in the age of AI"
+    }
+  ],
+  "session_url": "https://gotocph.com/2026/sessions/3977/keeping-humans-in-the-loop-with-ai-coding-agents",
+  "video_url": null,
+  "other_links": [],
+  "slides_url": "__PENDING__",
+  "slides_file": null
+}

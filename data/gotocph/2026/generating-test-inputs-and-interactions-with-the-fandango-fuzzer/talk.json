@@ -1,0 +1,32 @@
+{
+  "slug": "generating-test-inputs-and-interactions-with-the-fandango-fuzzer",
+  "organization": "gotocph",
+  "year": 2026,
+  "session_id": 3978,
+  "extracted": true,
+  "title": "Generating Test Inputs and Interactions with the Fandango Fuzzer",
+  "section": "Conference Talk",
+  "format": null,
+  "track": null,
+  "tags": [
+    "quality",
+    "security"
+  ],
+  "day": "Wednesday",
+  "start": "11:30",
+  "end": "12:15",
+  "room": "TAP1, Stage 1",
+  "abstract": "Random test input generators (fuzzers) have become the prime detectors of vulnerabilities in software. While generic fuzzers easily adapt to arbitrary programs under test, they offer very little possibilities to control or shape the generated inputs. In this talk, I present the Fandango test generator for comprehensive generation of complex test inputs and interactions. Fandango combines grammars with predicates over input elements to produce inputs that satisfy all the given predicates. Examples of what such predicates can express include\n\n- input format constraints (\"The `length` field should be equal to the length of the payload\")\n- code features (\"Any variable used must be declared beforehand\")\n- statistical distributions (\"Across all inputs, the `voltage` field must follow a Gaussian distribution, but never exceed 20 mV\")\n- data collections (\"The `credit-card-number` field should come from the Python faker library\")\n- and – all new – protocols (\"After a HELO command, send a 221 response\")\n\nFandango efficiently produces complex file formats and demanding interactions, up to full-fledged programming languages or SSL certificates. This opens the door towards personalized fuzzing, where testers can make use of their own knowledge and LLM knowledge to very effectively fuzz systems. Includes live demos!",
+  "speakers": [
+    {
+      "slug": "andreas-zeller",
+      "name": "Andreas Zeller",
+      "role_company": "Fuzzing and automated debugging in modern software"
+    }
+  ],
+  "session_url": "https://gotocph.com/2026/sessions/3978/generating-test-inputs-and-interactions-with-the-fandango-fuzzer",
+  "video_url": null,
+  "other_links": [],
+  "slides_url": "__PENDING__",
+  "slides_file": null
+}

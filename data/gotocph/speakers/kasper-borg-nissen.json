@@ -1,0 +1,17 @@
+{
+  "slug": "kasper-borg-nissen",
+  "name": "Kasper Borg Nissen",
+  "role_company": "Observability as a platform product",
+  "role": null,
+  "company": null,
+  "bio": null,
+  "email": null,
+  "photo_url": null,
+  "links": {},
+  "profiles": {
+    "2026": "https://gotocph.com/2026/speakers/4330"
+  },
+  "talks": [
+    "2026/rethinking-observability-as-a-platform-product"
+  ]
+}
