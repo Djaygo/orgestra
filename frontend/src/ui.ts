@@ -62,6 +62,22 @@ export function describeTheme(theme: Theme): { label: string; pressed: boolean }
   return { label: `Theme: ${CURRENT[theme]}. Switch to ${SWITCH_TO[theme]}`, pressed: theme !== "system" };
 }
 
+/** The length the server counts: a line break is one character although a browser submits two. */
+export function lengthOf(text: string): number {
+  return text.replaceAll("\r\n", "\n").length;
+}
+
+export function counterText(length: number, max: number): string {
+  return `${length} / ${max}`;
+}
+
+function updateCounter(field: HTMLInputElement | HTMLTextAreaElement): void {
+  const counter = document.querySelector(`[data-counter-for="${field.id}"]`);
+  if (counter && field.maxLength > 0) {
+    counter.textContent = counterText(lengthOf(field.value), field.maxLength);
+  }
+}
+
 export interface ClipboardLike {
   writeText(text: string): Promise<void>;
 }
@@ -271,6 +287,12 @@ function setResultsBusy(event: Event, busy: boolean): void {
 
 function boot(): void {
   bootSearch();
+  document.addEventListener("input", (event) => {
+    const field = event.target as HTMLInputElement | HTMLTextAreaElement | null;
+    if (field?.id) {
+      updateCounter(field);
+    }
+  });
   document.addEventListener("htmx:beforeRequest", (event) => setResultsBusy(event, true));
   document.addEventListener("htmx:afterRequest", (event) => setResultsBusy(event, false));
   const root = documentRoot(document.documentElement);

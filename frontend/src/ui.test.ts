@@ -2,8 +2,10 @@ import { describe, expect, it } from "vitest";
 import {
   applyTheme,
   copyText,
+  counterText,
   describeTheme,
   isTypingTarget,
+  lengthOf,
   nextOption,
   nextTheme,
   readTheme,
@@ -177,5 +179,17 @@ describe("copy link", () => {
       },
     };
     expect(await copyText(refusing, "x")).toBe(false);
+  });
+});
+
+describe("character counter", () => {
+  it("shows the length against the limit", () => {
+    expect(counterText(0, 120)).toBe("0 / 120");
+    expect(counterText(37, 5000)).toBe("37 / 5000");
+  });
+
+  it("counts a line break once, as the server does", () => {
+    expect(counterText("a\r\nb".length, 10)).toBe("4 / 10");
+    expect(counterText(lengthOf("a\r\nb"), 10)).toBe("3 / 10");
   });
 });

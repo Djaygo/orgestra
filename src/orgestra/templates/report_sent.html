@@ -1,10 +1,11 @@
 {% extends "base.html" %}
+{% from "partials/ui.html" import icon %}
 {% block title %}Report sent · Orgestra{% endblock %}
 {% block content %}
-  <article class="report">
+  <section class="result-page">
+    <span class="result-icon result-icon-success">{{ icon("check-circle", 40) }}</span>
     <h1>Thanks, your report was filed as #{{ number }}</h1>
-    <p>
-      <a href="{{ page or '/' }}">Back to where you were</a>
-    </p>
-  </article>
+    <p class="muted">The people who build this site will read it.</p>
+    <p><a class="btn btn-tonal" href="{{ page or '/' }}">Back to where you were</a></p>
+  </section>
 {% endblock %}
