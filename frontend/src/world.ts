@@ -3,6 +3,7 @@ import { DirectionalLight, HemisphereLight, PerspectiveCamera, Scene, Timer, Web
 import { CSS2DRenderer } from "three/addons/renderers/CSS2DRenderer.js";
 import { Character, createSharedParts, disposeSharedParts } from "./character";
 import { type CastMember, onStageEvent, SAY, SPOTLIGHT } from "./events";
+import { prefersReducedMotion } from "./motion";
 import { type Bounds, randomPoint } from "./wander";
 
 const MAX_PIXEL_RATIO = 2;
@@ -75,14 +76,25 @@ export function mountWorld(container: HTMLElement, cast: CastMember[], events: E
     renderer.setSize(width, height);
     labels.setSize(width, height);
   };
-  const resizeObserver = new ResizeObserver(resize);
+  // Under reduced motion the plaza is one still frame: nobody walks, no bubbles, no loop.
+  const still = prefersReducedMotion(window.matchMedia?.bind(window));
+  const renderFrame = () => {
+    renderer.render(scene, camera);
+    labels.render(scene, camera);
+  };
+  const resizeObserver = new ResizeObserver(() => {
+    resize();
+    if (still) {
+      renderFrame();
+    }
+  });
   resizeObserver.observe(container);
   resize();
 
   let lastSayAt = Number.NEGATIVE_INFINITY;
   const stopSay = onStageEvent(events, SAY, ({ speaker, listener, text }) => {
     const now = performance.now();
-    if (now - lastSayAt < MIN_SAY_GAP_MS) {
+    if (still || now - lastSayAt < MIN_SAY_GAP_MS) {
       return;
     }
     lastSayAt = now;
@@ -101,18 +113,24 @@ export function mountWorld(container: HTMLElement, cast: CastMember[], events: E
   });
 
   const timer = new Timer();
-  renderer.setAnimationLoop((time) => {
-    timer.update(time);
-    const seconds = Math.min(timer.getDelta(), MAX_STEP_SECONDS);
-    for (const character of characters.values()) {
-      if (character.idle && Math.random() < WANDER_CHANCE_PER_SECOND * seconds) {
-        character.wanderTo(randomPoint(bounds));
-      }
-      character.update(seconds, time);
-    }
-    renderer.render(scene, camera);
-    labels.render(scene, camera);
-  });
+  if (still) {
+    renderFrame();
+  }
+  renderer.setAnimationLoop(
+    still
+      ? null
+      : (time) => {
+          timer.update(time);
+          const seconds = Math.min(timer.getDelta(), MAX_STEP_SECONDS);
+          for (const character of characters.values()) {
+            if (character.idle && Math.random() < WANDER_CHANCE_PER_SECOND * seconds) {
+              character.wanderTo(randomPoint(bounds));
+            }
+            character.update(seconds, time);
+          }
+          renderFrame();
+        },
+  );
 
   return () => {
     renderer.setAnimationLoop(null);

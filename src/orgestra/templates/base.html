@@ -11,13 +11,13 @@
     {# Applied before first paint so a stored theme never flashes the other one. #}
     <script>try{var t=localStorage.getItem("theme");if(t==="light"||t==="dark")document.documentElement.dataset.theme=t}catch(e){}</script>
     <link rel="preload" href="/static/fonts/roboto-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
-    <link rel="stylesheet" href="/static/css/legacy.css">
     <link rel="stylesheet" href="/static/css/tokens.css">
     <link rel="stylesheet" href="/static/css/base.css">
     <link rel="stylesheet" href="/static/css/shell.css">
     <link rel="stylesheet" href="/static/css/components.css">
     <link rel="stylesheet" href="/static/css/pages.css">
     <link rel="stylesheet" href="/static/css/discussion.css">
+    <link rel="stylesheet" href="/static/css/stage.css">
     <script src="/static/vendor/htmx.min.js" defer></script>
     <script src="/static/vendor/sse.js" defer></script>
     {% if ui_available %}<script type="module" src="/static/dist/ui.js"></script>{% endif %}
@@ -26,7 +26,7 @@
   <body>
     <a class="skip-link" href="#content">Skip to content</a>
     {% include "partials/icons.html" %}
-    <div id="app" hx-boost="true" hx-target="#main" hx-select="#main" hx-swap="outerHTML">
+    <div id="app" hx-boost="true" hx-target="#main" hx-select="#main" hx-swap="outerHTML transition:true">
       <main id="main" class="main {% block main_class %}{% endblock %}">
         {% block header %}
           <header class="app-bar">

@@ -1,7 +1,6 @@
 /* The app bar and the page frame. */
 
 .main {
-  min-height: 100dvh;
   padding-bottom: var(--space-8);
 }
 

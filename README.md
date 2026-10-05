@@ -2,16 +2,24 @@
 
 Search and personas over the talks and slides of a conference (GOTO Copenhagen to start with).
 
-- **Search**: one search bar; questions are extracted from every talk, and the query is expanded with
-  a thesaurus and typo correction, so "llm agnts" also finds "large language model" and "agents".
+- **Search**: one search bar with predictions while you type (topics, speakers, talk titles); questions
+  are extracted from every talk, and the query is expanded with a thesaurus and typo correction, so
+  "llm agnts" also finds "large language model" and "agents". Results are cards with the matched words
+  highlighted, and filters for the year, talks with slides and talks with video. Press `/` or Ctrl or
+  Cmd+K to search from anywhere.
 - **Slides**: the text of the slide decks is searched too, and a result links to the slide the match is
   on ("Slide 14"). Each result shows badges for why it matched (title, tag, abstract, slide, ...) and
   hovering one shows its score. `uv run python scripts/fetch_slides.py data` downloads the decks (the
   GOTO Copenhagen decks are committed); the first start reads their text and caches it in git-ignored
   `slides.json` files, which takes a few seconds.
-- **Sources**: a sidebar indexes every edition, talk and speaker.
-- **Personas**: each speaker has a page with role, links and contact details (email when public).
-- **Stage**: the speakers walk around a three.js plaza and talk to each other about their talks.
+- **Talks**: the video plays on the page when the talk has one (YouTube or Vimeo), next to the slides,
+  the schedule, related talks and a discussion.
+- **Browse**: every talk of a year, or every speaker, with a filter box. Speaker pages show role, bio
+  and links (email when public).
+- **Stage**: the speakers walk around a three.js plaza at the bottom of the home page and at the end of
+  every other page, and talk to each other about their talks.
+- **Theme**: follows your system; the Theme button switches between light, dark and system. Everything
+  respects reduced motion.
 
 ## Run it
 

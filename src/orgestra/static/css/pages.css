@@ -48,8 +48,8 @@
 .hero {
   display: grid;
   justify-items: center;
-  gap: var(--space-5);
-  padding-top: clamp(var(--space-5), 9vh, var(--space-8));
+  gap: var(--space-4);
+  padding-top: clamp(var(--space-3), 6vh, var(--space-7));
   text-align: center;
 }
 

@@ -14,6 +14,16 @@
   box-sizing: border-box;
 }
 
+@view-transition {
+  navigation: auto;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: var(--dur-2);
+  animation-timing-function: var(--ease-standard);
+}
+
 html {
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;

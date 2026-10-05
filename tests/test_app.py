@@ -104,3 +104,12 @@ def test_home_invites_a_first_search(client):
     assert "<kbd>/</kbd>" in html
     assert 'role="combobox"' in html
     assert 'id="suggestions"' in html
+
+
+def test_boosted_navigation_swaps_pages_with_a_view_transition(client):
+    html = client.get("/").text
+
+    assert 'hx-swap="outerHTML transition:true"' in html
+    assert "/static/css/legacy.css" not in html
+    for sheet in ("tokens", "base", "shell", "components", "pages", "discussion", "stage"):
+        assert f'href="/static/css/{sheet}.css"' in html
