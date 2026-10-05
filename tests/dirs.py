@@ -29,6 +29,13 @@ def write_talk(root: Path, slug: str, **fields: Any) -> Path:
     return folder
 
 
+def write_speaker(root: Path, slug: str, **fields: Any) -> None:
+    folder = root / "conf" / "speakers"
+    folder.mkdir(parents=True, exist_ok=True)
+    speaker = {"slug": slug, "name": slug.title(), "talks": []} | fields
+    (folder / f"{slug}.json").write_text(json.dumps(speaker))
+
+
 def data_dir(tmp_path: Path) -> Path:
     root = tmp_path / "data"
     (root / "conf").mkdir(parents=True)

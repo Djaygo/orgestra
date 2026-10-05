@@ -331,3 +331,109 @@
   gap: var(--space-3);
   grid-template-columns: repeat(auto-fill, minmax(min(100%, 19rem), 1fr));
 }
+
+/* Browse */
+
+.browse {
+  display: grid;
+  gap: var(--space-4);
+  max-width: 52rem;
+}
+
+.browse h1,
+.speaker-head h1 {
+  font-size: var(--text-headline-l);
+}
+
+.browse-filter {
+  max-width: 24rem;
+}
+
+.browse-list {
+  display: grid;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.browse-row {
+  border-top: 1px solid var(--outline-variant);
+}
+
+.browse-link {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: 3.5rem;
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-md);
+  color: var(--on-surface);
+  text-decoration: none;
+}
+
+.browse-link:hover {
+  background: var(--surface-container);
+  text-decoration: none;
+}
+
+.browse-text {
+  display: grid;
+  flex: 1;
+  min-width: 0;
+}
+
+.browse-title {
+  font-weight: 500;
+}
+
+.browse-sub,
+.browse-side {
+  color: var(--on-surface-muted);
+  font-size: var(--text-body-s);
+}
+
+.browse-side {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  white-space: nowrap;
+}
+
+.browse-row-pending .browse-title {
+  color: var(--on-surface-muted);
+  font-weight: 400;
+}
+
+/* Speaker */
+
+.speaker {
+  display: grid;
+  gap: var(--space-6);
+}
+
+.speaker-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: var(--space-5);
+}
+
+.speaker-text {
+  display: grid;
+  flex: 1 1 18rem;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+.speaker-text p {
+  margin: 0;
+}
+
+.speaker-bio {
+  max-width: var(--measure);
+}
+
+.speaker-talks h2 {
+  margin-bottom: var(--space-3);
+  font-size: var(--text-title-l);
+}

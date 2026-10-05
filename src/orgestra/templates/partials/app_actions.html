@@ -1,5 +1,6 @@
 {% from "partials/ui.html" import icon %}
 <div class="app-actions">
+  <a class="action" href="/browse">{{ icon("grid") }}<span class="action-label">Browse</span></a>
   {% if ui_available %}
     <button class="action theme-toggle" type="button" data-theme-toggle aria-label="Theme" aria-pressed="false">
       {{ icon("sun", 20, "theme-sun") }}{{ icon("moon", 20, "theme-moon") }}<span class="action-label">Theme</span>

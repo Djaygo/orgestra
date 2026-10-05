@@ -37,7 +37,9 @@ async function discuss(page) {
   await form.scrollIntoViewIfNeeded();
   await form.locator("select[name=kind]").selectOption("question");
   await form.locator("input[name=name]").fill("Ada");
-  await form.locator("textarea[name=body]").pressSequentially("How does this hold up at scale?", { delay: 50 });
+  await form
+    .locator("textarea[name=body]")
+    .pressSequentially("How does this hold up at scale?", { delay: 50 });
   await form.locator("button[type=submit]").click();
   await page.waitForSelector(".post");
   log("question posted");
@@ -71,7 +73,9 @@ async function reportBug(page) {
   await page.waitForSelector("form.report-form");
   const form = page.locator("form.report-form");
   await form.locator("input[name=title]").pressSequentially("The search box loses my query", { delay: 50 });
-  await form.locator("textarea[name=description]").pressSequentially("I typed a long query, switched tabs and it was gone.", { delay: 40 });
+  await form
+    .locator("textarea[name=description]")
+    .pressSequentially("I typed a long query, switched tabs and it was gone.", { delay: 40 });
   log("report form filled in");
   await pause(page, 2500);
   await page.goBack();

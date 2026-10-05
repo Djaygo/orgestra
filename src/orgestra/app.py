@@ -284,12 +284,39 @@ def talk(request: Request, services: AppServices, *, year: int, slug: str) -> HT
         return services.templates.TemplateResponse(request, "talk.html", context)
 
 
+@router.get("/browse", response_class=HTMLResponse)
+def browse(request: Request, services: AppServices, tab: SearchQuery = "") -> HTMLResponse:
+    """Every talk of one year, or every speaker, with a filter box (the list is filtered in the browser)."""
+    catalog = services.catalog
+    years = catalog.stats().years
+    by_year = Counter(talk.year for talk in catalog.talks.values())
+    selected = (
+        tab
+        if tab == "speakers" or (tab.isdigit() and int(tab) in years)
+        else str(years[0] if years else "speakers")
+    )
+    talks = sorted(
+        (talk for talk in catalog.talks.values() if selected.isdigit() and talk.year == int(selected)),
+        key=lambda talk: (not talk.extracted, talk.display_title.lower()),
+    )
+    context = {
+        "tabs": [(str(year), by_year[year]) for year in years] + [("speakers", len(catalog.speakers))],
+        "selected": selected,
+        "talks": talks,
+        "speakers": sorted(catalog.speakers.values(), key=lambda speaker: speaker.name.casefold()),
+    }
+    return services.templates.TemplateResponse(request, "browse.html", context)
+
+
 @router.get("/speakers/{slug}", response_class=HTMLResponse)
 def speaker(request: Request, services: AppServices, slug: str) -> HTMLResponse:
     found = services.catalog.speakers.get(slug)
     if found is None:
         raise HTTPException(status_code=404, detail="Speaker not found")
-    context = {"speaker": found, "talks": services.catalog.talks_of(found)}
+    talks = sorted(
+        services.catalog.talks_of(found), key=lambda talk: (-talk.year, talk.display_title.lower())
+    )
+    context = {"speaker": found, "talks": talks}
     return services.templates.TemplateResponse(request, "speaker.html", context)
 
 

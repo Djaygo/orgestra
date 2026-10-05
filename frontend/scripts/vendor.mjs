@@ -16,5 +16,8 @@ copyFileSync(
 const fonts = new URL("../../src/orgestra/static/fonts/", import.meta.url);
 mkdirSync(fonts, { recursive: true });
 const roboto = "../node_modules/@fontsource-variable/roboto/";
-copyFileSync(new URL(`${roboto}files/roboto-latin-wght-normal.woff2`, import.meta.url), new URL("roboto-latin-wght-normal.woff2", fonts));
+copyFileSync(
+  new URL(`${roboto}files/roboto-latin-wght-normal.woff2`, import.meta.url),
+  new URL("roboto-latin-wght-normal.woff2", fonts),
+);
 copyFileSync(new URL(`${roboto}LICENSE`, import.meta.url), new URL("roboto-LICENSE.txt", fonts));

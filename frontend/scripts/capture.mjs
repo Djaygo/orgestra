@@ -26,9 +26,14 @@ const PAGES = [
   { name: "results-filtered", path: "/search?q=automation&year=2025&slides=1" },
   { name: "no-results", path: "/search?q=zzzxqj" },
   { name: "talk-video", path: VIDEO_TALK },
-  { name: "talk-slides", path: "/talks/2025/how-fast-can-you-parse-a-file-with-1-billion-rows-of-weather-data-using-java" },
+  {
+    name: "talk-slides",
+    path: "/talks/2025/how-fast-can-you-parse-a-file-with-1-billion-rows-of-weather-data-using-java",
+  },
   { name: "talk-pending", path: "/talks/2025/residues-time-change-and-uncertainty-in-software-architecture" },
   { name: "speaker", path: "/speakers/kevlin-henney" },
+  { name: "browse", path: "/browse" },
+  { name: "browse-speakers", path: "/browse?tab=speakers" },
   { name: "report", path: "/report?from=/" },
   { name: "not-found", path: "/talks/2025/nope" },
 ];
@@ -88,12 +93,6 @@ for (const viewport of VIEWPORTS) {
       if (!only || only.includes(name)) {
         await shoot(context, name, viewport, scheme, path);
       }
-    }
-    if (!only || only.includes("sources")) {
-      await shoot(context, "sources", viewport, scheme, "/search?q=automation", async (page) => {
-        await page.locator(".sources-button, [data-sources-toggle]").first().click();
-        await page.waitForTimeout(500);
-      });
     }
     await context.close();
   }

@@ -44,11 +44,12 @@ def test_talk_page(client):
     assert "Questions this talk answers" in html
 
 
-def test_speaker_page_shows_contact_info(client):
+def test_speaker_page_shows_links_as_chips_and_hides_what_is_missing(client):
     html = client.get("/speakers/sarah-meiklejohn").text
-    assert "Contact" in html
-    assert "No public email address" in html
+    assert "Sarah Meiklejohn" in html
+    assert "Speaker page" in html
     assert "https://gotocph.com/2025/speakers/" in html
+    assert "No public email address" not in html
 
 
 def test_unknown_pages_are_404(client):

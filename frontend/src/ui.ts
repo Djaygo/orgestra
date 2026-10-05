@@ -62,6 +62,30 @@ export function describeTheme(theme: Theme): { label: string; pressed: boolean }
   return { label: `Theme: ${CURRENT[theme]}. Switch to ${SWITCH_TO[theme]}`, pressed: theme !== "system" };
 }
 
+/** Whether a list item's text matches what was typed: every word of the query occurs in it, any order. */
+export function matchesFilter(text: string, query: string): boolean {
+  const haystack = text.toLowerCase();
+  return query
+    .toLowerCase()
+    .split(/\s+/)
+    .filter(Boolean)
+    .every((word) => haystack.includes(word));
+}
+
+function applyFilter(input: HTMLInputElement): void {
+  const list = document.getElementById(input.dataset.filterList ?? "");
+  let visible = 0;
+  for (const item of list?.querySelectorAll<HTMLElement>("[data-filter-text]") ?? []) {
+    const show = matchesFilter(item.dataset.filterText ?? "", input.value);
+    item.hidden = !show;
+    visible += show ? 1 : 0;
+  }
+  const empty = document.querySelector<HTMLElement>("[data-filter-empty]");
+  if (empty) {
+    empty.hidden = visible > 0;
+  }
+}
+
 /** The length the server counts: a line break is one character although a browser submits two. */
 export function lengthOf(text: string): number {
   return text.replaceAll("\r\n", "\n").length;
@@ -291,6 +315,9 @@ function boot(): void {
     const field = event.target as HTMLInputElement | HTMLTextAreaElement | null;
     if (field?.id) {
       updateCounter(field);
+    }
+    if (field instanceof HTMLInputElement && field.dataset.filterList) {
+      applyFilter(field);
     }
   });
   document.addEventListener("htmx:beforeRequest", (event) => setResultsBusy(event, true));

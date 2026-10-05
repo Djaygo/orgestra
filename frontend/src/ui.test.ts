@@ -6,6 +6,7 @@ import {
   describeTheme,
   isTypingTarget,
   lengthOf,
+  matchesFilter,
   nextOption,
   nextTheme,
   readTheme,
@@ -191,5 +192,18 @@ describe("character counter", () => {
   it("counts a line break once, as the server does", () => {
     expect(counterText("a\r\nb".length, 10)).toBe("4 / 10");
     expect(counterText(lengthOf("a\r\nb"), 10)).toBe("3 / 10");
+  });
+});
+
+describe("list filter", () => {
+  it("matches when every word of the query is in the text, in any order, ignoring case", () => {
+    expect(matchesFilter("Kubernetes at Scale", "kub")).toBe(true);
+    expect(matchesFilter("Kubernetes at Scale", "SCALE kub")).toBe(true);
+    expect(matchesFilter("Kubernetes at Scale", "scale zzz")).toBe(false);
+  });
+
+  it("matches everything for a blank query", () => {
+    expect(matchesFilter("anything", "")).toBe(true);
+    expect(matchesFilter("anything", "   ")).toBe(true);
   });
 });
