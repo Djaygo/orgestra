@@ -64,7 +64,9 @@ def years_of(html: str) -> list[str]:
 
 
 def chip_count(html: str, label: str) -> int:
-    return int(re.search(rf">{label}<span class=\"chip-count\">(\d+)</span>", html)[1])
+    found = re.search(rf">{label}<span class=\"chip-count\">(\d+)</span>", html)
+    assert found, f"no {label} chip with a count"
+    return int(found[1])
 
 
 def test_a_year_filter_narrows_the_cards_but_not_the_counts(client):
