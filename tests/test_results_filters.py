@@ -157,3 +157,13 @@ def test_a_talk_without_details_invents_no_speaker_and_names_its_conference(clie
 
     assert "Speakers not listed yet" in html
     assert "GOTO Copenhagen · 2026" in html
+
+
+def test_the_results_have_one_heading_that_follows_live_searches(client):
+    page = client.get("/search", params={"q": "automation"}).text
+    fragment = client.get("/search", params={"q": "agents"}, headers={"HX-Request": "true"}).text
+
+    assert page.count("<h1") == 1
+    assert "Search results for “automation”" in page
+    assert fragment.count("<h1") == 1
+    assert "Search results for “agents”" in fragment

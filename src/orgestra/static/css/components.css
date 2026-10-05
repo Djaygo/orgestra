@@ -478,7 +478,10 @@ mark {
 .tag {
   position: relative;
   z-index: 1;
-  padding: 0.125rem var(--space-3);
+  display: inline-flex;
+  align-items: center;
+  min-height: 1.5rem;
+  padding: 0 var(--space-3);
   border-radius: var(--radius-full);
   background: var(--surface-container-high);
   color: var(--on-surface-muted);
@@ -503,7 +506,9 @@ mark {
 
 .match {
   position: relative;
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  min-height: 1.5rem;
   margin: 0 var(--space-1) var(--space-1) 0;
   padding: 0 var(--space-2);
   border: 1px solid var(--outline-variant);
@@ -582,4 +587,18 @@ mark {
 .question p {
   margin: 0 0 var(--space-3);
   color: var(--on-surface-muted);
+}
+
+/* Touch screens: controls are at least 44px tall. */
+@media (pointer: coarse) {
+  .btn,
+  .chip,
+  .input {
+    min-height: 2.75rem;
+  }
+
+  .text-action,
+  .post-actions summary {
+    min-height: 2.75rem;
+  }
 }

@@ -1,6 +1,7 @@
 {% from "partials/ui.html" import icon, chip %}
 {% from "partials/talk_card.html" import talk_card %}
 <div id="results" class="results">
+  <h1 class="visually-hidden">Search results for “{{ result.query }}”</h1>
   {% if result.hits %}
   <p class="results-summary" role="status">
     {{ total }} talk{{ "" if total == 1 else "s" }} for “{{ result.query }}”
