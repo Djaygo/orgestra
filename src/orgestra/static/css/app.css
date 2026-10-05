@@ -386,6 +386,35 @@ body:has(#sources-toggle:checked) .layout { grid-template-columns: minmax(0, 1fr
 }
 .report-form .button { margin: 0 0.75rem 0 0; }
 
+/* Why a result matched */
+.hit-matches { margin: 0.35rem 0 0; }
+.match {
+  position: relative;
+  display: inline-block;
+  font-size: 12px;
+  padding: 0 0.55rem;
+  margin: 0 0.3rem 0.25rem 0;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--muted);
+}
+.match-slides { color: var(--link); }
+.match-slides:hover { text-decoration: none; background: var(--hover); }
+.match[data-tip]:hover::after, .match[data-tip]:focus::after {
+  content: attr(data-tip);
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 0;
+  z-index: 10;
+  white-space: nowrap;
+  padding: 0.15rem 0.5rem;
+  border-radius: 4px;
+  background: var(--text);
+  color: var(--bg);
+  font-size: 11px;
+}
+
 @media (max-width: 1000px) {
   .layout { grid-template-columns: minmax(0, 1fr); }
   .sidebar { display: none; }

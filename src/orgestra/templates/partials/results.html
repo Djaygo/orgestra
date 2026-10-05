@@ -34,6 +34,20 @@
           {% if hit.talk.day %}<span class="muted">{{ hit.talk.day }} {{ hit.talk.start }} —</span>{% endif %}
           {{ (hit.talk.abstract or "Details of this talk have not been extracted yet.")|summary }}
         </p>
+        {% if hit.matches %}
+          <p class="hit-matches" aria-label="Why this matched">
+            {% for match in hit.matches %}
+              {% if match.field == "slides" and hit.slide_page and hit.talk.slides_url %}
+                <a class="match match-slides"
+                   href="{{ hit.talk.slides_url }}#page={{ hit.slide_page }}"
+                   rel="noopener"
+                   data-tip="{{ match.label }}: {{ '%.1f'|format(match.score) }}">Slide {{ hit.slide_page }}</a>
+              {% else %}
+                <span class="match" tabindex="0" data-tip="{{ match.label }}: {{ '%.1f'|format(match.score) }}">{{ match.label }}</span>
+              {% endif %}
+            {% endfor %}
+          </p>
+        {% endif %}
         {% if hit.talk.tags %}
           <p class="hit-tags">
             {% for tag in hit.talk.tags %}<span class="tag">{{ tag }}</span>{% endfor %}
