@@ -368,7 +368,7 @@ body:has(#sources-toggle:checked) .layout { grid-template-columns: minmax(0, 1fr
 .diff-same { color: var(--faint); }
 
 /* Bug report */
-.report-button { margin-left: auto; color: var(--muted); padding: 0.5rem; border-radius: 4px; }
+.report-button { margin-left: auto; color: var(--muted); padding: 0.5rem; border-radius: 4px; white-space: nowrap; }
 .report-button:hover { background: var(--hover); text-decoration: none; }
 .report-button + .sources-button { margin-left: 0; }
 .home .report-button { position: absolute; top: 1rem; right: 6.5rem; }

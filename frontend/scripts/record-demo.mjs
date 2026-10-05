@@ -5,7 +5,8 @@
 //
 // Options: --base <url> (default http://127.0.0.1:8000), --out <file.webm|file.mp4>,
 // --query <text> (default "llm agnts"; "automation" for the slides tour), --tour full|slides (default
-// full; slides is a zoomed close-up of the match badges). An .mp4 output needs ffmpeg on PATH.
+// full; slides is a zoomed close-up of the match badges and needs an .mp4 output). An .mp4 output needs
+// ffmpeg on PATH.
 // Chromium: CHROMIUM_PATH, else the browser Playwright manages.
 import { execFileSync } from "node:child_process";
 import { mkdtempSync, renameSync, rmSync } from "node:fs";
@@ -78,11 +79,6 @@ async function reportBug(page) {
 
 /** A close-up of the match badges: why each result matched and the slide the match is on. */
 async function slidesTour(page) {
-  await page.addInitScript(() => {
-    document.addEventListener("DOMContentLoaded", () => {
-      document.documentElement.style.zoom = "1.6";
-    });
-  });
   await page.goto(values.base);
   log("home");
   await pause(page, 1500);
@@ -96,14 +92,15 @@ async function slidesTour(page) {
     await pause(page, 1200);
   }
   const slide = page.locator(".match-slides").first();
-  await slide.scrollIntoViewIfNeeded();
+  await slide.evaluate((el) => el.scrollIntoView({ block: "center" }));
   await slide.hover();
   log("slide badge");
   await pause(page, 3000);
   const slideOnly = page.locator(".hit:has(.match-slides):not(:has(.match:not(.match-slides)))").first();
   if (await slideOnly.count()) {
-    await slideOnly.scrollIntoViewIfNeeded();
-    await slideOnly.locator(".match-slides").hover();
+    const badge = slideOnly.locator(".match-slides");
+    await badge.evaluate((el) => el.scrollIntoView({ block: "center" }));
+    await badge.hover();
     log("a talk found only by its slides");
     await pause(page, 3000);
   }
@@ -150,7 +147,10 @@ const browser = await chromium.launch({
   // Software WebGL, so the three.js stage renders in headless and CI browsers too.
   args: ["--use-angle=swiftshader", "--enable-unsafe-swiftshader"],
 });
-const context = await browser.newContext({ viewport: size, recordVideo: { dir: videoDir, size } });
+// The close-up records a small layout viewport (the compact layout) that ffmpeg scales up to `size`.
+const zoomed = values.tour === "slides";
+const viewport = zoomed ? { width: 800, height: 500 } : size;
+const context = await browser.newContext({ viewport, recordVideo: { dir: videoDir, size: viewport } });
 const page = await context.newPage();
 try {
   await (values.tour === "slides" ? slidesTour(page) : tour(page));
@@ -168,6 +168,8 @@ if (out.endsWith(".mp4")) {
     "error",
     "-i",
     recorded,
+    "-vf",
+    `scale=${size.width}:${size.height}:flags=lanczos`,
     "-movflags",
     "+faststart",
     "-pix_fmt",
