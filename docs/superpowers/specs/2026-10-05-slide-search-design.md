@@ -44,9 +44,13 @@ is ("Slide 14"). Every result says why it matched: which fields contributed, and
 ### Search
 
 - `SearchIndex.build(catalog, thesaurus, slides=None)` takes those pages. Without them nothing changes.
-- A talk's slide text is a new field, "slides". Its score for a variant is `SLIDES_WEIGHT` (0.5) times
-  the number of pages the variant appears on, capped at `MAX_SLIDE_PAGES` (3), so a long deck cannot
-  outrank a title match by repetition. Typo correction also knows the slide words.
+- A talk's slide text is a new field, "slides". Its score for a variant is `SLIDES_WEIGHT` (0.4) times
+  the number of pages the variant appears on, capped at `MAX_SLIDE_PAGES` (3). The deck adds at most
+  `SLIDES_WEIGHT * MAX_SLIDE_PAGES` (1.2) to a talk's score in total, summed over every word of the
+  query (the per-word scores are scaled down together), so a long deck cannot outrank a title match by
+  repetition, not even the title match of a talk without details (3.0 * 0.5 = 1.5). Typo correction
+  also knows the slide words. When two variants of a word score the same, the one that sorts first
+  wins, so the badges do not change between starts.
 - A hit remembers `slide_page`: the page that matches the most query concepts (ties: most occurrences,
   then the lowest page number), or `None` when no page matches.
 - Ordering, coverage scaling and the unextracted-talk weight are unchanged.
@@ -81,7 +85,7 @@ is ("Slide 14"). Every result says why it matched: which fields contributed, and
 - `slides.py` with a small PDF built in the test (the project has no PDF writer): pages with text are
   returned with their numbers, a blank page is skipped but still counted, the cache is written and then
   reused (a second call does not call `extract_pages`), a changed file is re-extracted, and an
-  unreadable file gives no pages and does not raise.
+  unreadable file gives no pages and does not raise, as does a data directory that cannot be written.
 - Search: a word found only in a deck ranks that talk, reports the right `slide_page`, is capped at
   three pages, and keeps a title match above a deck-only match; `matches` names the contributing
   fields with scores that add up to the pre-scaling field total; without slides the results equal the

@@ -44,7 +44,7 @@ def test_the_slide_badge_links_to_the_matching_page(client):
 
     assert f'href="{DECK_URL}#page=2"' in html
     assert ">Slide 2<" in html
-    assert 'data-tip="Slides: 0.5"' in html
+    assert 'data-tip="Slides: 0.4"' in html
 
 
 def test_a_title_match_gets_a_plain_badge_with_its_score(client):

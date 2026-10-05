@@ -21,9 +21,11 @@ UNEXTRACTED_WEIGHT = 0.5
 TYPO_MIN_LENGTH = 4
 TYPO_MIN_SIMILARITY = 80
 MAX_QUESTIONS_PER_HIT = 3
-SLIDES_WEIGHT = 0.5
-# Pages a word is counted on, so a long deck cannot outrank a title match by repetition.
+# A deck adds at most SLIDES_WEIGHT * MAX_SLIDE_PAGES to a talk's score, however many words the query has: below
+# a title match even of a talk without details (3.0 * UNEXTRACTED_WEIGHT).
+SLIDES_WEIGHT = 0.4
 MAX_SLIDE_PAGES = 3
+SLIDES_CAP = SLIDES_WEIGHT * MAX_SLIDE_PAGES
 FIELD_LABELS = {
     "title": "Title",
     "tags": "Tag",
@@ -147,7 +149,7 @@ class SearchIndex:
 
 def score_document(doc: Document, concepts: list[Concept]) -> Hit | None:
     """Sum of concept scores, scaled down by the share of concepts the talk does not match."""
-    breakdowns = [concept_breakdown(doc, concept) for concept in concepts]
+    breakdowns = cap_slides([concept_breakdown(doc, concept) for concept in concepts])
     scores = [sum(breakdown.values()) for breakdown in breakdowns]
     matched = sum(1 for score in scores if score > 0)
     if not matched:
@@ -174,12 +176,21 @@ def concept_breakdown(doc: Document, concept: Concept) -> dict[str, float]:
     """Per-field scores of the concept's best-scoring variant (a synonym counts less than the typed word)."""
     typed = terms(concept.label)
     best: dict[str, float] = {}
-    for variant in concept.variants:
+    for variant in sorted(concept.variants):  # a fixed order, so ties give the same badges on every start
         factor = 1.0 if variant == typed else SYNONYM_WEIGHT
         scores = {name: factor * score for name, score in variant_scores(doc, variant).items()}
         if sum(scores.values()) > sum(best.values()):
             best = scores
     return best
+
+
+def cap_slides(breakdowns: list[dict[str, float]]) -> list[dict[str, float]]:
+    """Scale the slide scores down so the deck adds at most SLIDES_CAP over all the query's words."""
+    total = sum(breakdown.get("slides", 0.0) for breakdown in breakdowns)
+    if total <= SLIDES_CAP:
+        return breakdowns
+    factor = SLIDES_CAP / total
+    return [{**breakdown, "slides": breakdown.get("slides", 0.0) * factor} for breakdown in breakdowns]
 
 
 def field_matches(breakdowns: list[dict[str, float]]) -> list[FieldMatch]:

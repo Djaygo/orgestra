@@ -81,3 +81,18 @@ def test_load_slides_reads_the_decks_the_catalog_points_at(tmp_path, catalog):
     loaded = load_slides(tmp_path, type(catalog)(organizations=[], talks=talks, speakers={}))
 
     assert loaded == {with_deck.ref: [SlidePage(1, "Deck text")]}
+
+
+def test_a_read_only_data_directory_still_gives_the_pages(tmp_path, monkeypatch):
+    pdf = tmp_path / "slides.pdf"
+    pdf.write_bytes(make_pdf(["Readable"]))
+    real_write = type(pdf).write_text
+
+    def refuse_cache(self, *args, **kwargs):
+        if self.name == "slides.json":
+            raise PermissionError("read-only file system")
+        return real_write(self, *args, **kwargs)
+
+    monkeypatch.setattr(type(pdf), "write_text", refuse_cache)
+
+    assert load_pages(pdf) == [SlidePage(1, "Readable")]

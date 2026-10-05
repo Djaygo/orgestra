@@ -54,7 +54,12 @@ def load_pages(pdf: Path) -> list[SlidePage]:
     except Exception:  # pypdf raises many error types on damaged files
         logger.warning("could not read the slides at %s", pdf)
         pages = []
-    cache.write_text(json.dumps({**key, "pages": [attrs.asdict(page) for page in pages]}), encoding="utf-8")
+    try:
+        cache.write_text(
+            json.dumps({**key, "pages": [attrs.asdict(page) for page in pages]}), encoding="utf-8"
+        )
+    except OSError:
+        logger.warning("could not write the slide cache at %s", cache)
     return pages
 
 

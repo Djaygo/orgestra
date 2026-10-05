@@ -1,7 +1,19 @@
+from typing import cast
+
 import pytest
 
-from orgestra.search import MAX_SLIDE_PAGES, SLIDES_WEIGHT, SearchIndex, occurrences
+from orgestra.search import (
+    MAX_SLIDE_PAGES,
+    SLIDES_WEIGHT,
+    Document,
+    SearchIndex,
+    concept_breakdown,
+    occurrences,
+)
 from orgestra.slides import SlidePage
+from orgestra.text import Terms
+from orgestra.thesaurus import Concept
+from tests.conftest import make_talk
 
 
 @pytest.fixture
@@ -107,3 +119,43 @@ def test_without_slides_the_results_are_unchanged(catalog, thesaurus):
         assert [(h.talk.ref, h.score) for h in plain.search(query).hits] == [
             (h.talk.ref, h.score) for h in empty.search(query).hits
         ]
+
+
+def test_slides_add_at_most_one_cap_to_a_talk_however_many_words_the_query_has(catalog, thesaurus):
+    pages = [SlidePage(number, "quokka wombat") for number in range(1, 20)]
+    index = SearchIndex.build(catalog, thesaurus, {"2025/llms-in-production": pages})
+
+    hit = index.search("quokka wombat").hits[0]
+
+    slides = next(match for match in hit.matches if match.field == "slides")
+    assert slides.score == pytest.approx(SLIDES_WEIGHT * MAX_SLIDE_PAGES)
+
+
+def test_a_deck_alone_ranks_below_a_title_match_of_a_talk_without_details(catalog, thesaurus):
+    many = [SlidePage(number, "kubernetes") for number in range(1, 40)]
+    index = SearchIndex.build(catalog, thesaurus, {"2025/llms-in-production": many})
+
+    scores = {hit.talk.slug: hit.score for hit in index.search("kubernetes").hits}
+
+    assert scores["kubernetes-unplugged"] > scores["llms-in-production"]
+
+
+def ordered(*variants: Terms) -> frozenset[Terms]:
+    """A stand-in whose iteration order is the order given: the order a set would pick by chance."""
+    return cast("frozenset[Terms]", list(variants))
+
+
+def test_badges_do_not_depend_on_the_order_synonyms_are_tried_in():
+    fields: dict[str, Terms] = {
+        "title": ("a",),
+        "tags": ("b",),
+        "speakers": (),
+        "questions": (),
+        "abstract": ("b",),
+    }
+    doc = Document(make_talk("tie"), fields, [], [], [])
+
+    forward = concept_breakdown(doc, Concept(label="zzz", variants=ordered(("a",), ("b",))))
+    backward = concept_breakdown(doc, Concept(label="zzz", variants=ordered(("b",), ("a",))))
+
+    assert forward == backward
