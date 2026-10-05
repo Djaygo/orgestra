@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
   applyTheme,
+  copyText,
   describeTheme,
   isTypingTarget,
   nextOption,
@@ -152,5 +153,29 @@ describe("prediction list navigation", () => {
   it("has nothing to select without options and ignores other keys", () => {
     expect(nextOption(-1, 0, "ArrowDown")).toBe(-1);
     expect(nextOption(1, 3, "a")).toBe(1);
+  });
+});
+
+describe("copy link", () => {
+  it("writes the text to the clipboard and reports success", async () => {
+    const written: string[] = [];
+    const clipboard = {
+      writeText: async (text: string) => {
+        written.push(text);
+      },
+    };
+
+    expect(await copyText(clipboard, "https://example.test/talk")).toBe(true);
+    expect(written).toEqual(["https://example.test/talk"]);
+  });
+
+  it("reports failure without a clipboard or when writing is refused", async () => {
+    expect(await copyText(undefined, "x")).toBe(false);
+    const refusing = {
+      writeText: async () => {
+        throw new Error("denied");
+      },
+    };
+    expect(await copyText(refusing, "x")).toBe(false);
   });
 });

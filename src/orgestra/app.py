@@ -277,6 +277,7 @@ def talk(request: Request, services: AppServices, *, year: int, slug: str) -> HT
         context = {
             "talk": found,
             "questions": services.index.questions_for(found.ref),
+            "related": services.catalog.related(found),
             "posts": thread(session, found.ref),
             "author_name": discussion_routes.remembered_name(request),
         }

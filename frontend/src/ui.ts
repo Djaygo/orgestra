@@ -62,6 +62,23 @@ export function describeTheme(theme: Theme): { label: string; pressed: boolean }
   return { label: `Theme: ${CURRENT[theme]}. Switch to ${SWITCH_TO[theme]}`, pressed: theme !== "system" };
 }
 
+export interface ClipboardLike {
+  writeText(text: string): Promise<void>;
+}
+
+/** Copy text to the clipboard; false when there is no clipboard (insecure page) or it refuses. */
+export async function copyText(clipboard: ClipboardLike | undefined, text: string): Promise<boolean> {
+  if (!clipboard) {
+    return false;
+  }
+  try {
+    await clipboard.writeText(text);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
 export interface TypingTarget {
   tagName?: string;
   isContentEditable?: boolean;
@@ -168,7 +185,9 @@ function moveSelection(key: string): void {
   const options = [...(suggestionList()?.querySelectorAll<HTMLElement>('[role="option"]') ?? [])];
   const current = options.findIndex((option) => option.getAttribute("aria-selected") === "true");
   const index = nextOption(current, options.length, key);
-  options.forEach((option, position) => option.setAttribute("aria-selected", String(position === index)));
+  for (const [position, option] of options.entries()) {
+    option.setAttribute("aria-selected", String(position === index));
+  }
   const selected = options[index];
   if (selected && input) {
     input.setAttribute("aria-activedescendant", selected.id);
@@ -223,6 +242,26 @@ function bootSearch(): void {
   });
 }
 
+let toastTimer: ReturnType<typeof setTimeout> | undefined;
+
+function showToast(message: string): void {
+  const toast = document.getElementById("toast");
+  if (!toast) {
+    return;
+  }
+  toast.textContent = message;
+  toast.hidden = false;
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => {
+    toast.hidden = true;
+  }, 2400);
+}
+
+async function onCopyLink(): Promise<void> {
+  const copied = await copyText(navigator.clipboard, window.location.href);
+  showToast(copied ? "Link copied" : "Copy the link from the address bar");
+}
+
 function setResultsBusy(event: Event, busy: boolean): void {
   const target = (event as CustomEvent<{ target?: Element }>).detail?.target;
   if (target?.id === "results") {
@@ -239,6 +278,9 @@ function boot(): void {
   syncThemeButtons(theme);
   // Delegated, because boosted navigation replaces the app bar and its button.
   document.addEventListener("click", (event) => {
+    if ((event.target as Element).closest("[data-copy-link]")) {
+      void onCopyLink();
+    }
     if ((event.target as Element).closest("[data-theme-toggle]")) {
       theme = toggleTheme(root, localStorage, theme);
       syncThemeButtons(theme);

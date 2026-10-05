@@ -6,9 +6,11 @@ The JSON files are parsed into pydantic models where they enter; the rest of the
 
 from __future__ import annotations
 
+import re
 from collections import Counter
 from pathlib import Path
 from typing import TypeAlias
+from urllib.parse import urlsplit
 
 import attrs
 from pydantic import BaseModel, ConfigDict, Field, field_validator
@@ -23,6 +25,9 @@ class TalkSpeaker(BaseModel):
 
 
 PENDING_SLIDES = "__PENDING__"
+# Players that may be framed: host -> path prefix of an embed URL. Nothing else is ever put in an iframe.
+PLAYER_HOSTS = {"www.youtube-nocookie.com": "/embed/", "player.vimeo.com": "/video/"}
+VIDEO_ID = re.compile(r"[A-Za-z0-9_-]+")
 
 
 class Talk(BaseModel):
@@ -70,6 +75,22 @@ class Talk(BaseModel):
     def ref(self) -> str:
         """Stable id used in URLs and in speaker files: `<year>/<slug>`."""
         return f"{self.year}/{self.slug}"
+
+    @property
+    def embed_url(self) -> str | None:
+        """The video URL when it is an embed of a known player (https, no credentials or port), else None."""
+        if not self.video_url:
+            return None
+        try:
+            parts = urlsplit(self.video_url)
+            trusted = parts.scheme == "https" and not (parts.username or parts.password or parts.port)
+        except ValueError:  # a malformed port or bracket
+            return None
+        prefix = PLAYER_HOSTS.get(parts.hostname or "")
+        local_path = parts.path.removeprefix(prefix) if prefix else ""
+        if prefix and trusted and parts.path.startswith(prefix) and VIDEO_ID.fullmatch(local_path):
+            return self.video_url
+        return None
 
     @property
     def has_slides(self) -> bool:
@@ -183,6 +204,21 @@ class Catalog:
             for counter in spellings.values()
         ]
         return sorted(merged, key=lambda item: (-item[1], item[0].lower()))
+
+    def related(self, talk: Talk, limit: int = 3) -> list[Talk]:
+        """Talks with details that share tags with this one: most shared first, then shared speakers,
+        then the same year."""
+        tags = {tag.casefold() for tag in talk.tags}
+        speakers = {speaker.slug for speaker in talk.speakers}
+        ranked = []
+        for other in self.talks.values():
+            shared_tags = len(tags & {tag.casefold() for tag in other.tags})
+            if other.ref == talk.ref or not other.extracted or not shared_tags:
+                continue
+            shared_speakers = len(speakers & {speaker.slug for speaker in other.speakers})
+            order = (-shared_tags, -shared_speakers, other.year != talk.year, other.display_title.lower())
+            ranked.append((order, other))
+        return [other for _, other in sorted(ranked, key=lambda pair: pair[0])[:limit]]
 
     def popular_tags(self, limit: int = 6) -> list[str]:
         return [tag for tag, _ in self.tag_counts()[:limit]]

@@ -1,42 +1,18 @@
-import json
-
 import pytest
-from fastapi.testclient import TestClient
 
-from orgestra.app import Settings, create_app
+from tests.dirs import client_for, data_dir, write_talk
 from tests.pdfs import make_pdf
 
 DECK_URL = "https://slides.example.com/deck.pdf"
 
 
-def write_talk(root, slug, **fields):
-    folder = root / "conf" / "2025" / slug
-    folder.mkdir(parents=True)
-    talk = {
-        "slug": slug,
-        "organization": "conf",
-        "year": 2025,
-        "session_id": abs(hash(slug)) % 10_000,
-        "extracted": True,
-        "title": slug.replace("-", " ").title(),
-        "abstract": "A talk about something else.",
-        "speakers": [],
-        "session_url": f"https://example.com/{slug}",
-    } | fields
-    (folder / "talk.json").write_text(json.dumps(talk))
-    return folder
-
-
 @pytest.fixture
 def client(tmp_path):
-    root = tmp_path / "data"
-    (root / "conf").mkdir(parents=True)
-    index = {"slug": "conf", "name": "Conf", "url": "https://example.com", "editions": []}
-    (root / "conf" / "index.json").write_text(json.dumps(index))
+    root = data_dir(tmp_path)
     deck = write_talk(root, "with-deck", slides_url=DECK_URL, slides_file="slides.pdf")
     (deck / "slides.pdf").write_bytes(make_pdf(["Welcome", "Zebra crossing patterns"]))
     write_talk(root, "placeholder-deck", slides_url="__PENDING__", title="Zebra Placeholder Talk")
-    return TestClient(create_app(Settings(data_dir=root, db_path=tmp_path / "test.db")))
+    return client_for(root, tmp_path)
 
 
 def test_the_slide_badge_links_to_the_matching_page(client):
