@@ -9,6 +9,7 @@ data/gotocph/
   <year>/index.json             talk summaries for that edition
   <year>/<talk-slug>/talk.json  title, abstract, schedule, speakers, slide/video links
   <year>/<talk-slug>/slides.pdf slide deck, when downloaded
+  <year>/<talk-slug>/slides.json text cache of the deck, git-ignored, rebuilt by the app
   speakers/<speaker-slug>.json  name, role, bio, links, profile URLs, talks
 ```
 
@@ -17,6 +18,10 @@ scraped yet (only the session URL and id are known). Slide decks are fetched fro
 `https://gotocph.com/<year>/sessions/<id>/slides`, which redirects to
 files.gotocon.com, or 404s when no slides were uploaded. Speaker pages do not
 publish email addresses.
+
+Download the decks with `python scripts/fetch_slides.py data` (it also records `slides_file` in the
+JSON). The schedule extraction left `"__PENDING__"` as `slides_url` for talks without an uploaded deck;
+the app treats it as no slides.
 
 Rebuild with:
 

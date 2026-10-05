@@ -4,7 +4,8 @@
 //   npm run demo -- --out ../demo.webm      # from frontend/
 //
 // Options: --base <url> (default http://127.0.0.1:8000), --out <file.webm|file.mp4>,
-// --query <text> (default "llm agnts"). An .mp4 output needs ffmpeg on PATH.
+// --query <text> (default "llm agnts"; "automation" for the slides tour), --tour full|slides (default
+// full; slides is a zoomed close-up of the match badges). An .mp4 output needs ffmpeg on PATH.
 // Chromium: CHROMIUM_PATH, else the browser Playwright manages.
 import { execFileSync } from "node:child_process";
 import { mkdtempSync, renameSync, rmSync } from "node:fs";
@@ -17,9 +18,13 @@ const { values } = parseArgs({
   options: {
     base: { type: "string", default: "http://127.0.0.1:8000" },
     out: { type: "string", default: "demo.webm" },
-    query: { type: "string", default: "llm agnts" },
+    query: { type: "string" },
+    tour: { type: "string", default: "full" },
   },
 });
+// Words that decks of GOTO Copenhagen cover on slides, so the results mix title, abstract and slide badges.
+const SLIDES_QUERY = "automation";
+const query = values.query ?? (values.tour === "slides" ? SLIDES_QUERY : "llm agnts");
 const size = { width: 1280, height: 800 };
 const pause = (page, ms) => page.waitForTimeout(ms);
 const started = Date.now();
@@ -71,12 +76,45 @@ async function reportBug(page) {
   await page.goBack();
 }
 
+/** A close-up of the match badges: why each result matched and the slide the match is on. */
+async function slidesTour(page) {
+  await page.addInitScript(() => {
+    document.addEventListener("DOMContentLoaded", () => {
+      document.documentElement.style.zoom = "1.6";
+    });
+  });
+  await page.goto(values.base);
+  log("home");
+  await pause(page, 1500);
+  await page.locator("#q").pressSequentially(query, { delay: 110 });
+  await page.keyboard.press("Enter");
+  await page.waitForSelector(".hit-matches");
+  log("results with badges");
+  await pause(page, 3000);
+  for (const badge of (await page.locator(".hit-matches").first().locator(".match").all()).slice(0, 4)) {
+    await badge.hover();
+    await pause(page, 1200);
+  }
+  const slide = page.locator(".match-slides").first();
+  await slide.scrollIntoViewIfNeeded();
+  await slide.hover();
+  log("slide badge");
+  await pause(page, 3000);
+  const slideOnly = page.locator(".hit:has(.match-slides):not(:has(.match:not(.match-slides)))").first();
+  if (await slideOnly.count()) {
+    await slideOnly.scrollIntoViewIfNeeded();
+    await slideOnly.locator(".match-slides").hover();
+    log("a talk found only by its slides");
+    await pause(page, 3000);
+  }
+}
+
 /** The tour: home with the characters talking, a search, People also ask, a talk and a speaker. */
 async function tour(page) {
   await page.goto(values.base);
   log("home");
   await pause(page, 4000);
-  await page.locator("#q").pressSequentially(values.query, { delay: 90 });
+  await page.locator("#q").pressSequentially(query, { delay: 90 });
   await page.keyboard.press("Enter");
   await page.waitForSelector("#results");
   log("results");
@@ -115,7 +153,7 @@ const browser = await chromium.launch({
 const context = await browser.newContext({ viewport: size, recordVideo: { dir: videoDir, size } });
 const page = await context.newPage();
 try {
-  await tour(page);
+  await (values.tour === "slides" ? slidesTour(page) : tour(page));
 } finally {
   await context.close(); // writes the video
   await browser.close();

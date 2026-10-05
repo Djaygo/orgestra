@@ -4,6 +4,11 @@ Search and personas over the talks and slides of a conference (GOTO Copenhagen t
 
 - **Search**: one search bar; questions are extracted from every talk, and the query is expanded with
   a thesaurus and typo correction, so "llm agnts" also finds "large language model" and "agents".
+- **Slides**: the text of the slide decks is searched too, and a result links to the slide the match is
+  on ("Slide 14"). Each result shows badges for why it matched (title, tag, abstract, slide, ...) and
+  hovering one shows its score. `uv run python scripts/fetch_slides.py data` downloads the decks (the
+  GOTO Copenhagen decks are committed); the first start reads their text and caches it in git-ignored
+  `slides.json` files, which takes a few seconds.
 - **Sources**: a sidebar indexes every edition, talk and speaker.
 - **Personas**: each speaker has a page with role, links and contact details (email when public).
 - **Stage**: the speakers walk around a three.js plaza and talk to each other about their talks.
