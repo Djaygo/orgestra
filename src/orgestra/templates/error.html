@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% from "partials/ui.html" import icon, chip %}
+{% block title %}{{ title }} · Orgestra{% endblock %}
+{% block content %}
+  <section class="error-page">
+    <span class="error-icon">{{ icon("compass" if status == 404 else "alert", 40) }}</span>
+    <p class="error-code">{{ status }}</p>
+    <h1>{{ title }}</h1>
+    <p class="muted">{{ message }}</p>
+    {% if popular_tags %}
+      <p class="field-label">Try a topic</p>
+      <div class="chip-row">
+        {% for tag in popular_tags %}{{ chip(tag, href="/search?q=" ~ (tag|urlencode)) }}{% endfor %}
+      </div>
+    {% endif %}
+    <p><a class="btn btn-tonal" href="/">Back to search</a></p>
+  </section>
+{% endblock %}

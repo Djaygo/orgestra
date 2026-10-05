@@ -3,31 +3,46 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light dark">
+    {# Swap the HTML error pages (404, 5xx) into the page like any other; leave 4xx form errors alone. #}
+    <meta name="htmx-config" content='{"responseHandling":[{"code":"204","swap":false},{"code":"[23]..","swap":true},{"code":"404","swap":true,"error":true},{"code":"5..","swap":true,"error":true},{"code":"[4]..","swap":false,"error":true}]}'>
     <title>{% block title %}Orgestra{% endblock %}</title>
     <link rel="icon" href="data:,">
-    <link rel="stylesheet" href="/static/css/app.css">
+    {# Applied before first paint so a stored theme never flashes the other one. #}
+    <script>try{var t=localStorage.getItem("theme");if(t==="light"||t==="dark")document.documentElement.dataset.theme=t}catch(e){}</script>
+    <link rel="preload" href="/static/fonts/roboto-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="stylesheet" href="/static/css/tokens.css">
+    <link rel="stylesheet" href="/static/css/base.css">
+    <link rel="stylesheet" href="/static/css/shell.css">
+    <link rel="stylesheet" href="/static/css/components.css">
+    <link rel="stylesheet" href="/static/css/pages.css">
+    <link rel="stylesheet" href="/static/css/legacy.css">
     <script src="/static/vendor/htmx.min.js" defer></script>
     <script src="/static/vendor/sse.js" defer></script>
+    {% if ui_available %}<script type="module" src="/static/dist/ui.js"></script>{% endif %}
     {% if scene_available %}<script type="module" src="/static/dist/stage.js"></script>{% endif %}
   </head>
   <body>
-    <input type="checkbox" id="sources-toggle" class="visually-hidden">
-    <div id="app" class="layout" hx-boost="true" hx-target="#main" hx-select="#main" hx-swap="outerHTML">
-      {% include "partials/sidebar.html" %}
-      <main id="main" class="{% block main_class %}page{% endblock %}">
+    <a class="skip-link" href="#content">Skip to content</a>
+    {% include "partials/icons.html" %}
+    <div id="app" hx-boost="true" hx-target="#main" hx-select="#main" hx-swap="outerHTML">
+      <main id="main" class="main {% block main_class %}{% endblock %}">
         {% block header %}
-          <header class="topbar">
-            <a href="/" class="logo small" aria-label="Orgestra home">{% include "partials/logo.html" %}</a>
-            {% block searchbox %}
-              {% with live=false, query="" %}
-                {% include "partials/searchbox.html" %}
-              {% endwith %}
-            {% endblock %}
-            {% include "partials/report_button.html" %}
-            <label for="sources-toggle" class="sources-button">Sources</label>
+          <header class="app-bar">
+            <div class="frame app-bar-inner">
+              <a href="/" class="wordmark" aria-label="Orgestra home">{% include "partials/logo.html" %}</a>
+              {% block searchbox %}
+                {% with live=false, query="" %}
+                  {% include "partials/searchbox.html" %}
+                {% endwith %}
+              {% endblock %}
+              {% include "partials/app_actions.html" %}
+            </div>
           </header>
         {% endblock %}
-        {% block content %}{% endblock %}
+        <div id="content" class="frame content" tabindex="-1">
+          {% block content %}{% endblock %}
+        </div>
       </main>
     </div>
     {% include "partials/stage.html" %}

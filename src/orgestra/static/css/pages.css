@@ -1,0 +1,44 @@
+/* Page layouts. */
+
+.content {
+  padding-block: var(--space-6) var(--space-7);
+}
+
+.home .app-bar {
+  position: static;
+  background: transparent;
+  backdrop-filter: none;
+  border-bottom-color: transparent;
+}
+
+.error-page {
+  display: grid;
+  justify-items: start;
+  gap: var(--space-3);
+  max-width: 34rem;
+  margin: var(--space-7) auto;
+}
+
+.error-icon {
+  color: var(--primary);
+}
+
+.error-code {
+  margin: 0;
+  color: var(--on-surface-muted);
+  font-size: var(--text-label);
+  font-weight: 500;
+  letter-spacing: 0.1em;
+}
+
+.error-page h1 {
+  font-size: var(--text-headline-l);
+}
+
+.error-page p {
+  margin: 0;
+}
+
+.error-page .chip-row {
+  margin-bottom: var(--space-3);
+}

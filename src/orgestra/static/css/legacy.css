@@ -144,13 +144,10 @@ a:hover { text-decoration: underline; }
   padding-left: 1.5rem;
   padding-right: 1.5rem;
 }
-.sources-button { margin-left: auto; color: var(--muted); cursor: pointer; padding: 0.5rem; border-radius: 4px; }
-.sources-button:hover { background: var(--hover); }
 
 /* Home: nothing but the logo and the box, centred above the stage. */
 body:has(.home) .layout { grid-template-columns: minmax(0, 1fr); }
 .home { display: flex; flex-direction: column; }
-.home .sources-button { position: absolute; top: 1rem; right: 1.5rem; }
 .hero {
   flex: 1;
   display: flex;
@@ -368,10 +365,6 @@ body:has(#sources-toggle:checked) .layout { grid-template-columns: minmax(0, 1fr
 .diff-same { color: var(--faint); }
 
 /* Bug report */
-.report-button { margin-left: auto; color: var(--muted); padding: 0.5rem; border-radius: 4px; white-space: nowrap; }
-.report-button:hover { background: var(--hover); text-decoration: none; }
-.report-button + .sources-button { margin-left: 0; }
-.home .report-button { position: absolute; top: 1rem; right: 6.5rem; }
 .report { max-width: 720px; }
 .report h1 { font-weight: 400; font-size: 28px; margin: 0.25rem 0 0.75rem; }
 .report-form { display: grid; gap: 1rem; }

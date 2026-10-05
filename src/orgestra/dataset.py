@@ -6,6 +6,7 @@ The JSON files are parsed into pydantic models where they enter; the rest of the
 
 from __future__ import annotations
 
+from collections import Counter
 from pathlib import Path
 from typing import TypeAlias
 
@@ -140,6 +141,12 @@ class Catalog:
         for talks in by_year.values():
             talks.sort(key=lambda talk: (not talk.extracted, talk.display_title.lower()))
         return dict(sorted(by_year.items(), reverse=True))
+
+    def popular_tags(self, limit: int = 6) -> list[str]:
+        """The most used tags, most used first, ties in alphabetical order."""
+        counts = Counter(tag for talk in self.talks.values() for tag in talk.tags if tag.strip())
+        ranked = sorted(counts.items(), key=lambda item: (-item[1], item[0].lower()))
+        return [tag for tag, _ in ranked[:limit]]
 
     def speakers_of(self, talk: Talk) -> list[Speaker]:
         return [self.speakers[s.slug] for s in talk.speakers if s.slug in self.speakers]

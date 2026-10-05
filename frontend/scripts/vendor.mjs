@@ -1,4 +1,4 @@
-// Copy htmx and its SSE extension into the Python package, so the pages work without a Node build.
+// Copy htmx, its SSE extension and the Roboto font into the Python package, so the pages work without a Node build.
 // Run after bumping either package: `npm run vendor`.
 import { copyFileSync, mkdirSync } from "node:fs";
 
@@ -12,3 +12,9 @@ copyFileSync(
   new URL("../node_modules/htmx-ext-sse/dist/sse.min.js", import.meta.url),
   new URL("sse.js", target),
 );
+
+const fonts = new URL("../../src/orgestra/static/fonts/", import.meta.url);
+mkdirSync(fonts, { recursive: true });
+const roboto = "../node_modules/@fontsource-variable/roboto/";
+copyFileSync(new URL(`${roboto}files/roboto-latin-wght-normal.woff2`, import.meta.url), new URL("roboto-latin-wght-normal.woff2", fonts));
+copyFileSync(new URL(`${roboto}LICENSE`, import.meta.url), new URL("roboto-LICENSE.txt", fonts));

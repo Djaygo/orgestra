@@ -12,9 +12,11 @@ from typing import Annotated
 
 import attrs
 from fastapi import APIRouter, Depends, FastAPI, HTTPException, Query, Request
-from fastapi.responses import HTMLResponse, RedirectResponse, StreamingResponse
+from fastapi.exception_handlers import http_exception_handler
+from fastapi.responses import HTMLResponse, JSONResponse, RedirectResponse, Response, StreamingResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
+from starlette.exceptions import HTTPException as StarletteHTTPException
 
 from orgestra.conversations import Conversation, Persona, conversations, personas
 from orgestra.dataset import Catalog, load_catalog
@@ -36,6 +38,7 @@ from orgestra.thesaurus import load_thesaurus
 PACKAGE_DIR = Path(__file__).parent
 REPO_DATA_DIR = PACKAGE_DIR.parents[1] / "data"
 SCENE_ENTRY = PACKAGE_DIR / "static" / "dist" / "stage.js"
+UI_ENTRY = PACKAGE_DIR / "static" / "dist" / "ui.js"
 SearchQuery = Annotated[str, Query(max_length=200)]
 
 
@@ -107,7 +110,12 @@ def transcript_frames(script: Iterator[Conversation]) -> Iterator[Conversation]:
 
 def build_templates(catalog: Catalog, cast: list[Persona]) -> Jinja2Templates:
     # What the layout (sidebar, stage) needs on every page.
-    layout = {"catalog": catalog, "cast_json": cast_json(cast), "scene_available": SCENE_ENTRY.exists()}
+    layout = {
+        "catalog": catalog,
+        "cast_json": cast_json(cast),
+        "scene_available": SCENE_ENTRY.exists(),
+        "ui_available": UI_ENTRY.exists(),
+    }
 
     def layout_context(request: Request) -> dict[str, object]:
         query = f"?{request.url.query}" if request.url.query else ""
@@ -225,6 +233,43 @@ async def conversation_stream(request: Request, services: AppServices) -> Stream
     return StreamingResponse(events(), media_type="text/event-stream", headers=headers)
 
 
+ERROR_PAGES = {
+    404: ("Page not found", "We could not find that page. It may have moved, or the link may be wrong."),
+    500: ("Something went wrong", "That was our mistake, not yours. Please try again in a moment."),
+}
+
+
+def wants_html(request: Request) -> bool:
+    """Browsers and boosted htmx navigations get a page; API clients keep the JSON answer."""
+    return "text/html" in request.headers.get("accept", "") or request.headers.get("HX-Boosted") == "true"
+
+
+def error_page(request: Request, status_code: int) -> HTMLResponse:
+    title, message = ERROR_PAGES.get(status_code, ("Something went wrong", "Please try again in a moment."))
+    services = request.app.state.services
+    context = {
+        "status": status_code,
+        "title": title,
+        "message": message,
+        "popular_tags": services.catalog.popular_tags(),
+    }
+    return services.templates.TemplateResponse(request, "error.html", context, status_code=status_code)
+
+
+async def http_error(request: Request, error: Exception) -> Response:
+    if not isinstance(error, StarletteHTTPException):
+        raise error
+    if not wants_html(request):
+        return await http_exception_handler(request, error)
+    return error_page(request, error.status_code)
+
+
+async def server_error(request: Request, _error: Exception) -> Response:
+    if not wants_html(request):
+        return JSONResponse({"detail": "Internal Server Error"}, status_code=500)
+    return error_page(request, 500)
+
+
 def create_app(settings: Settings | None = None) -> FastAPI:
     app = FastAPI(title="Orgestra")
     resolved = settings or Settings.from_env()
@@ -236,4 +281,6 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     app.include_router(router)
     app.include_router(discussion_routes.router)
     app.include_router(reports_routes.router)
+    app.add_exception_handler(StarletteHTTPException, http_error)
+    app.add_exception_handler(Exception, server_error)
     return app

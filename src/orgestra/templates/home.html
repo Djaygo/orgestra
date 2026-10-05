@@ -1,8 +1,13 @@
 {% extends "base.html" %}
-{% block main_class %}page home{% endblock %}
+{% block main_class %}home{% endblock %}
 {% block header %}
-  {% include "partials/report_button.html" %}
-  <label for="sources-toggle" class="sources-button">Sources</label>
+  <header class="app-bar">
+    <div class="frame app-bar-inner">
+      <span></span>
+      <span></span>
+      {% include "partials/app_actions.html" %}
+    </div>
+  </header>
 {% endblock %}
 {% block content %}
   <section class="hero">
