@@ -42,3 +42,55 @@
 .error-page .chip-row {
   margin-bottom: var(--space-3);
 }
+
+/* Home */
+
+.hero {
+  display: grid;
+  justify-items: center;
+  gap: var(--space-5);
+  padding-top: clamp(var(--space-5), 9vh, var(--space-8));
+  text-align: center;
+}
+
+.hero .searchbox {
+  max-width: 43rem;
+}
+
+.hero-tagline,
+.hero-stats,
+.hero-hint {
+  margin: 0;
+  color: var(--on-surface-muted);
+}
+
+.hero-tagline {
+  font-size: var(--text-title-m);
+}
+
+.hero-stats,
+.hero-hint {
+  font-size: var(--text-body-m);
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-3);
+}
+
+@media (hover: none) {
+  .hero-hint {
+    display: none;
+  }
+}
+
+.hero-try {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2) var(--space-3);
+  max-width: 43rem;
+}

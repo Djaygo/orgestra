@@ -2,11 +2,14 @@ import { describe, expect, it } from "vitest";
 import {
   applyTheme,
   describeTheme,
+  isTypingTarget,
+  nextOption,
   nextTheme,
   readTheme,
   type ThemeRoot,
   type ThemeStorage,
   toggleTheme,
+  wantsSearchFocus,
 } from "./ui";
 
 function memory(initial: Record<string, string> = {}): ThemeStorage & { data: Record<string, string> } {
@@ -100,5 +103,54 @@ describe("theme", () => {
       label: "Theme: dark. Switch to follow your system",
       pressed: true,
     });
+  });
+});
+
+const keys = { ctrlKey: false, metaKey: false, altKey: false, shiftKey: false, target: null };
+
+describe("search shortcuts", () => {
+  it("knows which elements take typing", () => {
+    expect(isTypingTarget({ tagName: "INPUT" })).toBe(true);
+    expect(isTypingTarget({ tagName: "TEXTAREA" })).toBe(true);
+    expect(isTypingTarget({ tagName: "SELECT" })).toBe(true);
+    expect(isTypingTarget({ tagName: "DIV", isContentEditable: true })).toBe(true);
+    expect(isTypingTarget({ tagName: "A" })).toBe(false);
+    expect(isTypingTarget(null)).toBe(false);
+  });
+
+  it("focuses search on / and on Ctrl or Cmd+K outside inputs", () => {
+    expect(wantsSearchFocus({ ...keys, key: "/" })).toBe(true);
+    expect(wantsSearchFocus({ ...keys, key: "k", ctrlKey: true })).toBe(true);
+    expect(wantsSearchFocus({ ...keys, key: "K", metaKey: true })).toBe(true);
+  });
+
+  it("leaves typing and other shortcuts alone", () => {
+    expect(wantsSearchFocus({ ...keys, key: "/", target: { tagName: "INPUT" } })).toBe(false);
+    expect(wantsSearchFocus({ ...keys, key: "k", ctrlKey: true, target: { tagName: "TEXTAREA" } })).toBe(
+      false,
+    );
+    expect(wantsSearchFocus({ ...keys, key: "/", ctrlKey: true })).toBe(false);
+    expect(wantsSearchFocus({ ...keys, key: "k" })).toBe(false);
+    expect(wantsSearchFocus({ ...keys, key: "k", ctrlKey: true, altKey: true })).toBe(false);
+    expect(wantsSearchFocus({ ...keys, key: "a" })).toBe(false);
+  });
+});
+
+describe("prediction list navigation", () => {
+  it("moves down and wraps to the first option", () => {
+    expect(nextOption(-1, 3, "ArrowDown")).toBe(0);
+    expect(nextOption(0, 3, "ArrowDown")).toBe(1);
+    expect(nextOption(2, 3, "ArrowDown")).toBe(0);
+  });
+
+  it("moves up and wraps to the last option", () => {
+    expect(nextOption(-1, 3, "ArrowUp")).toBe(2);
+    expect(nextOption(0, 3, "ArrowUp")).toBe(2);
+    expect(nextOption(2, 3, "ArrowUp")).toBe(1);
+  });
+
+  it("has nothing to select without options and ignores other keys", () => {
+    expect(nextOption(-1, 0, "ArrowDown")).toBe(-1);
+    expect(nextOption(1, 3, "a")).toBe(1);
   });
 });

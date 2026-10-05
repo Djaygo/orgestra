@@ -33,6 +33,7 @@ from orgestra.reports.build import build_tracker
 from orgestra.reports.tracker import IssueTracker
 from orgestra.search import SearchIndex
 from orgestra.slides import load_slides
+from orgestra.suggest import suggest
 from orgestra.thesaurus import load_thesaurus
 
 PACKAGE_DIR = Path(__file__).parent
@@ -162,7 +163,12 @@ router = APIRouter()
 def search_response(request: Request, services: Services, query: str) -> HTMLResponse:
     result = services.index.search(query) if query.strip() else None
     if result is None:
-        return services.templates.TemplateResponse(request, "home.html", {"result": None})
+        home = {
+            "result": None,
+            "popular_tags": services.catalog.popular_tags(),
+            "stats": services.catalog.stats(),
+        }
+        return services.templates.TemplateResponse(request, "home.html", home)
     with db.begin() as session:
         stats = talk_stats(session, [hit.talk.ref for hit in result.hits])
         context = {"result": result, "stats": stats}
@@ -182,6 +188,15 @@ def home(request: Request, services: AppServices, q: SearchQuery = "") -> HTMLRe
 @router.get("/search", response_class=HTMLResponse)
 def search(request: Request, services: AppServices, q: SearchQuery = "") -> HTMLResponse:
     return search_response(request, services, q)
+
+
+@router.get("/suggest", response_class=HTMLResponse)
+def suggestions(request: Request, services: AppServices, q: SearchQuery = "") -> HTMLResponse:
+    """Predictions for the search box, as list items for the listbox under it."""
+    context = {"suggestions": suggest(services.catalog, q)}
+    response = services.templates.TemplateResponse(request, "partials/suggest.html", context)
+    response.headers["Cache-Control"] = "no-store"
+    return response
 
 
 @router.get("/lucky")

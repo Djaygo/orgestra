@@ -72,6 +72,14 @@ class Talk(BaseModel):
         return f"{self.year}/{self.slug}"
 
     @property
+    def has_slides(self) -> bool:
+        return bool(self.slides_url)
+
+    @property
+    def has_video(self) -> bool:
+        return bool(self.video_url)
+
+    @property
     def display_title(self) -> str:
         return self.title or self.slug.replace("-", " ").capitalize()
 
@@ -126,6 +134,17 @@ class OrganizationData:
 
 
 @attrs.frozen
+class CatalogStats:
+    """The numbers the home page quotes."""
+
+    talks: int
+    speakers: int
+    with_slides: int
+    with_video: int
+    years: list[int]
+
+
+@attrs.frozen
 class Catalog:
     """Everything the app knows about, keyed for lookup."""
 
@@ -142,11 +161,31 @@ class Catalog:
             talks.sort(key=lambda talk: (not talk.extracted, talk.display_title.lower()))
         return dict(sorted(by_year.items(), reverse=True))
 
+    def stats(self) -> CatalogStats:
+        talks = list(self.talks.values())
+        return CatalogStats(
+            talks=len(talks),
+            speakers=len(self.speakers),
+            with_slides=sum(talk.has_slides for talk in talks),
+            with_video=sum(talk.has_video for talk in talks),
+            years=sorted({talk.year for talk in talks}, reverse=True),
+        )
+
+    def tag_counts(self) -> list[tuple[str, int]]:
+        """Tags merged by case ("AI agents", "AI Agents"), most used first, in their most common spelling."""
+        spellings: dict[str, Counter[str]] = {}
+        for talk in self.talks.values():
+            for tag in talk.tags:
+                if tag.strip():
+                    spellings.setdefault(tag.casefold(), Counter())[tag] += 1
+        merged = [
+            (min(counter, key=lambda spelling: (-counter[spelling], spelling)), sum(counter.values()))
+            for counter in spellings.values()
+        ]
+        return sorted(merged, key=lambda item: (-item[1], item[0].lower()))
+
     def popular_tags(self, limit: int = 6) -> list[str]:
-        """The most used tags, most used first, ties in alphabetical order."""
-        counts = Counter(tag for talk in self.talks.values() for tag in talk.tags if tag.strip())
-        ranked = sorted(counts.items(), key=lambda item: (-item[1], item[0].lower()))
-        return [tag for tag, _ in ranked[:limit]]
+        return [tag for tag, _ in self.tag_counts()[:limit]]
 
     def speakers_of(self, talk: Talk) -> list[Speaker]:
         return [self.speakers[s.slug] for s in talk.speakers if s.slug in self.speakers]

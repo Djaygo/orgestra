@@ -1,34 +1,35 @@
 {% extends "base.html" %}
+{% from "partials/ui.html" import icon, chip %}
 {% block main_class %}home{% endblock %}
 {% block header %}
   <header class="app-bar">
-    <div class="frame app-bar-inner">
-      <span></span>
-      <span></span>
+    <div class="frame app-bar-inner app-bar-minimal">
       {% include "partials/app_actions.html" %}
     </div>
   </header>
 {% endblock %}
 {% block content %}
   <section class="hero">
-    <h1 class="logo large">
-      {% include "partials/logo.html" %}
-    </h1>
-    {% with live=false, query="" %}
+    <h1 class="wordmark wordmark-large" aria-label="Orgestra">{% include "partials/logo.html" %}</h1>
+    <p class="hero-tagline">Find any talk, slide or speaker of {{ catalog.organizations|map(attribute="name")|join(" and ") }}</p>
+    {% with live=false, query="", hero=true %}
       {% include "partials/searchbox.html" %}
     {% endwith %}
-    <div class="hero-buttons">
-      <button type="submit" form="search-form" class="button">Orgestra search</button>
-      <a class="button" href="/lucky">I'm feeling curious</a>
+    <div class="hero-actions">
+      <a class="btn btn-tonal" href="/lucky">{{ icon("sparkle", 18) }}I'm feeling curious</a>
+      <a class="btn btn-outlined" href="/browse">{{ icon("grid", 18) }}Browse talks</a>
     </div>
-    <p class="hero-note">
-      {% for organization in catalog.organizations %}
-        {{ organization.name }}:
-        {% for edition in organization.editions %}
-          {{ edition.year }} ({{ edition.talks }} talks){{ ", " if not loop.last }}
-        {% endfor %}
-      {% endfor %}
-      · {{ catalog.speakers|length }} speakers
+    {% if popular_tags %}
+      <div class="hero-try">
+        <span class="field-label">Try</span>
+        <div class="chip-row">
+          {% for tag in popular_tags %}{{ chip(tag, href="/search?q=" ~ (tag|urlencode)) }}{% endfor %}
+        </div>
+      </div>
+    {% endif %}
+    <p class="hero-stats">
+      {{ stats.talks }} talks · {{ stats.speakers }} speakers · {{ stats.with_slides }} with slides · {{ stats.with_video }} with video
     </p>
+    <p class="hero-hint"><kbd>/</kbd> to search</p>
   </section>
 {% endblock %}

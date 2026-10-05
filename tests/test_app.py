@@ -14,7 +14,7 @@ def client(tmp_path_factory):
     return TestClient(create_app(Settings(data_dir=REPO_DATA_DIR, db_path=db_path)))
 
 
-def test_home_has_search_sidebar_and_stage(client):
+def test_home_has_search_the_stats_and_stage(client):
     html = client.get("/").text
     assert 'id="q"' in html
     assert "GOTO Copenhagen" in html
@@ -70,7 +70,7 @@ def test_search_page_searches_while_typing(client):
 
 def test_home_is_just_the_search_box(client):
     html = client.get("/").text
-    assert 'class="logo large"' in html
+    assert 'class="wordmark wordmark-large"' in html
     assert 'hx-target="#results"' not in html
 
 
@@ -89,3 +89,19 @@ def test_results_list_shows_post_counts_and_activity(client):
     assert 'class="topics-head"' in html
     assert '<span class="hit-replies" title="Posts in the discussion">1</span>' in html
     assert "just now" in html
+
+
+def test_home_invites_a_first_search(client):
+    html = client.get("/").text
+    popular = client.app.state.services.catalog.popular_tags(6)
+
+    assert "I'm feeling curious" in html
+    assert "Browse talks" in html
+    for tag in popular:
+        assert f'href="/search?q={tag.replace(" ", "%20")}"' in html or f">{tag}<" in html
+    assert len(popular) == 6
+    assert "135 talks" in html
+    assert "65 speakers" in html
+    assert "<kbd>/</kbd>" in html
+    assert 'role="combobox"' in html
+    assert 'id="suggestions"' in html

@@ -62,6 +62,52 @@ export function describeTheme(theme: Theme): { label: string; pressed: boolean }
   return { label: `Theme: ${CURRENT[theme]}. Switch to ${SWITCH_TO[theme]}`, pressed: theme !== "system" };
 }
 
+export interface TypingTarget {
+  tagName?: string;
+  isContentEditable?: boolean;
+}
+
+export interface KeyLike {
+  key: string;
+  ctrlKey: boolean;
+  metaKey: boolean;
+  altKey: boolean;
+  shiftKey: boolean;
+  target: TypingTarget | null;
+}
+
+const TYPING_TAGS = new Set(["INPUT", "TEXTAREA", "SELECT"]);
+
+export function isTypingTarget(target: TypingTarget | null): boolean {
+  return target !== null && (TYPING_TAGS.has(target.tagName ?? "") || target.isContentEditable === true);
+}
+
+/** `/` or Ctrl/Cmd+K focuses the search box, unless the visitor is already typing somewhere. */
+export function wantsSearchFocus(event: KeyLike): boolean {
+  if (isTypingTarget(event.target) || event.altKey) {
+    return false;
+  }
+  const modifier = event.ctrlKey || event.metaKey;
+  if (event.key === "/") {
+    return !modifier && !event.shiftKey;
+  }
+  return event.key.toLowerCase() === "k" && modifier && !event.shiftKey;
+}
+
+/** The index selected after a key in a list of `count` options; -1 means none. Arrows wrap around. */
+export function nextOption(index: number, count: number, key: string): number {
+  if (count === 0) {
+    return -1;
+  }
+  if (key === "ArrowDown") {
+    return (index + 1) % count;
+  }
+  if (key === "ArrowUp") {
+    return index <= 0 ? count - 1 : index - 1;
+  }
+  return index;
+}
+
 function documentRoot(root: HTMLElement): ThemeRoot {
   return {
     setTheme: (theme) => {
@@ -82,7 +128,103 @@ function syncThemeButtons(theme: Theme): void {
   }
 }
 
+const SELECTED = '[role="option"][aria-selected="true"]';
+
+function searchInput(): HTMLInputElement | null {
+  return document.getElementById("q") as HTMLInputElement | null;
+}
+
+function suggestionList(): HTMLElement | null {
+  return document.getElementById("suggestions");
+}
+
+function closeSuggestions(): void {
+  const list = suggestionList();
+  const input = searchInput();
+  if (list) {
+    list.hidden = true;
+  }
+  input?.setAttribute("aria-expanded", "false");
+  input?.removeAttribute("aria-activedescendant");
+  for (const option of list?.querySelectorAll(SELECTED) ?? []) {
+    option.setAttribute("aria-selected", "false");
+  }
+}
+
+/** Show the list the server just swapped in, or hide it when it came back empty. */
+function syncSuggestions(): void {
+  const list = suggestionList();
+  const hasOptions = (list?.querySelectorAll('[role="option"]').length ?? 0) > 0;
+  if (list && hasOptions && document.activeElement === searchInput()) {
+    list.hidden = false;
+    searchInput()?.setAttribute("aria-expanded", "true");
+  } else {
+    closeSuggestions();
+  }
+}
+
+function moveSelection(key: string): void {
+  const input = searchInput();
+  const options = [...(suggestionList()?.querySelectorAll<HTMLElement>('[role="option"]') ?? [])];
+  const current = options.findIndex((option) => option.getAttribute("aria-selected") === "true");
+  const index = nextOption(current, options.length, key);
+  options.forEach((option, position) => option.setAttribute("aria-selected", String(position === index)));
+  const selected = options[index];
+  if (selected && input) {
+    input.setAttribute("aria-activedescendant", selected.id);
+    selected.scrollIntoView({ block: "nearest" });
+  }
+}
+
+function onKeydown(event: KeyboardEvent): void {
+  if (wantsSearchFocus({ ...event, key: event.key, target: event.target as TypingTarget | null })) {
+    event.preventDefault();
+    searchInput()?.focus();
+    searchInput()?.select();
+    return;
+  }
+  if (event.target !== searchInput() || suggestionList()?.hidden !== false) {
+    return;
+  }
+  if (event.key === "ArrowDown" || event.key === "ArrowUp") {
+    event.preventDefault();
+    moveSelection(event.key);
+  } else if (event.key === "Escape") {
+    event.preventDefault();
+    closeSuggestions();
+  } else if (event.key === "Enter") {
+    const link = suggestionList()?.querySelector<HTMLElement>(`${SELECTED} a`);
+    if (link) {
+      event.preventDefault();
+      closeSuggestions();
+      link.click();
+    }
+  }
+}
+
+function bootSearch(): void {
+  document.addEventListener("keydown", onKeydown);
+  document.addEventListener("htmx:afterSwap", (event) => {
+    if ((event.target as Element | null)?.id === "suggestions") {
+      syncSuggestions();
+    }
+  });
+  document.addEventListener("input", (event) => {
+    if (event.target === searchInput() && (searchInput()?.value.trim().length ?? 0) < 2) {
+      closeSuggestions();
+    }
+  });
+  document.addEventListener("focusout", () => {
+    setTimeout(() => {
+      if (!document.getElementById("search-form")?.contains(document.activeElement)) {
+        closeSuggestions();
+      }
+    }, 120);
+  });
+}
+
 function boot(): void {
+  bootSearch();
   const root = documentRoot(document.documentElement);
   let theme = readTheme(localStorage);
   syncThemeButtons(theme);
