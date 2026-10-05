@@ -232,3 +232,6 @@ data/orgestra.db*
 
 # Executing-plans workspace
 .superpowers/
+
+# Slide text cache
+data/**/slides.json

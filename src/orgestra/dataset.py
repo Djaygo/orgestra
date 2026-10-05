@@ -21,6 +21,9 @@ class TalkSpeaker(BaseModel):
     role_company: str | None = None
 
 
+PENDING_SLIDES = "__PENDING__"
+
+
 class Talk(BaseModel):
     """One talk.json: schedule entry, abstract and links."""
 
@@ -47,6 +50,12 @@ class Talk(BaseModel):
     other_links: list[str] = Field(default_factory=list)
     slides_url: str | None = None
     slides_file: str | None = None
+
+    @field_validator("slides_url", mode="after")
+    @classmethod
+    def _no_placeholder(cls, value: str | None) -> str | None:
+        """The schedule extraction left "__PENDING__" where no deck was uploaded yet."""
+        return None if value == PENDING_SLIDES else value
 
     @field_validator("formats", mode="before")
     @classmethod
