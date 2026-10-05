@@ -21,6 +21,20 @@ export function nextTheme(current: Theme): Theme {
   return THEMES[(THEMES.indexOf(current) + 1) % THEMES.length] ?? "system";
 }
 
+/** Reading `localStorage` itself throws when site data is blocked; fall back to a storage that lives for the page. */
+export function resolveStorage(read: () => ThemeStorage): ThemeStorage {
+  try {
+    return read();
+  } catch {
+    const data = new Map<string, string>();
+    return {
+      getItem: (key) => data.get(key) ?? null,
+      setItem: (key, value) => void data.set(key, value),
+      removeItem: (key) => void data.delete(key),
+    };
+  }
+}
+
 /** The stored theme; anything but the two explicit choices (or a blocked storage) means "system". */
 export function readTheme(storage: ThemeStorage): Theme {
   try {
@@ -133,6 +147,12 @@ export interface KeyLike {
   target: TypingTarget | null;
 }
 
+/** Copies the fields by name: a KeyboardEvent keeps its modifiers as prototype getters, which `{ ...event }` drops. */
+export function keysOf(event: Omit<KeyLike, "target">, target: TypingTarget | null): KeyLike {
+  const { key, ctrlKey, metaKey, altKey, shiftKey } = event;
+  return { key, ctrlKey, metaKey, altKey, shiftKey, target };
+}
+
 const TYPING_TAGS = new Set(["INPUT", "TEXTAREA", "SELECT"]);
 
 export function isTypingTarget(target: TypingTarget | null): boolean {
@@ -236,7 +256,7 @@ function moveSelection(key: string): void {
 }
 
 function onKeydown(event: KeyboardEvent): void {
-  if (wantsSearchFocus({ ...event, key: event.key, target: event.target as TypingTarget | null })) {
+  if (wantsSearchFocus(keysOf(event, event.target as TypingTarget | null))) {
     event.preventDefault();
     searchInput()?.focus();
     searchInput()?.select();
@@ -323,7 +343,8 @@ function boot(): void {
   document.addEventListener("htmx:beforeRequest", (event) => setResultsBusy(event, true));
   document.addEventListener("htmx:afterRequest", (event) => setResultsBusy(event, false));
   const root = documentRoot(document.documentElement);
-  let theme = readTheme(localStorage);
+  const storage = resolveStorage(() => window.localStorage);
+  let theme = readTheme(storage);
   syncThemeButtons(theme);
   // Delegated, because boosted navigation replaces the app bar and its button.
   document.addEventListener("click", (event) => {
@@ -331,7 +352,7 @@ function boot(): void {
       void onCopyLink();
     }
     if ((event.target as Element).closest("[data-theme-toggle]")) {
-      theme = toggleTheme(root, localStorage, theme);
+      theme = toggleTheme(root, storage, theme);
       syncThemeButtons(theme);
     }
   });

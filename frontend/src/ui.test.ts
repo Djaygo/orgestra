@@ -5,11 +5,13 @@ import {
   counterText,
   describeTheme,
   isTypingTarget,
+  keysOf,
   lengthOf,
   matchesFilter,
   nextOption,
   nextTheme,
   readTheme,
+  resolveStorage,
   type ThemeRoot,
   type ThemeStorage,
   toggleTheme,
@@ -205,5 +207,48 @@ describe("list filter", () => {
   it("matches everything for a blank query", () => {
     expect(matchesFilter("anything", "")).toBe(true);
     expect(matchesFilter("anything", "   ")).toBe(true);
+  });
+});
+
+describe("keyboard events", () => {
+  it("reads modifiers from getters on the prototype, which spreading would drop", () => {
+    class FakeKeyEvent {
+      get key() {
+        return "k";
+      }
+      get ctrlKey() {
+        return true;
+      }
+      get metaKey() {
+        return false;
+      }
+      get altKey() {
+        return false;
+      }
+      get shiftKey() {
+        return false;
+      }
+    }
+    const event = new FakeKeyEvent();
+
+    expect(wantsSearchFocus(keysOf(event, null))).toBe(true);
+    expect(wantsSearchFocus({ ...event, key: event.key, target: null } as never)).toBeFalsy();
+  });
+});
+
+describe("storage access", () => {
+  it("uses the storage when reading the property works", () => {
+    const storage = memory();
+    expect(resolveStorage(() => storage)).toBe(storage);
+  });
+
+  it("falls back to a working in-memory storage when the property access throws", () => {
+    const storage = resolveStorage(() => {
+      throw new Error("SecurityError");
+    });
+
+    expect(readTheme(storage)).toBe("system");
+    expect(() => toggleTheme(root(), storage, "system")).not.toThrow();
+    expect(readTheme(storage)).toBe("light");
   });
 });

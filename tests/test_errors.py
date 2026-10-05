@@ -61,3 +61,18 @@ def test_a_server_error_shows_a_friendly_page_without_the_exception(client):
     assert "Something went wrong" in response.text
     assert "secret internal detail" not in response.text
     assert "RuntimeError" not in response.text
+
+
+def test_a_plain_htmx_request_gets_the_html_page(client):
+    response = client.get("/speakers/nope", headers={"HX-Request": "true"})
+
+    assert response.status_code == 404
+    assert "text/html" in response.headers["content-type"]
+
+
+def test_a_server_error_keeps_json_for_api_clients_without_the_exception(client):
+    response = client.get("/boom", headers={"accept": "application/json"})
+
+    assert response.status_code == 500
+    assert "secret internal detail" not in response.text
+    assert "application/json" in response.headers["content-type"]

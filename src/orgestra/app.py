@@ -117,7 +117,7 @@ def transcript_frames(script: Iterator[Conversation]) -> Iterator[Conversation]:
 
 
 def build_templates(catalog: Catalog, cast: list[Persona]) -> Jinja2Templates:
-    # What the layout (sidebar, stage) needs on every page.
+    # What the layout (app bar, stage) needs on every page.
     layout = {
         "catalog": catalog,
         "cast_json": cast_json(cast),
@@ -292,7 +292,7 @@ def browse(request: Request, services: AppServices, tab: SearchQuery = "") -> HT
     by_year = Counter(talk.year for talk in catalog.talks.values())
     selected = (
         tab
-        if tab == "speakers" or (tab.isdigit() and int(tab) in years)
+        if tab == "speakers" or (tab.isascii() and tab.isdigit() and int(tab) in years)
         else str(years[0] if years else "speakers")
     )
     talks = sorted(
@@ -344,8 +344,8 @@ ERROR_PAGES = {
 
 
 def wants_html(request: Request) -> bool:
-    """Browsers and boosted htmx navigations get a page; API clients keep the JSON answer."""
-    return "text/html" in request.headers.get("accept", "") or request.headers.get("HX-Boosted") == "true"
+    """Browsers and htmx requests get a page; API clients keep the JSON answer."""
+    return "text/html" in request.headers.get("accept", "") or request.headers.get("HX-Request") == "true"
 
 
 def error_page(request: Request, status_code: int) -> HTMLResponse:

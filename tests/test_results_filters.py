@@ -33,6 +33,7 @@ def test_filters_ignore_junk_and_keep_real_values():
     assert Filters.parse("abc", "maybe", "") == Filters()
     assert Filters.parse("2025", "1", "1") == Filters(year=2025, slides=True, video=True)
     assert Filters.parse("20255555555555555555555", "", "") == Filters()
+    assert Filters.parse("²²²²", "", "") == Filters()
 
 
 def test_filters_keep_only_matching_talks():

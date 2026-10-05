@@ -53,7 +53,7 @@ def test_the_speakers_tab_lists_everyone_by_name_with_their_talk_counts(client):
     assert "Herder" in html
 
 
-@pytest.mark.parametrize("tab", ["1999", "nope", "<img src=x onerror=alert(1)>", "2025x"])
+@pytest.mark.parametrize("tab", ["1999", "nope", "<img src=x onerror=alert(1)>", "2025x", "²", "²⁰²⁵"])
 def test_an_unknown_tab_falls_back_to_the_newest_year(client, tab):
     response = client.get("/browse", params={"tab": tab})
 

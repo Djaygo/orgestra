@@ -21,7 +21,7 @@ class Filters:
     def parse(cls, year: str, slides: str, video: str) -> Filters:
         """Anything that is not a four-digit year or "1" is ignored."""
         return cls(
-            year=int(year) if year.isdigit() and len(year) == YEAR_DIGITS else None,
+            year=int(year) if year.isascii() and year.isdigit() and len(year) == YEAR_DIGITS else None,
             slides=slides == "1",
             video=video == "1",
         )
