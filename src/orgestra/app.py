@@ -30,6 +30,7 @@ from orgestra.reports import routes as reports_routes
 from orgestra.reports.build import build_tracker
 from orgestra.reports.tracker import IssueTracker
 from orgestra.search import SearchIndex
+from orgestra.slides import load_slides
 from orgestra.thesaurus import load_thesaurus
 
 PACKAGE_DIR = Path(__file__).parent
@@ -135,7 +136,7 @@ def build_services(settings: Settings) -> Services:
     return Services(
         settings=settings,
         catalog=catalog,
-        index=SearchIndex.build(catalog, load_thesaurus()),
+        index=SearchIndex.build(catalog, load_thesaurus(), load_slides(settings.data_dir, catalog)),
         cast=cast,
         templates=build_templates(catalog, cast),
         tracker=build_tracker(settings.issues_provider, settings.issues_repo, settings.issues_token),
