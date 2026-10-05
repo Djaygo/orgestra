@@ -179,8 +179,6 @@ def test_the_confirmation_and_the_failure_page_each_have_a_way_back(client, trac
     assert f'href="{TALK}"' in sent.text
     assert "Report another" not in sent.text
 
-    from orgestra.reports.tracker import TrackerError
-
     tracker.error = TrackerError("boom")
     failed = client.post("/report", data=VALID)
     assert failed.status_code == 502
