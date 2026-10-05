@@ -235,3 +235,4 @@ data/orgestra.db*
 
 # Slide text cache
 data/**/slides.json
+frontend/.vitest/

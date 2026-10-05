@@ -18,7 +18,10 @@
          aria-haspopup="listbox"
          aria-expanded="false"
          aria-controls="suggestions"
-         {% if live %}hx-get="/search" hx-trigger="input changed delay:300ms, search" hx-sync="this:replace" hx-target="#results" hx-select="#results" hx-swap="outerHTML" hx-push-url="true" hx-indicator="#search-busy"{% endif %}>
+         {% if live %}hx-get="/search" hx-include="closest form" hx-trigger="input changed delay:300ms, search" hx-sync="this:replace" hx-target="#results" hx-select="#results" hx-swap="outerHTML" hx-push-url="true" hx-indicator="#search-busy"{% endif %}>
+  {% if filters and filters.year %}<input type="hidden" name="year" value="{{ filters.year }}">{% endif %}
+  {% if filters and filters.slides %}<input type="hidden" name="slides" value="1">{% endif %}
+  {% if filters and filters.video %}<input type="hidden" name="video" value="1">{% endif %}
   <span id="search-busy" class="htmx-indicator searchbox-busy" aria-hidden="true"></span>
   <div hidden hx-get="/suggest" hx-trigger="input from:#q delay:150ms" hx-include="#q" hx-target="#suggestions" hx-select="unset" hx-swap="innerHTML"></div>
   <ul id="suggestions" class="suggestions" role="listbox" aria-label="Suggestions" hidden></ul>

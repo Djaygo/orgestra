@@ -23,6 +23,7 @@ const VIDEO_TALK = "/talks/2025/the-way-the-future-was";
 const PAGES = [
   { name: "home", path: "/" },
   { name: "results", path: "/search?q=automation" },
+  { name: "results-filtered", path: "/search?q=automation&year=2025&slides=1" },
   { name: "no-results", path: "/search?q=zzzxqj" },
   { name: "talk-video", path: VIDEO_TALK },
   { name: "talk-slides", path: "/talks/2025/how-fast-can-you-parse-a-file-with-1-billion-rows-of-weather-data-using-java" },

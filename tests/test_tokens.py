@@ -24,6 +24,7 @@ PAIRS = [
     ("on-primary-container", "primary-container", TEXT),
     ("error", "surface", TEXT),
     ("success", "surface", TEXT),
+    ("on-surface", "highlight", TEXT),
     ("outline", "surface", NON_TEXT),
     ("outline", "surface-container", NON_TEXT),
 ]

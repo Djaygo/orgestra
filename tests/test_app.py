@@ -86,9 +86,7 @@ def test_results_list_shows_post_counts_and_activity(client):
 
     html = client.get("/search", params={"q": "cryptocurrency"}).text
 
-    assert 'class="topics-head"' in html
-    assert '<span class="hit-replies" title="Posts in the discussion">1</span>' in html
-    assert "just now" in html
+    assert 'title="1 post, last activity just now"' in html
 
 
 def test_home_invites_a_first_search(client):

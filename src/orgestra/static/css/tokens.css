@@ -24,6 +24,7 @@
   /* Feedback */
   --error: light-dark(oklch(0.5 0.2 27), oklch(0.75 0.13 25));
   --success: light-dark(oklch(0.5 0.13 150), oklch(0.78 0.14 150));
+  --highlight: light-dark(oklch(0.93 0.14 95), oklch(0.42 0.08 95));
   --shadow: light-dark(oklch(0.2 0.02 265 / 0.18), oklch(0 0 0 / 0.55));
 
   /* Brand */

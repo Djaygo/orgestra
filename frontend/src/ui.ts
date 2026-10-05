@@ -223,8 +223,17 @@ function bootSearch(): void {
   });
 }
 
+function setResultsBusy(event: Event, busy: boolean): void {
+  const target = (event as CustomEvent<{ target?: Element }>).detail?.target;
+  if (target?.id === "results") {
+    target.setAttribute("aria-busy", String(busy));
+  }
+}
+
 function boot(): void {
   bootSearch();
+  document.addEventListener("htmx:beforeRequest", (event) => setResultsBusy(event, true));
+  document.addEventListener("htmx:afterRequest", (event) => setResultsBusy(event, false));
   const root = documentRoot(document.documentElement);
   let theme = readTheme(localStorage);
   syncThemeButtons(theme);
