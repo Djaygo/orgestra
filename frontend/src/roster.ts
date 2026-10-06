@@ -8,8 +8,7 @@ const MAX_CAPACITY = 12;
 /** World units between neighbours in the front row, at most. */
 export const FRONT_SPACING = 2.6;
 const FRONT_DEPTH = 0.7;
-// Speech bubbles are wider than a character: keep the cast away from the edges so they stay on screen.
-const AMBIENT_SPAN = 0.8;
+const BUBBLE_HALF_WIDTH_PX = 96;
 const MAX_HALF_WIDTH = 11;
 const MIN_HALF_WIDTH = 3.5;
 const HALF_WIDTH_PER_ASPECT = 1.9;
@@ -60,6 +59,11 @@ export function chooseRoster(
   return { front, ambient };
 }
 
+/** The share of the plaza's half width the cast may use: a bubble is `unit` pixels per world unit wide. */
+export function usableShare(halfWidth: number, unit: number): number {
+  return Math.min(0.85, Math.max(0.4, 1 - BUBBLE_HALF_WIDTH_PX / unit / halfWidth));
+}
+
 /** The front row: centred, evenly spaced, nearest to the camera. */
 export function frontSlots(count: number, bounds: Bounds): Point[] {
   const step = Math.min(FRONT_SPACING, (bounds.halfWidth * 1.6) / Math.max(count, 1));
@@ -71,7 +75,7 @@ export function frontSlots(count: number, bounds: Bounds): Point[] {
 
 /** Everyone else: spread across the width with a little jitter, behind the front row. */
 export function ambientSlots(count: number, bounds: Bounds, random: () => number = Math.random): Point[] {
-  const halfWidth = bounds.halfWidth * AMBIENT_SPAN;
+  const { halfWidth } = bounds;
   const step = (halfWidth * 2) / Math.max(count, 1);
   return Array.from({ length: count }, (_, index) => ({
     x: -halfWidth + (index + 0.5) * step + (random() - 0.5) * step * 0.5,

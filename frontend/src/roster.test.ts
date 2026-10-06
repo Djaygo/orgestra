@@ -1,5 +1,13 @@
 import { describe, expect, it } from "vitest";
-import { ambientSlots, capacityFor, chooseRoster, frontSlots, MAX_FRONT, plazaFor } from "./roster";
+import {
+  ambientSlots,
+  capacityFor,
+  chooseRoster,
+  frontSlots,
+  MAX_FRONT,
+  plazaFor,
+  usableShare,
+} from "./roster";
 
 const cast = Array.from({ length: 65 }, (_, index) => `s${index}`);
 const first = () => 0;
@@ -67,10 +75,21 @@ describe("slots", () => {
     const slots = ambientSlots(12, bounds);
 
     for (const slot of slots) {
-      expect(Math.abs(slot.x)).toBeLessThanOrEqual(bounds.halfWidth * 0.8);
+      expect(Math.abs(slot.x)).toBeLessThanOrEqual(bounds.halfWidth);
       expect(slot.z).toBeLessThan(0.2 * bounds.halfDepth);
     }
     const xs = slots.map((slot) => slot.x);
     expect(xs).toEqual([...xs].sort((a, b) => a - b));
+  });
+});
+
+describe("usableShare", () => {
+  it("keeps more of a phone's width free for bubbles than a desktop's", () => {
+    const phone = usableShare(4.9, 40);
+    const desktop = usableShare(9.3, 69);
+
+    expect(phone).toBeLessThan(desktop);
+    expect(phone).toBeGreaterThanOrEqual(0.4);
+    expect(desktop).toBeLessThanOrEqual(0.85);
   });
 });

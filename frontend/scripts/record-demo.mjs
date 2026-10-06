@@ -4,8 +4,8 @@
 //   npm run demo -- --out ../demo.webm      # from frontend/
 //
 // Options: --base <url> (default http://127.0.0.1:8000), --out <file.webm|file.mp4>,
-// --query <text> (default "agents"; "automation" for the slides tour), --tour full|slides (default
-// full; slides is a zoomed close-up of the match badges and needs an .mp4 output). An .mp4 output needs
+// --query <text> (default "agents"; "automation" for the slides tour), --tour full|slides|plaza
+// (default full; slides and plaza are zoomed close-ups, of the match badges and of the plaza, and need an .mp4 output). An .mp4 output needs
 // ffmpeg on PATH.
 // Chromium: CHROMIUM_PATH, else the browser Playwright manages.
 import { execFileSync } from "node:child_process";
@@ -198,6 +198,39 @@ async function slidesTour(page) {
   }
 }
 
+/** The plaza close-up: a small cast on the home page, then speakers of the results and of a talk stepping
+ * to the front row, with a hover card and a click through to their talk. */
+async function plazaTour(page) {
+  await page.goto(values.base);
+  await pause(page, 7000);
+  log("the cast on duty");
+  const ambient = page.locator(".stage-tag:visible").nth(3);
+  await ambient.hover({ force: true });
+  log("one of them waves");
+  await pause(page, 3000);
+  await page.mouse.move(640, 100);
+  await page.locator("#q").fill(SLIDES_QUERY);
+  await page.keyboard.press("Enter");
+  await page.waitForSelector("#results .talk-card");
+  await pause(page, 1500);
+  await scrollTo(page, 100000, 1500);
+  log("the speakers of the results walk to the front");
+  await pause(page, 9000);
+  const front = page.locator(".stage-tag.front").nth(2);
+  await front.locator(".stage-name").hover({ force: true });
+  log("hover shows the talk");
+  await pause(page, 3500);
+  await front.locator(".stage-name").click({ force: true });
+  await page.waitForSelector(".talk-head");
+  await pause(page, 1500);
+  await scrollTo(page, 100000, 1500);
+  log("a talk brings its speakers and related ones");
+  await pause(page, 9000);
+  await page.locator(".stage-tag.front").first().focus();
+  log("keyboard focus");
+  await pause(page, 3000);
+}
+
 /** The tour: search with predictions and filters, a talk with its player and discussion, the theme,
  * Browse, a speaker, the report form and the 404. */
 async function tour(page) {
@@ -217,12 +250,12 @@ const browser = await chromium.launch({
   args: ["--use-angle=swiftshader", "--enable-unsafe-swiftshader"],
 });
 // The close-up records a small layout viewport (the compact layout) that ffmpeg scales up to `size`.
-const zoomed = values.tour === "slides";
-const viewport = zoomed ? { width: 800, height: 500 } : size;
+const zoomed = values.tour === "slides" || values.tour === "plaza";
+const viewport = values.tour === "plaza" ? { width: 1024, height: 640 } : zoomed ? { width: 800, height: 500 } : size;
 const context = await browser.newContext({ viewport, recordVideo: { dir: videoDir, size: viewport } });
 const page = await context.newPage();
 try {
-  await (values.tour === "slides" ? slidesTour(page) : tour(page));
+  await ({ slides: slidesTour, plaza: plazaTour }[values.tour] ?? tour)(page);
 } finally {
   await context.close(); // writes the video
   await browser.close();

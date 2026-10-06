@@ -12,7 +12,7 @@ import {
 } from "three";
 import { CSS2DObject } from "three/addons/renderers/CSS2DRenderer.js";
 import type { CastMember } from "./events";
-import { headingTo, meetingPoint, type Point, stepToward, turnToward } from "./wander";
+import { type Bounds, headingTo, meetingPoint, type Point, stepToward, turnToward } from "./wander";
 
 const WALK_SPEED = 0.9;
 const APPROACH_SPEED = 1.4;
@@ -122,6 +122,8 @@ export class Character {
   private home: Point;
   /** Where this character walks off the plaza from where it stands; set by the world. */
   exit: (from: Point) => Point = (from) => from;
+  /** Where conversations may happen, set by the world: far enough from the edge for their bubbles. */
+  plaza: () => Bounds = () => ({ halfWidth: Number.POSITIVE_INFINITY, halfDepth: Number.POSITIVE_INFINITY });
   /** Came on stage for a conversation and leaves when it is over. */
   guest = false;
   active = false;
@@ -334,7 +336,9 @@ export class Character {
 
   private move(seconds: number, now: number): boolean {
     if (this.mode === "approach" && this.partner) {
-      this.target = meetingPoint(this.position, this.partner.position);
+      const meeting = meetingPoint(this.position, this.partner.position);
+      const limit = this.plaza().halfWidth;
+      this.target = { x: Math.min(limit, Math.max(-limit, meeting.x)), z: meeting.z };
     }
     const hurrying = this.arriving || this.leaving || this.guest;
     const speed =

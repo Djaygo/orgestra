@@ -12,6 +12,7 @@ import {
   frontSlots,
   plazaFor,
   type Roster,
+  usableShare,
 } from "./roster";
 import { type Bounds, type Point, randomPointNear } from "./wander";
 
@@ -70,6 +71,7 @@ export function mountWorld(container: HTMLElement, cast: CastMember[], events: E
   );
   for (const character of characters.values()) {
     // Walk off toward the nearer side, past the edge of what the camera sees.
+    character.plaza = () => inner();
     character.exit = (from) => ({ x: Math.sign(from.x || 1) * (bounds.halfWidth + 2), z: from.z });
     scene.add(character.root);
   }
@@ -81,6 +83,9 @@ export function mountWorld(container: HTMLElement, cast: CastMember[], events: E
   const still = prefersReducedMotion(window.matchMedia?.bind(window));
 
   let unit = 60;
+  /** How much of the width the cast uses, so a speech bubble beside someone at the edge stays on screen. */
+  let share = 0.8;
+  const inner = (): Bounds => ({ halfWidth: bounds.halfWidth * share, halfDepth: bounds.halfDepth });
   let tagSpacing = FRONT_SPACING;
   /** A front-row plate may be as wide as the gap to its neighbour, so names never overlap. */
   const sizeTags = () =>
@@ -92,7 +97,7 @@ export function mountWorld(container: HTMLElement, cast: CastMember[], events: E
     const front = frontSlots(next.front.length, bounds);
     tagSpacing = front.length > 1 ? Math.abs((front[1] as Point).x - (front[0] as Point).x) : FRONT_SPACING;
     sizeTags();
-    const ambient = ambientSlots(next.ambient.length, bounds);
+    const ambient = ambientSlots(next.ambient.length, inner());
     const slots = new Map<string, { slot: Point; front: boolean }>();
     for (const [index, slug] of next.front.entries()) {
       slots.set(slug, { slot: front[index] as Point, front: true });
@@ -124,10 +129,8 @@ export function mountWorld(container: HTMLElement, cast: CastMember[], events: E
       return;
     }
     const resized = plazaFor(width / height);
-    if (resized.halfWidth !== bounds.halfWidth) {
-      bounds = resized;
-      arrange(chooseFor(capacityFor(bounds)), performance.now());
-    }
+    const plazaChanged = resized.halfWidth !== bounds.halfWidth;
+    bounds = resized;
     camera.aspect = width / height;
     const distance = cameraDistance(bounds, camera.fov, camera.aspect);
     camera.position.set(
@@ -142,7 +145,11 @@ export function mountWorld(container: HTMLElement, cast: CastMember[], events: E
     // Pixels per world unit at the plaza's middle: the CSS sizes each link's hit area from it.
     unit = height / (2 * Math.tan((camera.fov * Math.PI) / 360) * distance);
     container.style.setProperty("--unit", `${unit.toFixed(1)}px`);
+    share = usableShare(bounds.halfWidth, unit);
     sizeTags();
+    if (plazaChanged) {
+      arrange(chooseFor(capacityFor(bounds)), performance.now());
+    }
   };
   const renderFrame = () => {
     renderer.render(scene, camera);
@@ -195,7 +202,7 @@ export function mountWorld(container: HTMLElement, cast: CastMember[], events: E
           const seconds = Math.min(timer.getDelta(), MAX_STEP_SECONDS);
           for (const character of characters.values()) {
             if (character.roaming && Math.random() < WANDER_CHANCE_PER_SECOND * seconds) {
-              character.wanderTo(randomPointNear(character.strollPoint, character.strollRadius, bounds));
+              character.wanderTo(randomPointNear(character.strollPoint, character.strollRadius, inner()));
             }
             character.update(seconds, time);
           }

@@ -2,7 +2,8 @@
    at the end of every other page (three.js loads when it scrolls into view). */
 
 :root {
-  --stage-height: clamp(150px, 28vh, 260px);
+  --stage-height: clamp(170px, 30vh, 280px);
+  --transcript-room: 2.75rem;
 }
 
 body {
@@ -35,9 +36,23 @@ body:has(main.home) .main {
   padding-bottom: var(--stage-height);
 }
 
+/* On a short window a fixed band would cover the home page's own content: let it flow below instead. */
+@media (max-height: 620px) {
+  body:has(main.home) .stage {
+    position: relative;
+    pointer-events: auto;
+    background: linear-gradient(to bottom, transparent, var(--surface-container));
+  }
+
+  body:has(main.home) .main {
+    padding-bottom: 0;
+  }
+}
+
+/* The bottom strip is the transcript's: the plaza stands above it. */
 .world {
   position: absolute;
-  inset: 0;
+  inset: 0 0 var(--transcript-room);
 }
 
 /* Only the characters fade into the page; speech bubbles above the strip stay opaque and uncut. */
@@ -172,7 +187,10 @@ body:has(main.home) .main {
 }
 
 .turn-new {
-  display: block;
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
   animation: appear var(--dur-3) var(--ease-standard);
 }
 
