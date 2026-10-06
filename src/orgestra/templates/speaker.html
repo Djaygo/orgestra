@@ -4,6 +4,7 @@
 {% block title %}{{ speaker.name }} · Orgestra{% endblock %}
 {% block content %}
   <article class="speaker">
+<div hidden data-spotlight="{{ speaker.slug }}"></div>
     <header class="speaker-head card">
       {{ avatar(speaker.name, speaker.slug, "lg") }}
       <div class="speaker-text">

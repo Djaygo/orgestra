@@ -4,7 +4,6 @@ import pytest
 from fastapi.testclient import TestClient
 
 from orgestra.app import REPO_DATA_DIR, Settings, create_app, sse_event
-from orgestra.events import SPOTLIGHT
 
 
 @pytest.fixture(scope="module")
@@ -23,13 +22,30 @@ def test_home_has_search_the_stats_and_stage(client):
     assert len(json.loads(cast)) > 10
 
 
+def spotlight_of(html: str) -> list[str]:
+    return html.split('data-spotlight="')[1].split('"', maxsplit=1)[0].split()
+
+
 def test_search_fragment_spotlights_the_matching_speakers(client):
     response = client.get("/search", params={"q": "cryptocurrency"}, headers={"HX-Request": "true"})
     assert response.text.lstrip().startswith('<div id="results"')
     assert "<html" not in response.text
     assert "13 years of cryptocurrency" in response.text
-    trigger = json.loads(response.headers["HX-Trigger"])
-    assert "sarah-meiklejohn" in trigger[SPOTLIGHT]["speakers"]
+    assert "sarah-meiklejohn" in spotlight_of(response.text)
+    assert "HX-Trigger" not in response.headers
+
+
+def test_search_url_spotlights_the_matching_speakers_too(client):
+    response = client.get("/search", params={"q": "cryptocurrency"})
+
+    assert "sarah-meiklejohn" in spotlight_of(response.text)
+
+
+def test_the_cast_carries_each_speakers_talk_title(client):
+    html = client.get("/").text
+    cast = json.loads(html.split('id="cast-data">')[1].split("</script>")[0])
+
+    assert all(member["title"] for member in cast)
 
 
 def test_search_url_renders_the_full_page(client):

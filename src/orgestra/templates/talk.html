@@ -4,6 +4,7 @@
 {% block title %}{{ talk.display_title }} · Orgestra{% endblock %}
 {% block content %}
   <article class="talk">
+    <div hidden data-spotlight="{% for person in talk.speakers %}{{ person.slug }} {% endfor %}{% for other in related %}{% for person in other.speakers %}{{ person.slug }} {% endfor %}{% endfor %}"></div>
     <nav class="breadcrumb" aria-label="Breadcrumb">
       <ol>
         <li><a href="/browse">Browse</a></li>

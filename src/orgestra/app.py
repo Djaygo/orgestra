@@ -27,7 +27,6 @@ from orgestra.discussion.diff import revision_history
 from orgestra.discussion.models import db
 from orgestra.discussion.render import ago, linkify
 from orgestra.discussion.store import TalkStats, talk_stats, thread
-from orgestra.events import SPOTLIGHT, Spotlight, hx_trigger
 from orgestra.filters import Filters
 from orgestra.highlight import highlight
 from orgestra.personas import initials, persona_hue
@@ -96,6 +95,7 @@ def cast_json(cast: list[Persona]) -> str:
             "name": p.speaker.name,
             "hue": persona_hue(p.speaker.slug),
             "talk": p.talk.ref,
+            "title": p.talk.display_title,
         }
         for p in cast
     ]
@@ -227,10 +227,7 @@ def search_response(
         context = attrs.asdict(view, recurse=False)
         if not is_fragment_request(request):
             return services.templates.TemplateResponse(request, "search.html", context)
-        response = services.templates.TemplateResponse(request, "partials/results.html", context)
-    speakers = list(dict.fromkeys(s.slug for hit in view.hits for s in hit.talk.speakers))
-    response.headers["HX-Trigger"] = hx_trigger(SPOTLIGHT, Spotlight(speakers=speakers))
-    return response
+        return services.templates.TemplateResponse(request, "partials/results.html", context)
 
 
 @router.get("/", response_class=HTMLResponse)

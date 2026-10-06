@@ -24,6 +24,20 @@ export function randomPoint(bounds: Bounds, random: () => number = Math.random):
   };
 }
 
+/** A spot within `radius` of `home`, kept inside the plaza: where someone who stays put strolls to. */
+export function randomPointNear(
+  home: Point,
+  radius: number,
+  bounds: Bounds,
+  random: () => number = Math.random,
+): Point {
+  const clamp = (value: number, limit: number) => Math.min(limit, Math.max(-limit, value));
+  return {
+    x: clamp(home.x + (random() * 2 - 1) * radius, bounds.halfWidth),
+    z: clamp(home.z + (random() * 2 - 1) * radius, bounds.halfDepth),
+  };
+}
+
 /** Move from `from` toward `to` by at most `maxStep`, never overshooting. */
 export function stepToward(from: Point, to: Point, maxStep: number): Point {
   const gap = distance(from, to);

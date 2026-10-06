@@ -92,3 +92,9 @@ def test_the_abstract_keeps_its_paragraphs_and_the_discussion_stays(client):
     assert "<p>First paragraph.</p>" in html
     assert "<p>Second paragraph.</p>" in html
     assert 'class="new-post"' in html
+
+
+def test_the_talks_speakers_step_to_the_front_of_the_plaza(client):
+    html = client.get("/talks/2025/full-talk").text
+
+    assert html.split('data-spotlight="')[1].split('"')[0].split() == ["ada"]

@@ -1,10 +1,19 @@
-// The three.js world: a plaza where the cast wanders and walks up to each other to talk.
+// The three.js world: a plaza where the cast on duty stands, strolls and walks up to each other to talk.
 import { DirectionalLight, HemisphereLight, PerspectiveCamera, Scene, Timer, WebGLRenderer } from "three";
 import { CSS2DRenderer } from "three/addons/renderers/CSS2DRenderer.js";
 import { Character, createSharedParts, disposeSharedParts } from "./character";
-import { type CastMember, onStageEvent, SAY, SPOTLIGHT } from "./events";
+import { type CastMember, onStageEvent, readSpotlight, SAY, SPOTLIGHT } from "./events";
 import { prefersReducedMotion } from "./motion";
-import { type Bounds, randomPoint } from "./wander";
+import {
+  ambientSlots,
+  capacityFor,
+  chooseRoster,
+  FRONT_SPACING,
+  frontSlots,
+  plazaFor,
+  type Roster,
+} from "./roster";
+import { type Bounds, type Point, randomPointNear } from "./wander";
 
 const MAX_PIXEL_RATIO = 2;
 const MAX_STEP_SECONDS = 0.1;
@@ -14,12 +23,6 @@ const MIN_SAY_GAP_MS = 250;
 
 export function pixelRatio(deviceRatio: number): number {
   return Math.min(deviceRatio, MAX_PIXEL_RATIO);
-}
-
-/** A wide, shallow strip that grows with the cast so a large edition does not turn into a crowd. */
-export function plazaFor(castSize: number): Bounds {
-  const halfWidth = Math.min(18, 5 + Math.sqrt(castSize) * 1.4);
-  return { halfWidth, halfDepth: 2.2 };
 }
 
 const CAMERA_ELEVATION = 0.22; // radians above the horizon
@@ -34,7 +37,7 @@ export function cameraDistance(bounds: Bounds, verticalFovDeg: number, aspect: n
 
 /** Mount the world in `container`; returns the function that tears it down and frees the GPU. */
 export function mountWorld(container: HTMLElement, cast: CastMember[], events: EventTarget): () => void {
-  const bounds = plazaFor(cast.length);
+  let bounds = plazaFor(container.clientWidth / Math.max(container.clientHeight, 1));
   // No background and no floor: the canvas is transparent so the characters walk on the page itself.
   const scene = new Scene();
   const camera = new PerspectiveCamera(30, 1, 0.1, 200);
@@ -45,6 +48,16 @@ export function mountWorld(container: HTMLElement, cast: CastMember[], events: E
   const labels = new CSS2DRenderer();
   labels.domElement.className = "stage-labels";
   container.append(renderer.domElement, labels.domElement);
+  // The label layer adds each tag to the page only once its character is on stage: let htmx boost it then.
+  const boostTags = new MutationObserver((records) => {
+    const htmx = (window as { htmx?: { process(element: Element): void } }).htmx;
+    for (const added of records.flatMap((record) => [...record.addedNodes])) {
+      if (added instanceof Element) {
+        htmx?.process(added);
+      }
+    }
+  });
+  boostTags.observe(labels.domElement, { childList: true });
 
   scene.add(new HemisphereLight("#ffffff", "#b8c4d6", 1.7));
   const sun = new DirectionalLight("#ffffff", 1.4);
@@ -53,16 +66,67 @@ export function mountWorld(container: HTMLElement, cast: CastMember[], events: E
 
   const parts = createSharedParts();
   const characters = new Map(
-    cast.map((member) => [member.slug, new Character(member, parts, randomPoint(bounds))] as const),
+    cast.map((member) => [member.slug, new Character(member, parts, { x: 0, z: 0 })] as const),
   );
   for (const character of characters.values()) {
+    // Walk off toward the nearer side, past the edge of what the camera sees.
+    character.exit = (from) => ({ x: Math.sign(from.x || 1) * (bounds.halfWidth + 2), z: from.z });
     scene.add(character.root);
   }
+  const slugs = cast.map((member) => member.slug);
+  let spotlight = readSpotlight(document);
+  let roster: Roster = { front: [], ambient: [] };
+
+  // Under reduced motion the plaza is one still frame: nobody walks, no bubbles, no loop.
+  const still = prefersReducedMotion(window.matchMedia?.bind(window));
+
+  let unit = 60;
+  let tagSpacing = FRONT_SPACING;
+  /** A front-row plate may be as wide as the gap to its neighbour, so names never overlap. */
+  const sizeTags = () =>
+    container.style.setProperty("--tag-width", `${(tagSpacing * unit * 0.95).toFixed(0)}px`);
+
+  /** Put the roster on stage: newcomers walk in from the side, the rest settle or walk off. */
+  const arrange = (next: Roster, now: number) => {
+    roster = next;
+    const front = frontSlots(next.front.length, bounds);
+    tagSpacing = front.length > 1 ? Math.abs((front[1] as Point).x - (front[0] as Point).x) : FRONT_SPACING;
+    sizeTags();
+    const ambient = ambientSlots(next.ambient.length, bounds);
+    const slots = new Map<string, { slot: Point; front: boolean }>();
+    for (const [index, slug] of next.front.entries()) {
+      slots.set(slug, { slot: front[index] as Point, front: true });
+    }
+    for (const [index, slug] of next.ambient.entries()) {
+      slots.set(slug, { slot: ambient[index] as Point, front: false });
+    }
+    for (const [slug, character] of characters) {
+      const place = slots.get(slug);
+      if (place && character.active) {
+        character.settle(place.slot, place.front, still);
+      } else if (place) {
+        const from = character.exit({ x: place.slot.x, z: place.slot.z });
+        character.enter(place.slot, from, place.front, now, still);
+      } else if (character.active) {
+        character.leave(still);
+      }
+    }
+    if (still) {
+      renderFrame();
+    }
+  };
+  const chooseFor = (capacity: number) =>
+    chooseRoster(slugs, spotlight, [...roster.front, ...roster.ambient], capacity);
 
   const resize = () => {
     const { clientWidth: width, clientHeight: height } = container;
     if (width === 0 || height === 0) {
       return;
+    }
+    const resized = plazaFor(width / height);
+    if (resized.halfWidth !== bounds.halfWidth) {
+      bounds = resized;
+      arrange(chooseFor(capacityFor(bounds)), performance.now());
     }
     camera.aspect = width / height;
     const distance = cameraDistance(bounds, camera.fov, camera.aspect);
@@ -75,9 +139,11 @@ export function mountWorld(container: HTMLElement, cast: CastMember[], events: E
     camera.updateProjectionMatrix();
     renderer.setSize(width, height);
     labels.setSize(width, height);
+    // Pixels per world unit at the plaza's middle: the CSS sizes each link's hit area from it.
+    unit = height / (2 * Math.tan((camera.fov * Math.PI) / 360) * distance);
+    container.style.setProperty("--unit", `${unit.toFixed(1)}px`);
+    sizeTags();
   };
-  // Under reduced motion the plaza is one still frame: nobody walks, no bubbles, no loop.
-  const still = prefersReducedMotion(window.matchMedia?.bind(window));
   const renderFrame = () => {
     renderer.render(scene, camera);
     labels.render(scene, camera);
@@ -100,19 +166,24 @@ export function mountWorld(container: HTMLElement, cast: CastMember[], events: E
     lastSayAt = now;
     const from = characters.get(speaker);
     const to = characters.get(listener);
+    for (const guest of [from, to]) {
+      if (guest && !guest.active) {
+        guest.enter(guest.exit({ x: 0, z: 0 }), guest.exit({ x: 0, z: 0 }), false, now, true);
+        guest.guest = true;
+      }
+    }
     from?.say(text, to, now);
     if (from && to) {
       to.listenTo(from, now);
     }
   });
   const stopSpotlight = onStageEvent(events, SPOTLIGHT, ({ speakers }) => {
-    const now = performance.now();
-    for (const slug of speakers) {
-      characters.get(slug)?.spotlight(now);
-    }
+    spotlight = speakers;
+    arrange(chooseFor(capacityFor(bounds)), performance.now());
   });
 
   const timer = new Timer();
+  arrange(chooseFor(capacityFor(bounds)), performance.now());
   if (still) {
     renderFrame();
   }
@@ -123,8 +194,8 @@ export function mountWorld(container: HTMLElement, cast: CastMember[], events: E
           timer.update(time);
           const seconds = Math.min(timer.getDelta(), MAX_STEP_SECONDS);
           for (const character of characters.values()) {
-            if (character.idle && Math.random() < WANDER_CHANCE_PER_SECOND * seconds) {
-              character.wanderTo(randomPoint(bounds));
+            if (character.roaming && Math.random() < WANDER_CHANCE_PER_SECOND * seconds) {
+              character.wanderTo(randomPointNear(character.strollPoint, character.strollRadius, bounds));
             }
             character.update(seconds, time);
           }
@@ -134,6 +205,7 @@ export function mountWorld(container: HTMLElement, cast: CastMember[], events: E
 
   return () => {
     renderer.setAnimationLoop(null);
+    boostTags.disconnect();
     stopSay();
     stopSpotlight();
     resizeObserver.disconnect();

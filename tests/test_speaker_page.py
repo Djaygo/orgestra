@@ -56,3 +56,7 @@ def test_nothing_is_said_about_a_missing_email_or_missing_talks(client):
     assert "No public email" not in html
     assert 'class="talk-card' not in html
     assert "<h2>Talks</h2>" not in html
+
+
+def test_the_speaker_steps_to_the_front_of_the_plaza(client):
+    assert 'data-spotlight="ada"' in client.get("/speakers/ada").text

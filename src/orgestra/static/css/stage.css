@@ -49,24 +49,98 @@ body:has(main.home) .main {
 .stage-labels {
   position: absolute;
   inset: 0;
+  /* Bubbles and cards rise above the strip; three's label layer clips them by default. */
+  overflow: visible !important;
+}
+
+/* A character's tag is a link to their talk. Its hit area covers the character (--unit is the pixel
+   size of one world unit, set by the world); the plate shows on hover, focus, in the front row and
+   while talking. */
+.stage-tag {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  gap: 2px;
+  color: var(--on-surface);
+  text-decoration: none;
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+.stage-tag::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  translate: -50% 0;
+  width: calc(var(--unit, 40px) * 1.2);
+  height: calc(var(--unit, 40px) * 2);
+}
+
+.stage-tag:focus-visible {
+  outline: none;
+}
+
+.stage-name,
+.stage-talk {
+  max-width: 14rem;
+  border-radius: var(--radius-full);
+  background: var(--surface);
+  box-shadow: var(--elev-1);
+  opacity: 0;
+  transition: opacity var(--dur-2) var(--ease-standard);
 }
 
 .stage-name {
+  /* Neighbours in the front row stand --tag-width apart (set by the world): a long name shortens, never overlaps. */
+  max-width: var(--tag-width, 8rem);
   padding: 0 var(--space-2);
-  border-radius: var(--radius-full);
-  background: var(--surface);
-  color: var(--on-surface);
-  box-shadow: var(--elev-1);
-  font-size: 0.6875rem;
+  overflow: hidden;
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
-.stage-name.spotlit {
+.stage-tag:is(:hover, :focus-visible) .stage-name {
+  max-width: 14rem;
+}
+
+.stage-talk {
+  display: none;
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-md);
+  color: var(--on-surface-muted);
+  font-size: var(--text-body-s);
+  line-height: 1.3;
+  text-align: center;
+}
+
+.stage-tag:is(.front, .talking, :hover, :focus-visible) .stage-name {
+  opacity: 1;
+}
+
+.stage-tag.front .stage-name {
   background: var(--primary);
   color: var(--on-primary);
 }
 
+.stage-tag:focus-visible .stage-name {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+.stage-tag:is(:hover, :focus-visible) {
+  z-index: 10000 !important;
+}
+
+.stage-tag:is(:hover, :focus-visible) .stage-talk {
+  display: block;
+  opacity: 1;
+}
+
 .stage-bubble {
-  max-width: 15rem;
+  max-width: 12rem;
   padding: var(--space-2) var(--space-3);
   border: 1px solid var(--outline-variant);
   border-radius: var(--radius-md);

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { distance, meetingPoint, stepToward, TALK_DISTANCE, turnToward } from "./wander";
+import { distance, meetingPoint, randomPointNear, stepToward, TALK_DISTANCE, turnToward } from "./wander";
 
 describe("stepToward", () => {
   it("moves at most maxStep", () => {
@@ -31,5 +31,20 @@ describe("turnToward", () => {
 
   it("snaps to the target when within maxTurn", () => {
     expect(turnToward(0, 0.1, 0.5)).toBe(0.1);
+  });
+});
+
+describe("randomPointNear", () => {
+  const bounds = { halfWidth: 5, halfDepth: 2 };
+
+  it("stays within the radius of home", () => {
+    const home = { x: 1, z: 0 };
+    expect(randomPointNear(home, 0.6, bounds, () => 1)).toEqual({ x: 1.6, z: 0.6 });
+    expect(randomPointNear(home, 0.6, bounds, () => 0)).toEqual({ x: 0.4, z: -0.6 });
+  });
+
+  it("never leaves the plaza", () => {
+    expect(randomPointNear({ x: 4.9, z: 1.9 }, 3, bounds, () => 1)).toEqual({ x: 5, z: 2 });
+    expect(randomPointNear({ x: -4.9, z: -1.9 }, 3, bounds, () => 0)).toEqual({ x: -5, z: -2 });
   });
 });

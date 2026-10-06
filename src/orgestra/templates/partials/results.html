@@ -2,6 +2,7 @@
 {% from "partials/talk_card.html" import talk_card %}
 <div id="results" class="results">
   <h1 class="visually-hidden">Search results for “{{ result.query }}”</h1>
+  <div hidden data-spotlight="{% for hit in hits %}{% for person in hit.talk.speakers %}{{ person.slug }} {% endfor %}{% endfor %}"></div>
   {% if result.hits %}
   <p class="results-summary" role="status">
     {{ total }} talk{{ "" if total == 1 else "s" }} for “{{ result.query }}”
