@@ -1,0 +1,604 @@
+/* Shared components: buttons, chips, badges, avatars, cards and form fields. */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-height: 2.5rem;
+  padding: 0 var(--space-5);
+  border: 1px solid transparent;
+  border-radius: var(--radius-full);
+  background: var(--primary);
+  color: var(--on-primary);
+  font-size: var(--text-label);
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  transition: background-color var(--dur-1) var(--ease-standard), box-shadow var(--dur-1) var(--ease-standard);
+}
+
+.btn:hover {
+  box-shadow: var(--elev-1);
+  background: color-mix(in oklch, var(--primary), var(--on-primary) 8%);
+  text-decoration: none;
+}
+
+.btn:active {
+  background: color-mix(in oklch, var(--primary), var(--on-primary) 14%);
+}
+
+.btn-tonal {
+  background: var(--primary-container);
+  color: var(--on-primary-container);
+}
+
+.btn-tonal:hover {
+  background: color-mix(in oklch, var(--primary-container), var(--on-primary-container) 8%);
+}
+
+.btn-outlined {
+  background: transparent;
+  border-color: var(--outline);
+  color: var(--primary);
+}
+
+.btn-outlined:hover {
+  background: color-mix(in oklch, var(--primary) 8%, transparent);
+  box-shadow: none;
+}
+
+.btn-text {
+  padding-inline: var(--space-3);
+  background: transparent;
+  color: var(--primary);
+}
+
+.btn-text:hover {
+  background: color-mix(in oklch, var(--primary) 8%, transparent);
+  box-shadow: none;
+}
+
+.btn[disabled],
+.btn[aria-disabled="true"] {
+  opacity: 0.38;
+  pointer-events: none;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 2rem;
+  padding: 0 var(--space-3);
+  border: 1px solid var(--outline-variant);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--on-surface);
+  font-size: var(--text-label);
+  font-weight: 500;
+  text-decoration: none;
+  transition: background-color var(--dur-1) var(--ease-standard), border-color var(--dur-1) var(--ease-standard);
+}
+
+a.chip:hover,
+button.chip:hover {
+  background: var(--surface-container-high);
+  text-decoration: none;
+}
+
+.chip[aria-pressed="true"],
+.chip[aria-current="true"],
+.chip-selected {
+  border-color: transparent;
+  background: var(--primary-container);
+  color: var(--on-primary-container);
+}
+
+.chip-count {
+  color: var(--on-surface-muted);
+  font-weight: 400;
+}
+
+.chip-selected .chip-count {
+  color: inherit;
+  opacity: 0.8;
+}
+
+.chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  min-height: 1.5rem;
+  padding: 0 var(--space-2);
+  border-radius: var(--radius-xs);
+  background: var(--surface-container-high);
+  color: var(--on-surface-muted);
+  font-size: var(--text-body-s);
+  font-weight: 500;
+  line-height: 1;
+}
+
+.badge-primary {
+  background: var(--primary-container);
+  color: var(--on-primary-container);
+}
+
+.avatar {
+  --hue: 250;
+  display: inline-grid;
+  place-items: center;
+  flex: none;
+  border-radius: 50%;
+  background: oklch(0.55 0.12 var(--hue));
+  color: oklch(0.99 0 0);
+  font-weight: 500;
+  line-height: 1;
+}
+
+.avatar-sm { width: 1.75rem; height: 1.75rem; font-size: 0.6875rem; }
+.avatar-md { width: 2.25rem; height: 2.25rem; font-size: 0.8125rem; }
+.avatar-lg { width: 5rem; height: 5rem; font-size: 1.75rem; }
+
+.avatar-stack {
+  display: flex;
+  flex: none;
+}
+
+.avatar-stack .avatar + .avatar {
+  margin-left: -0.5rem;
+  box-shadow: 0 0 0 2px var(--surface);
+}
+
+.card {
+  border-radius: var(--radius-lg);
+  background: var(--surface-container);
+  padding: var(--space-5);
+}
+
+.field {
+  display: grid;
+  gap: var(--space-1);
+}
+
+.field > label,
+.field-label {
+  font-size: var(--text-label);
+  font-weight: 500;
+  color: var(--on-surface);
+}
+
+.field-help {
+  font-size: var(--text-body-s);
+  color: var(--on-surface-muted);
+}
+
+.input {
+  width: 100%;
+  min-height: 2.75rem;
+  padding: var(--space-2) var(--space-4);
+  border: 1px solid var(--outline);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  color: var(--on-surface);
+}
+
+.input:hover {
+  border-color: var(--on-surface-muted);
+}
+
+.input:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 0;
+  border-color: var(--primary);
+}
+
+textarea.input {
+  min-height: 5.5rem;
+  resize: vertical;
+  field-sizing: content;
+}
+
+.toast {
+  position: fixed;
+  inset: auto 50% var(--space-6) auto;
+  z-index: var(--z-toast);
+  translate: 50% 0;
+  padding: var(--space-3) var(--space-5);
+  border-radius: var(--radius-sm);
+  background: var(--on-surface);
+  color: var(--surface);
+  font-size: var(--text-body-m);
+  box-shadow: var(--elev-3);
+}
+
+.toast[hidden] {
+  display: none;
+}
+
+/* The search field and its predictions */
+
+.searchbox {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  width: 100%;
+  padding-inline: var(--space-4);
+  border: 1px solid var(--outline-variant);
+  border-radius: var(--radius-full);
+  background: var(--surface);
+  transition: box-shadow var(--dur-2) var(--ease-standard), border-color var(--dur-2) var(--ease-standard);
+}
+
+.searchbox:hover {
+  box-shadow: var(--elev-1);
+  border-color: var(--outline);
+}
+
+.searchbox:focus-within {
+  box-shadow: var(--elev-2);
+  border-color: var(--primary);
+}
+
+.searchbox input {
+  flex: 1;
+  min-width: 0;
+  min-height: 2.75rem;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--on-surface);
+  font-size: var(--text-body-l);
+}
+
+.searchbox input::placeholder {
+  color: var(--on-surface-muted);
+  opacity: 1;
+}
+
+.searchbox-hero {
+  min-height: 3.5rem;
+}
+
+.searchbox-hero input {
+  min-height: 3.5rem;
+  font-size: 1.0625rem;
+}
+
+.searchbox-icon {
+  color: var(--on-surface-muted);
+}
+
+.searchbox-busy {
+  flex: none;
+  width: 1rem;
+  height: 1rem;
+  border: 2px solid var(--outline-variant);
+  border-top-color: var(--primary);
+  border-radius: 50%;
+  opacity: 0;
+}
+
+.htmx-request .searchbox-busy,
+.htmx-request.searchbox-busy {
+  opacity: 1;
+  animation: spin 700ms linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.suggestions {
+  position: absolute;
+  inset: calc(100% + var(--space-2)) 0 auto;
+  z-index: var(--z-popover);
+  max-height: min(24rem, 60dvh);
+  margin: 0;
+  padding: var(--space-2);
+  overflow: auto;
+  list-style: none;
+  text-align: left;
+  border: 1px solid var(--outline-variant);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  box-shadow: var(--elev-3);
+}
+
+.suggestions a {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: 2.75rem;
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-md);
+  color: var(--on-surface);
+  text-decoration: none;
+}
+
+.suggestions a:hover,
+.suggestions [aria-selected="true"] a {
+  background: var(--surface-container-high);
+}
+
+.suggestions .icon {
+  color: var(--on-surface-muted);
+}
+
+.suggestion-text {
+  display: grid;
+  min-width: 0;
+}
+
+.suggestion-label,
+.suggestion-detail {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.suggestion-detail {
+  color: var(--on-surface-muted);
+  font-size: var(--text-body-s);
+}
+
+kbd {
+  display: inline-grid;
+  place-items: center;
+  min-width: 1.5rem;
+  padding: 0 var(--space-1);
+  border: 1px solid var(--outline-variant);
+  border-bottom-width: 2px;
+  border-radius: var(--radius-xs);
+  background: var(--surface-container);
+  font: inherit;
+  font-size: var(--text-body-s);
+}
+
+.btn .icon {
+  margin-inline-start: calc(var(--space-1) * -1);
+}
+
+/* Talk cards and what they carry */
+
+mark {
+  padding: 0 0.1em;
+  border-radius: 0.2em;
+  background: var(--highlight);
+  color: inherit;
+}
+
+.talk-card {
+  position: relative;
+  display: grid;
+  gap: var(--space-2);
+  padding: var(--space-5);
+  border: 1px solid var(--outline-variant);
+  border-radius: var(--radius-lg);
+  transition: background-color var(--dur-1) var(--ease-standard);
+  animation: rise var(--dur-3) var(--ease-standard) both;
+  animation-delay: calc(var(--i, 0) * 45ms);
+}
+
+.talk-card:hover {
+  background: var(--surface-container);
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(0.5rem);
+  }
+}
+
+.talk-card-head {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.talk-card-source {
+  display: grid;
+  min-width: 0;
+  line-height: 1.3;
+}
+
+.talk-card-speakers {
+  font-size: var(--text-body-m);
+  font-weight: 500;
+}
+
+.talk-card-crumbs {
+  color: var(--on-surface-muted);
+  font-size: var(--text-body-s);
+}
+
+.talk-card-title {
+  font-size: var(--text-title-l);
+  line-height: 1.3;
+}
+
+.talk-card-title a {
+  color: var(--primary);
+  text-decoration: none;
+}
+
+.talk-card-title a:hover {
+  text-decoration: underline;
+}
+
+/* The whole card opens the talk; links inside it stay clickable on top. */
+.talk-card-title a::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+}
+
+.talk-card-snippet {
+  margin: 0;
+  max-width: var(--measure);
+  color: var(--on-surface-muted);
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  overflow: hidden;
+}
+
+.talk-card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2) var(--space-3);
+  font-size: var(--text-body-s);
+}
+
+.talk-card-meta:empty {
+  display: none;
+}
+
+.meta-item {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  color: var(--on-surface-muted);
+}
+
+.tag {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  min-height: 1.5rem;
+  padding: 0 var(--space-3);
+  border-radius: var(--radius-full);
+  background: var(--surface-container-high);
+  color: var(--on-surface-muted);
+  font-size: var(--text-body-s);
+  text-decoration: none;
+}
+
+.tag:hover {
+  color: var(--on-surface);
+  text-decoration: none;
+}
+
+.talk-card-pending .talk-card-title a {
+  color: var(--on-surface-muted);
+}
+
+.hit-matches {
+  position: relative;
+  z-index: 1;
+  margin: 0;
+}
+
+.match {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  min-height: 1.5rem;
+  margin: 0 var(--space-1) var(--space-1) 0;
+  padding: 0 var(--space-2);
+  border: 1px solid var(--outline-variant);
+  border-radius: var(--radius-xs);
+  color: var(--on-surface-muted);
+  font-size: var(--text-body-s);
+  line-height: 1.5;
+  text-decoration: none;
+}
+
+.match-slides {
+  border-color: transparent;
+  background: var(--primary-container);
+  color: var(--on-primary-container);
+  font-weight: 500;
+}
+
+.match-slides:hover {
+  text-decoration: none;
+  background: color-mix(in oklch, var(--primary-container), var(--on-primary-container) 10%);
+}
+
+.match[data-tip]:hover::after,
+.match[data-tip]:focus::after {
+  content: attr(data-tip);
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 0;
+  z-index: var(--z-popover);
+  padding: 0.15rem var(--space-2);
+  border-radius: var(--radius-xs);
+  background: var(--on-surface);
+  color: var(--surface);
+  font-size: 0.6875rem;
+  font-weight: 400;
+  white-space: nowrap;
+}
+
+/* Accordions: a question and its answer */
+
+.question {
+  border-top: 1px solid var(--outline-variant);
+}
+
+.question summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding: var(--space-3) 0;
+  font-weight: 500;
+  list-style: none;
+  cursor: pointer;
+}
+
+.question summary::-webkit-details-marker {
+  display: none;
+}
+
+.question summary::after {
+  content: "";
+  flex: none;
+  width: 0.5rem;
+  height: 0.5rem;
+  margin-right: var(--space-2);
+  border-right: 2px solid var(--on-surface-muted);
+  border-bottom: 2px solid var(--on-surface-muted);
+  transform: rotate(45deg);
+  transition: transform var(--dur-2) var(--ease-standard);
+}
+
+.question[open] summary::after {
+  transform: rotate(-135deg);
+}
+
+.question p {
+  margin: 0 0 var(--space-3);
+  color: var(--on-surface-muted);
+}
+
+/* Touch screens: controls are at least 44px tall. */
+@media (pointer: coarse) {
+  .btn,
+  .chip,
+  .input {
+    min-height: 2.75rem;
+  }
+
+  .text-action,
+  .post-actions summary {
+    min-height: 2.75rem;
+  }
+}

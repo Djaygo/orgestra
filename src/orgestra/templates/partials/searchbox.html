@@ -1,16 +1,28 @@
-{# The search field. `live` searches while typing and swaps only #results (on the results page);
-   otherwise Enter opens the results page. #}
-<form id="search-form" action="/search" method="get" role="search" class="searchbox">
-  <svg class="searchbox-icon" viewBox="0 0 24 24" aria-hidden="true">
-    <path d="M15.5 14h-.8l-.3-.3A6.5 6.5 0 1 0 14 15.5l.3.3v.8l5 5 1.5-1.5-5-5zm-6 0a4.5 4.5 0 1 1 0-9 4.5 4.5 0 0 1 0 9z" />
-  </svg>
+{# The search field with predictions. `live` searches while typing and swaps only #results (on the results
+   page); otherwise Enter opens the results page. `hero` is the large field on the home page. #}
+{% from "partials/ui.html" import icon %}
+<form id="search-form" action="/search" method="get" role="search" class="searchbox{% if hero %} searchbox-hero{% endif %}">
+  {{ icon("search", 20, "searchbox-icon") }}
   <label for="q" class="visually-hidden">Search talks, questions and speakers</label>
   <input id="q"
          type="search"
          name="q"
          value="{{ query }}"
-         placeholder="Ask about a topic, a talk or a speaker"
+         placeholder="Search talks and speakers"
          autocomplete="off"
-         {% if live %}hx-get="/search" hx-trigger="input changed delay:300ms, search" hx-sync="this:replace" hx-target="#results" hx-select="#results" hx-swap="outerHTML" hx-push-url="true" hx-indicator="#search-busy"{% endif %}>
+         autocapitalize="off"
+         spellcheck="false"
+         enterkeyhint="search"
+         role="combobox"
+         aria-autocomplete="list"
+         aria-haspopup="listbox"
+         aria-expanded="false"
+         aria-controls="suggestions"
+         {% if live %}hx-get="/search" hx-include="closest form" hx-trigger="input changed delay:300ms, search" hx-sync="this:replace" hx-target="#results" hx-select="#results" hx-swap="outerHTML" hx-push-url="true" hx-indicator="#search-busy"{% endif %}>
+  {% if filters and filters.year %}<input type="hidden" name="year" value="{{ filters.year }}">{% endif %}
+  {% if filters and filters.slides %}<input type="hidden" name="slides" value="1">{% endif %}
+  {% if filters and filters.video %}<input type="hidden" name="video" value="1">{% endif %}
   <span id="search-busy" class="htmx-indicator searchbox-busy" aria-hidden="true"></span>
+  <div hidden hx-get="/suggest" hx-trigger="input from:#q delay:150ms" hx-include="#q" hx-target="#suggestions" hx-select="unset" hx-swap="innerHTML"></div>
+  <ul id="suggestions" class="suggestions" role="listbox" aria-label="Suggestions" hidden></ul>
 </form>

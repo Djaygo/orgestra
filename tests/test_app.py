@@ -4,7 +4,6 @@ import pytest
 from fastapi.testclient import TestClient
 
 from orgestra.app import REPO_DATA_DIR, Settings, create_app, sse_event
-from orgestra.events import SPOTLIGHT
 
 
 @pytest.fixture(scope="module")
@@ -14,7 +13,7 @@ def client(tmp_path_factory):
     return TestClient(create_app(Settings(data_dir=REPO_DATA_DIR, db_path=db_path)))
 
 
-def test_home_has_search_sidebar_and_stage(client):
+def test_home_has_search_the_stats_and_stage(client):
     html = client.get("/").text
     assert 'id="q"' in html
     assert "GOTO Copenhagen" in html
@@ -23,13 +22,30 @@ def test_home_has_search_sidebar_and_stage(client):
     assert len(json.loads(cast)) > 10
 
 
+def spotlight_of(html: str) -> list[str]:
+    return html.split('data-spotlight="')[1].split('"', maxsplit=1)[0].split()
+
+
 def test_search_fragment_spotlights_the_matching_speakers(client):
     response = client.get("/search", params={"q": "cryptocurrency"}, headers={"HX-Request": "true"})
     assert response.text.lstrip().startswith('<div id="results"')
     assert "<html" not in response.text
     assert "13 years of cryptocurrency" in response.text
-    trigger = json.loads(response.headers["HX-Trigger"])
-    assert "sarah-meiklejohn" in trigger[SPOTLIGHT]["speakers"]
+    assert "sarah-meiklejohn" in spotlight_of(response.text)
+    assert "HX-Trigger" not in response.headers
+
+
+def test_search_url_spotlights_the_matching_speakers_too(client):
+    response = client.get("/search", params={"q": "cryptocurrency"})
+
+    assert "sarah-meiklejohn" in spotlight_of(response.text)
+
+
+def test_the_cast_carries_each_speakers_talk_title(client):
+    html = client.get("/").text
+    cast = json.loads(html.split('id="cast-data">')[1].split("</script>")[0])
+
+    assert all(member["title"] for member in cast)
 
 
 def test_search_url_renders_the_full_page(client):
@@ -44,11 +60,12 @@ def test_talk_page(client):
     assert "Questions this talk answers" in html
 
 
-def test_speaker_page_shows_contact_info(client):
+def test_speaker_page_shows_links_as_chips_and_hides_what_is_missing(client):
     html = client.get("/speakers/sarah-meiklejohn").text
-    assert "Contact" in html
-    assert "No public email address" in html
+    assert "Sarah Meiklejohn" in html
+    assert "Speaker page" in html
     assert "https://gotocph.com/2025/speakers/" in html
+    assert "No public email address" not in html
 
 
 def test_unknown_pages_are_404(client):
@@ -70,7 +87,7 @@ def test_search_page_searches_while_typing(client):
 
 def test_home_is_just_the_search_box(client):
     html = client.get("/").text
-    assert 'class="logo large"' in html
+    assert 'class="wordmark wordmark-large"' in html
     assert 'hx-target="#results"' not in html
 
 
@@ -86,6 +103,29 @@ def test_results_list_shows_post_counts_and_activity(client):
 
     html = client.get("/search", params={"q": "cryptocurrency"}).text
 
-    assert 'class="topics-head"' in html
-    assert '<span class="hit-replies" title="Posts in the discussion">1</span>' in html
-    assert "just now" in html
+    assert 'title="1 post, last activity just now"' in html
+
+
+def test_home_invites_a_first_search(client):
+    html = client.get("/").text
+    popular = client.app.state.services.catalog.popular_tags(6)
+
+    assert "I'm feeling curious" in html
+    assert "Browse talks" in html
+    for tag in popular:
+        assert f'href="/search?q={tag.replace(" ", "%20")}"' in html or f">{tag}<" in html
+    assert len(popular) == 6
+    assert "135 talks" in html
+    assert "65 speakers" in html
+    assert "<kbd>/</kbd>" in html
+    assert 'role="combobox"' in html
+    assert 'id="suggestions"' in html
+
+
+def test_boosted_navigation_swaps_pages_with_a_view_transition(client):
+    html = client.get("/").text
+
+    assert 'hx-swap="outerHTML transition:true"' in html
+    assert "/static/css/legacy.css" not in html
+    for sheet in ("tokens", "base", "shell", "components", "pages", "discussion", "stage"):
+        assert f'href="/static/css/{sheet}.css"' in html

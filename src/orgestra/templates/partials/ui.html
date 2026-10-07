@@ -1,0 +1,17 @@
+{# Shared components. Import what a template needs: {% from "partials/ui.html" import icon, avatar, chip %} #}
+
+{% macro icon(name, size=20, cls="") -%}
+  <svg class="icon{% if name == 'play' %} icon-filled{% endif %}{% if cls %} {{ cls }}{% endif %}" width="{{ size }}" height="{{ size }}" aria-hidden="true" focusable="false"><use href="#i-{{ name }}"/></svg>
+{%- endmacro %}
+
+{% macro avatar(name, slug, size="md") -%}
+  <span class="avatar avatar-{{ size }}" style="--hue: {{ slug|hue }}" aria-hidden="true">{{ name|initials }}</span>
+{%- endmacro %}
+
+{# A link chip, or a plain chip without href. `selected` marks the current filter. #}
+{% macro chip(label, href=None, selected=False, icon_name=None, count=None) -%}
+  {% if href %}<a class="chip{% if selected %} chip-selected{% endif %}" href="{{ href }}"{% if selected %} aria-current="true"{% endif %}>
+  {%- else %}<span class="chip{% if selected %} chip-selected{% endif %}">{% endif -%}
+  {% if icon_name %}{{ icon(icon_name, 16) }}{% endif %}{{ label }}{% if count is not none %}<span class="chip-count">{{ count }}</span>{% endif %}
+  {%- if href %}</a>{% else %}</span>{% endif %}
+{%- endmacro %}

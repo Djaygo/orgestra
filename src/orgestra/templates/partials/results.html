@@ -1,52 +1,35 @@
+{% from "partials/ui.html" import icon, chip %}
+{% from "partials/talk_card.html" import talk_card %}
 <div id="results" class="results">
-  <p class="result-stats">
-    About {{ result.hits|length }} talk{{ "" if result.hits|length == 1 else "s" }}
-    {% for concept in result.concepts if concept.alternatives %}
-      {% if loop.first %}· also searched for{% endif %}
-      <span class="expansion"><strong>{{ concept.label }}</strong> ≈ {{ concept.alternatives[:4]|join(", ") }}</span>
-    {% endfor %}
-  </p>
+  <h1 class="visually-hidden">Search results for “{{ result.query }}”</h1>
+  <div hidden data-spotlight="{% for hit in hits %}{% for person in hit.talk.speakers %}{{ person.slug }} {% endfor %}{% endfor %}"></div>
   {% if result.hits %}
-    <div class="topics-head" aria-hidden="true">
-      <span>Talk</span><span>Posts</span><span>Activity</span>
+  <p class="results-summary" role="status">
+    {{ total }} talk{{ "" if total == 1 else "s" }} for “{{ result.query }}”
+    {%- if total > hits|length %}, showing the best {{ hits|length }}{% endif %}
+    {%- for concept in result.concepts if concept.alternatives %}
+      {%- if loop.first %}<span class="results-expansion"> · also searched for</span>{% endif %}
+      <span class="results-expansion"><strong>{{ concept.label }}</strong> ≈ {{ concept.alternatives[:4]|join(", ") }}</span>
+    {%- endfor %}
+  </p>
+  <nav class="filters" aria-label="Filter results">
+    <div class="chip-row">
+      {{ chip("Any year", href=filters.url(result.query, year=None), selected=filters.year is none, count=result.hits|length) }}
+      {% for year, count in year_counts %}
+        {{ chip(year, href=filters.url(result.query, year=year), selected=filters.year == year, count=count) }}
+      {% endfor %}
+      <span class="chip-divider" aria-hidden="true"></span>
+      {{ chip("Slides", href=filters.url(result.query, slides=not filters.slides), selected=filters.slides, icon_name="slides", count=slide_count) }}
+      {{ chip("Video", href=filters.url(result.query, video=not filters.video), selected=filters.video, icon_name="play", count=video_count) }}
     </div>
+  </nav>
   {% endif %}
-  {% for hit in result.hits %}
-    {% set talk_stats = stats.get(hit.talk.ref) %}
-    <article class="hit{% if not hit.talk.extracted %} hit-pending{% endif %}">
-      <div class="hit-main">
-        <div class="hit-source">
-          {% for person in hit.talk.speakers[:3] %}
-            <span class="avatar small" style="--hue: {{ person.slug|hue }}" aria-hidden="true">{{ person.name|initials }}</span>
-          {% else %}
-            <span class="avatar small" aria-hidden="true">?</span>
-          {% endfor %}
-          <div>
-            <span class="hit-site">{{ hit.talk.speakers|map(attribute="name")|join(", ") or hit.talk.organization|upper }}</span>
-            <span class="hit-crumbs">{{ hit.talk.organization }} › {{ hit.talk.year }} › {{ hit.talk.section or "talk" }}</span>
-          </div>
-        </div>
-        <h3>
-          <a href="/talks/{{ hit.talk.ref }}">{{ hit.talk.display_title }}</a>
-          <span class="badge">{{ hit.talk.year }}</span>
-        </h3>
-        <p class="hit-snippet">
-          {% if hit.talk.day %}<span class="muted">{{ hit.talk.day }} {{ hit.talk.start }} —</span>{% endif %}
-          {{ (hit.talk.abstract or "Details of this talk have not been extracted yet.")|summary }}
-        </p>
-        {% if hit.talk.tags %}
-          <p class="hit-tags">
-            {% for tag in hit.talk.tags %}<span class="tag">{{ tag }}</span>{% endfor %}
-          </p>
-        {% endif %}
-      </div>
-      <span class="hit-replies" title="Posts in the discussion">{{ talk_stats.posts if talk_stats else 0 }}</span>
-      <span class="hit-activity muted">{{ talk_stats.last_activity|ago if talk_stats else "—" }}</span>
-    </article>
-    {% if loop.index == 2 and result.top_questions() %}
+  {% for hit in hits %}
+    {{ talk_card(hit.talk, words=words, hit=hit, posts=stats.get(hit.talk.ref), index=loop.index0) }}
+    {% if loop.index == 2 and top_questions %}
       <section class="people-ask" aria-label="People also ask">
         <h2>People also ask</h2>
-        {% for question in result.top_questions() %}
+        {% for question in top_questions %}
           <details class="question">
             <summary>{{ question.text }}</summary>
             <p>
@@ -57,8 +40,20 @@
       </section>
     {% endif %}
   {% else %}
-    <p class="empty">
-      Your search, <strong>{{ result.query }}</strong>, did not match any talks. Try other words: synonyms and typos are handled.
-    </p>
+    <section class="empty-state">
+      <span class="empty-icon">{{ icon("search", 36) }}</span>
+      <h2>Nothing matched “{{ result.query }}”</h2>
+      <p class="muted">Synonyms and typos are handled, so try other words or a broader topic.</p>
+      {% if filters.active %}
+        <p><a class="btn btn-tonal" href="{{ filters.url(result.query, year=None, slides=False, video=False) }}">Clear filters</a></p>
+      {% endif %}
+      {% if popular_tags %}
+        <p class="field-label">Try a topic</p>
+        <div class="chip-row">
+          {% for tag in popular_tags %}{{ chip(tag, href="/search?q=" ~ (tag|urlencode)) }}{% endfor %}
+        </div>
+      {% endif %}
+      <p><a class="btn btn-outlined" href="/browse">Browse all talks</a></p>
+    </section>
   {% endfor %}
 </div>

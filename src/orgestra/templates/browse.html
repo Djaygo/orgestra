@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% from "partials/ui.html" import icon, chip, avatar %}
+{% block title %}Browse · Orgestra{% endblock %}
+{% block content %}
+  <section class="browse">
+    <h1>Browse</h1>
+    <nav class="filters" aria-label="Browse by">
+      <div class="chip-row">
+        {% for tab, count in tabs %}
+          {{ chip("Speakers" if tab == "speakers" else tab, href="/browse?tab=" ~ tab, selected=tab == selected, count=count) }}
+        {% endfor %}
+      </div>
+    </nav>
+    <div class="browse-filter">
+      <label for="browse-filter" class="visually-hidden">Filter the list</label>
+      <input id="browse-filter" class="input" type="search" autocomplete="off" data-filter-list="browse-list"
+             placeholder="Filter {{ 'speakers' if selected == 'speakers' else 'talks' }}">
+    </div>
+    <ul id="browse-list" class="browse-list">
+      {% if selected == "speakers" %}
+        {% for speaker in speakers %}
+          {% set count = catalog.talks_of(speaker)|length %}
+          <li class="browse-row" data-filter-text="{{ (speaker.name ~ ' ' ~ (speaker.role_company or ''))|lower }}">
+            <a class="browse-link" href="/speakers/{{ speaker.slug }}">
+              {{ avatar(speaker.name, speaker.slug, "md") }}
+              <span class="browse-text">
+                <span class="browse-title">{{ speaker.name }}</span>
+                {% if speaker.role_company %}<span class="browse-sub">{{ speaker.role_company }}</span>{% endif %}
+              </span>
+              <span class="browse-side">{{ count }} talk{{ "" if count == 1 else "s" }}</span>
+            </a>
+          </li>
+        {% endfor %}
+      {% else %}
+        {% for talk in talks %}
+          {% set names = talk.speakers|map(attribute="name")|join(", ") %}
+          <li class="browse-row{% if not talk.extracted %} browse-row-pending{% endif %}" data-filter-text="{{ (talk.display_title ~ ' ' ~ names ~ ' ' ~ (talk.section or ''))|lower }}">
+            <a class="browse-link" href="/talks/{{ talk.ref }}">
+              <span class="browse-text">
+                <span class="browse-title">{{ talk.display_title }}</span>
+                <span class="browse-sub">{{ names or "Details not extracted yet" }}{% if talk.section %} · {{ talk.section }}{% endif %}</span>
+              </span>
+              <span class="browse-side">
+                {% if talk.has_video %}<span title="Video available">{{ icon("play", 16) }}</span>{% endif %}
+                {% if talk.has_slides %}<span title="Slides available">{{ icon("slides", 16) }}</span>{% endif %}
+              </span>
+            </a>
+          </li>
+        {% endfor %}
+      {% endif %}
+    </ul>
+    <p class="muted" data-filter-empty hidden>Nothing in this list matches.</p>
+  </section>
+{% endblock %}

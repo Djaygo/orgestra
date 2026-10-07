@@ -6,15 +6,19 @@ import asyncio
 import json
 import os
 import random
+from collections import Counter
 from collections.abc import AsyncIterator, Iterator
 from pathlib import Path
-from typing import Annotated
+from typing import Annotated, TypeAlias
 
 import attrs
 from fastapi import APIRouter, Depends, FastAPI, HTTPException, Query, Request
-from fastapi.responses import HTMLResponse, RedirectResponse, StreamingResponse
+from fastapi.exception_handlers import http_exception_handler
+from fastapi.responses import HTMLResponse, JSONResponse, RedirectResponse, Response, StreamingResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
+from sqlalchemy.orm import Session
+from starlette.exceptions import HTTPException as StarletteHTTPException
 
 from orgestra.conversations import Conversation, Persona, conversations, personas
 from orgestra.dataset import Catalog, load_catalog
@@ -22,20 +26,27 @@ from orgestra.discussion import routes as discussion_routes
 from orgestra.discussion.diff import revision_history
 from orgestra.discussion.models import db
 from orgestra.discussion.render import ago, linkify
-from orgestra.discussion.store import talk_stats, thread
-from orgestra.events import SPOTLIGHT, Spotlight, hx_trigger
+from orgestra.discussion.store import TalkStats, talk_stats, thread
+from orgestra.filters import Filters
+from orgestra.highlight import highlight
 from orgestra.personas import initials, persona_hue
-from orgestra.questions import summary
+from orgestra.questions import Question, summary
 from orgestra.reports import routes as reports_routes
 from orgestra.reports.build import build_tracker
 from orgestra.reports.tracker import IssueTracker
-from orgestra.search import SearchIndex
+from orgestra.search import Hit, SearchIndex, SearchResult
+from orgestra.slides import load_slides
+from orgestra.suggest import suggest
 from orgestra.thesaurus import load_thesaurus
 
 PACKAGE_DIR = Path(__file__).parent
 REPO_DATA_DIR = PACKAGE_DIR.parents[1] / "data"
 SCENE_ENTRY = PACKAGE_DIR / "static" / "dist" / "stage.js"
+UI_ENTRY = PACKAGE_DIR / "static" / "dist" / "ui.js"
 SearchQuery = Annotated[str, Query(max_length=200)]
+FilterParam = Annotated[str, Query(max_length=10)]
+RESULTS_SHOWN = 20
+YearCount: TypeAlias = tuple[int, int]  # (year, number of hits)
 
 
 @attrs.frozen
@@ -84,6 +95,7 @@ def cast_json(cast: list[Persona]) -> str:
             "name": p.speaker.name,
             "hue": persona_hue(p.speaker.slug),
             "talk": p.talk.ref,
+            "title": p.talk.display_title,
         }
         for p in cast
     ]
@@ -105,8 +117,13 @@ def transcript_frames(script: Iterator[Conversation]) -> Iterator[Conversation]:
 
 
 def build_templates(catalog: Catalog, cast: list[Persona]) -> Jinja2Templates:
-    # What the layout (sidebar, stage) needs on every page.
-    layout = {"catalog": catalog, "cast_json": cast_json(cast), "scene_available": SCENE_ENTRY.exists()}
+    # What the layout (app bar, stage) needs on every page.
+    layout = {
+        "catalog": catalog,
+        "cast_json": cast_json(cast),
+        "scene_available": SCENE_ENTRY.exists(),
+        "ui_available": UI_ENTRY.exists(),
+    }
 
     def layout_context(request: Request) -> dict[str, object]:
         query = f"?{request.url.query}" if request.url.query else ""
@@ -118,7 +135,14 @@ def build_templates(catalog: Catalog, cast: list[Persona]) -> Jinja2Templates:
         }
 
     templates = Jinja2Templates(directory=PACKAGE_DIR / "templates", context_processors=[layout_context])
+    organization_names = {organization.slug: organization.name for organization in catalog.organizations}
+
+    def organization_name(slug: str) -> str:
+        return organization_names.get(slug, slug)
+
     templates.env.filters.update(
+        highlight=highlight,
+        org_name=organization_name,
         hue=persona_hue,
         initials=initials,
         summary=summary,
@@ -135,7 +159,7 @@ def build_services(settings: Settings) -> Services:
     return Services(
         settings=settings,
         catalog=catalog,
-        index=SearchIndex.build(catalog, load_thesaurus()),
+        index=SearchIndex.build(catalog, load_thesaurus(), load_slides(settings.data_dir, catalog)),
         cast=cast,
         templates=build_templates(catalog, cast),
         tracker=build_tracker(settings.issues_provider, settings.issues_repo, settings.issues_token),
@@ -150,19 +174,60 @@ AppServices = Annotated[Services, Depends(get_services)]
 router = APIRouter()
 
 
-def search_response(request: Request, services: Services, query: str) -> HTMLResponse:
-    result = services.index.search(query) if query.strip() else None
+@attrs.frozen
+class ResultsView:
+    """What the results page shows: the filtered hits, and counts for the filter chips from all of them."""
+
+    result: SearchResult
+    filters: Filters
+    hits: list[Hit]
+    total: int
+    year_counts: list[YearCount]
+    slide_count: int
+    video_count: int
+    top_questions: list[Question]
+    words: frozenset[str]
+    stats: dict[str, TalkStats]
+    popular_tags: list[str]
+
+
+def results_view(services: Services, result: SearchResult, filters: Filters, session: Session) -> ResultsView:
+    kept = [hit for hit in result.hits if filters.keeps(hit.talk)]
+    shown = kept[:RESULTS_SHOWN]
+    years = Counter(hit.talk.year for hit in result.hits)
+    return ResultsView(
+        result=result,
+        filters=filters,
+        hits=shown,
+        total=len(kept),
+        year_counts=sorted(years.items(), reverse=True),
+        slide_count=sum(hit.talk.has_slides for hit in result.hits),
+        video_count=sum(hit.talk.has_video for hit in result.hits),
+        top_questions=[hit.questions[0] for hit in shown if hit.questions][:4],
+        words=result.highlight_terms,
+        stats=talk_stats(session, [hit.talk.ref for hit in shown]),
+        popular_tags=services.catalog.popular_tags(),
+    )
+
+
+def search_response(
+    request: Request, services: Services, query: str, filters: Filters | None = None
+) -> HTMLResponse:
+    filters = filters or Filters()
+    result = services.index.search(query, limit=None) if query.strip() else None
     if result is None:
-        return services.templates.TemplateResponse(request, "home.html", {"result": None})
+        home = {
+            "result": None,
+            "popular_tags": services.catalog.popular_tags(),
+            "stats": services.catalog.stats(),
+        }
+        return services.templates.TemplateResponse(request, "home.html", home)
     with db.begin() as session:
-        stats = talk_stats(session, [hit.talk.ref for hit in result.hits])
-        context = {"result": result, "stats": stats}
+        view = results_view(services, result, filters, session)
+        context = attrs.asdict(view, recurse=False)
         if not is_fragment_request(request):
             return services.templates.TemplateResponse(request, "search.html", context)
-        response = services.templates.TemplateResponse(request, "partials/results.html", context)
-    speakers = list(dict.fromkeys(s.slug for hit in result.hits for s in hit.talk.speakers))
-    response.headers["HX-Trigger"] = hx_trigger(SPOTLIGHT, Spotlight(speakers=speakers))
-    return response
+        return services.templates.TemplateResponse(request, "partials/results.html", context)
 
 
 @router.get("/", response_class=HTMLResponse)
@@ -171,8 +236,25 @@ def home(request: Request, services: AppServices, q: SearchQuery = "") -> HTMLRe
 
 
 @router.get("/search", response_class=HTMLResponse)
-def search(request: Request, services: AppServices, q: SearchQuery = "") -> HTMLResponse:
-    return search_response(request, services, q)
+def search(
+    request: Request,
+    services: AppServices,
+    *,
+    q: SearchQuery = "",
+    year: FilterParam = "",
+    slides: FilterParam = "",
+    video: FilterParam = "",
+) -> HTMLResponse:
+    return search_response(request, services, q, Filters.parse(year, slides, video))
+
+
+@router.get("/suggest", response_class=HTMLResponse)
+def suggestions(request: Request, services: AppServices, q: SearchQuery = "") -> HTMLResponse:
+    """Predictions for the search box, as list items for the listbox under it."""
+    context = {"suggestions": suggest(services.catalog, q)}
+    response = services.templates.TemplateResponse(request, "partials/suggest.html", context)
+    response.headers["Cache-Control"] = "no-store"
+    return response
 
 
 @router.get("/lucky")
@@ -192,10 +274,35 @@ def talk(request: Request, services: AppServices, *, year: int, slug: str) -> HT
         context = {
             "talk": found,
             "questions": services.index.questions_for(found.ref),
+            "related": services.catalog.related(found),
             "posts": thread(session, found.ref),
             "author_name": discussion_routes.remembered_name(request),
         }
         return services.templates.TemplateResponse(request, "talk.html", context)
+
+
+@router.get("/browse", response_class=HTMLResponse)
+def browse(request: Request, services: AppServices, tab: SearchQuery = "") -> HTMLResponse:
+    """Every talk of one year, or every speaker, with a filter box (the list is filtered in the browser)."""
+    catalog = services.catalog
+    years = catalog.stats().years
+    by_year = Counter(talk.year for talk in catalog.talks.values())
+    selected = (
+        tab
+        if tab == "speakers" or (tab.isascii() and tab.isdigit() and int(tab) in years)
+        else str(years[0] if years else "speakers")
+    )
+    talks = sorted(
+        (talk for talk in catalog.talks.values() if selected.isdigit() and talk.year == int(selected)),
+        key=lambda talk: (not talk.extracted, talk.display_title.lower()),
+    )
+    context = {
+        "tabs": [(str(year), by_year[year]) for year in years] + [("speakers", len(catalog.speakers))],
+        "selected": selected,
+        "talks": talks,
+        "speakers": sorted(catalog.speakers.values(), key=lambda speaker: speaker.name.casefold()),
+    }
+    return services.templates.TemplateResponse(request, "browse.html", context)
 
 
 @router.get("/speakers/{slug}", response_class=HTMLResponse)
@@ -203,7 +310,10 @@ def speaker(request: Request, services: AppServices, slug: str) -> HTMLResponse:
     found = services.catalog.speakers.get(slug)
     if found is None:
         raise HTTPException(status_code=404, detail="Speaker not found")
-    context = {"speaker": found, "talks": services.catalog.talks_of(found)}
+    talks = sorted(
+        services.catalog.talks_of(found), key=lambda talk: (-talk.year, talk.display_title.lower())
+    )
+    context = {"speaker": found, "talks": talks}
     return services.templates.TemplateResponse(request, "speaker.html", context)
 
 
@@ -224,6 +334,43 @@ async def conversation_stream(request: Request, services: AppServices) -> Stream
     return StreamingResponse(events(), media_type="text/event-stream", headers=headers)
 
 
+ERROR_PAGES = {
+    404: ("Page not found", "We could not find that page. It may have moved, or the link may be wrong."),
+    500: ("Something went wrong", "That was our mistake, not yours. Please try again in a moment."),
+}
+
+
+def wants_html(request: Request) -> bool:
+    """Browsers and htmx requests get a page; API clients keep the JSON answer."""
+    return "text/html" in request.headers.get("accept", "") or request.headers.get("HX-Request") == "true"
+
+
+def error_page(request: Request, status_code: int) -> HTMLResponse:
+    title, message = ERROR_PAGES.get(status_code, ("Something went wrong", "Please try again in a moment."))
+    services = request.app.state.services
+    context = {
+        "status": status_code,
+        "title": title,
+        "message": message,
+        "popular_tags": services.catalog.popular_tags(),
+    }
+    return services.templates.TemplateResponse(request, "error.html", context, status_code=status_code)
+
+
+async def http_error(request: Request, error: Exception) -> Response:
+    if not isinstance(error, StarletteHTTPException):
+        raise error
+    if not wants_html(request):
+        return await http_exception_handler(request, error)
+    return error_page(request, error.status_code)
+
+
+async def server_error(request: Request, _error: Exception) -> Response:
+    if not wants_html(request):
+        return JSONResponse({"detail": "Internal Server Error"}, status_code=500)
+    return error_page(request, 500)
+
+
 def create_app(settings: Settings | None = None) -> FastAPI:
     app = FastAPI(title="Orgestra")
     resolved = settings or Settings.from_env()
@@ -235,4 +382,6 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     app.include_router(router)
     app.include_router(discussion_routes.router)
     app.include_router(reports_routes.router)
+    app.add_exception_handler(StarletteHTTPException, http_error)
+    app.add_exception_handler(Exception, server_error)
     return app

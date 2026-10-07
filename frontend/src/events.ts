@@ -10,6 +10,7 @@ export interface CastMember {
   hue: number;
   /** `<year>/<talk-slug>` of the talk they are talking about. */
   talk: string;
+  title: string;
 }
 
 export interface SayDetail {
@@ -18,7 +19,7 @@ export interface SayDetail {
   text: string;
 }
 
-/** Sent by the server in an HX-Trigger header with each search result. */
+/** The speakers a page is about, named by its `data-spotlight` marker; they step to the front. */
 export interface SpotlightDetail {
   speakers: string[];
 }
@@ -60,4 +61,25 @@ export function bridgeTranscript(transcript: Element, target: EventTarget): () =
   };
   document.addEventListener("htmx:load", listener);
   return () => document.removeEventListener("htmx:load", listener);
+}
+
+/** The speakers named by the page's `data-spotlight` marker (space separated slugs); none without one. */
+export function readSpotlight(root: ParentNode): string[] {
+  const marker = root.querySelector<HTMLElement>("[data-spotlight]");
+  return marker?.dataset.spotlight?.split(" ").filter(Boolean) ?? [];
+}
+
+/** Announce the page's spotlight whenever htmx has settled new content, but only when it changed. */
+export function bridgeSpotlight(target: EventTarget): () => void {
+  let last = "";
+  const announce = () => {
+    const speakers = readSpotlight(document);
+    const key = speakers.join(" ");
+    if (key !== last) {
+      last = key;
+      target.dispatchEvent(new CustomEvent(SPOTLIGHT, { detail: { speakers } }));
+    }
+  };
+  document.addEventListener("htmx:afterSettle", announce);
+  return () => document.removeEventListener("htmx:afterSettle", announce);
 }

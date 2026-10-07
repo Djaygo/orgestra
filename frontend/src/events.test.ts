@@ -1,5 +1,5 @@
 import { expect, it } from "vitest";
-import { onStageEvent, SAY, sayFromElement } from "./events";
+import { onStageEvent, readSpotlight, SAY, sayFromElement } from "./events";
 
 it("reads a transcript line from its data-say-* attributes", () => {
   const line = { dataset: { saySpeaker: "a", sayListener: "b", sayText: "Hi" } } as unknown as Element;
@@ -18,4 +18,14 @@ it("unsubscribes", () => {
   stop();
   target.dispatchEvent(new CustomEvent(SAY, { detail: { speaker: "a", listener: "b", text: "two" } }));
   expect(heard).toEqual(["one"]);
+});
+
+it("reads the spotlight from the page marker, and finds none without one", () => {
+  const withMarker = {
+    querySelector: () => ({ dataset: { spotlight: "ada  grace " } }),
+  } as unknown as ParentNode;
+  const without = { querySelector: () => null } as unknown as ParentNode;
+
+  expect(readSpotlight(withMarker)).toEqual(["ada", "grace"]);
+  expect(readSpotlight(without)).toEqual([]);
 });

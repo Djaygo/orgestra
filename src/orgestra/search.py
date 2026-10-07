@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from collections import Counter
 from collections.abc import Iterable
 
 import attrs
@@ -9,6 +10,7 @@ from rapidfuzz import fuzz, process
 
 from orgestra.dataset import Catalog, Talk
 from orgestra.questions import Question, extract_questions
+from orgestra.slides import SlidePage
 from orgestra.text import Terms, terms
 from orgestra.thesaurus import Concept, Thesaurus
 
@@ -19,6 +21,27 @@ UNEXTRACTED_WEIGHT = 0.5
 TYPO_MIN_LENGTH = 4
 TYPO_MIN_SIMILARITY = 80
 MAX_QUESTIONS_PER_HIT = 3
+# A deck adds at most SLIDES_WEIGHT * MAX_SLIDE_PAGES to a talk's score, however many words the query has: below
+# a title match even of a talk without details (3.0 * UNEXTRACTED_WEIGHT).
+SLIDES_WEIGHT = 0.4
+MAX_SLIDE_PAGES = 3
+SLIDES_CAP = SLIDES_WEIGHT * MAX_SLIDE_PAGES
+FIELD_LABELS = {
+    "title": "Title",
+    "tags": "Tag",
+    "speakers": "Speaker",
+    "questions": "Question",
+    "abstract": "Abstract",
+    "slides": "Slides",
+}
+# Equal scores list the more telling field first.
+FIELD_ORDER = tuple(FIELD_LABELS)
+
+
+@attrs.frozen
+class PageTerms:
+    number: int
+    terms: Terms
 
 
 @attrs.frozen
@@ -27,6 +50,19 @@ class Document:
     fields: dict[str, Terms]
     questions: list[Question]
     question_terms: list[Terms]
+    pages: list[PageTerms]
+
+
+@attrs.frozen
+class FieldMatch:
+    """How much one field contributed to a hit, summed over the query's concepts."""
+
+    field: str
+    score: float
+
+    @property
+    def label(self) -> str:
+        return FIELD_LABELS[self.field]
 
 
 @attrs.frozen
@@ -34,6 +70,8 @@ class Hit:
     talk: Talk
     score: float
     questions: list[Question]
+    matches: list[FieldMatch]
+    slide_page: int | None
 
 
 @attrs.frozen
@@ -41,6 +79,13 @@ class SearchResult:
     query: str
     concepts: list[Concept]
     hits: list[Hit]
+
+    @property
+    def highlight_terms(self) -> frozenset[str]:
+        """Every stemmed word the search looked for, typed or from a synonym, for highlighting."""
+        return frozenset(
+            word for concept in self.concepts for variant in concept.variants for word in variant
+        )
 
     def top_questions(self, limit: int = 4) -> list[Question]:
         """The best-ranked talks' first matching questions, for a "People also ask" box."""
@@ -53,7 +98,7 @@ def occurrences(variant: Terms, field: Terms) -> int:
     return sum(1 for start in range(len(field) - size + 1) if field[start : start + size] == variant)
 
 
-def document_for(talk: Talk) -> Document:
+def document_for(talk: Talk, slides: Iterable[SlidePage] = ()) -> Document:
     questions = extract_questions(talk)
     fields = {
         "title": terms(talk.display_title),
@@ -62,7 +107,8 @@ def document_for(talk: Talk) -> Document:
         "questions": tuple(t for question in questions for t in terms(question.text)),
         "abstract": terms(talk.abstract or ""),
     }
-    return Document(talk, fields, questions, [terms(question.text) for question in questions])
+    pages = [PageTerms(page.number, terms(page.text)) for page in slides]
+    return Document(talk, fields, questions, [terms(question.text) for question in questions], pages)
 
 
 @attrs.frozen
@@ -72,12 +118,17 @@ class SearchIndex:
     thesaurus: Thesaurus
 
     @classmethod
-    def build(cls, catalog: Catalog, thesaurus: Thesaurus) -> SearchIndex:
-        documents = [document_for(talk) for talk in catalog.talks.values()]
-        vocabulary = frozenset(t for doc in documents for field in doc.fields.values() for t in field)
+    def build(
+        cls, catalog: Catalog, thesaurus: Thesaurus, slides: dict[str, list[SlidePage]] | None = None
+    ) -> SearchIndex:
+        slides = slides or {}
+        documents = [document_for(talk, slides.get(talk.ref, [])) for talk in catalog.talks.values()]
+        vocabulary = frozenset(
+            t for doc in documents for field in doc.fields.values() for t in field
+        ) | frozenset(t for doc in documents for page in doc.pages for t in page.terms)
         return cls(documents=documents, vocabulary=vocabulary, thesaurus=thesaurus)
 
-    def search(self, query: str, limit: int = 20) -> SearchResult:
+    def search(self, query: str, limit: int | None = 20) -> SearchResult:
         concepts = [self._with_typo_fixes(concept) for concept in self.thesaurus.expand(query)]
         if not concepts:
             return SearchResult(query=query, concepts=[], hits=[])
@@ -105,26 +156,72 @@ class SearchIndex:
 
 def score_document(doc: Document, concepts: list[Concept]) -> Hit | None:
     """Sum of concept scores, scaled down by the share of concepts the talk does not match."""
-    scores = [concept_score(doc, concept) for concept in concepts]
+    breakdowns = cap_slides([concept_breakdown(doc, concept) for concept in concepts])
+    scores = [sum(breakdown.values()) for breakdown in breakdowns]
     matched = sum(1 for score in scores if score > 0)
     if not matched:
         return None
     coverage = matched / len(concepts)
-    questions = matching_questions(doc, concepts)
     weight = 1.0 if doc.talk.extracted else UNEXTRACTED_WEIGHT
-    return Hit(talk=doc.talk, score=sum(scores) * coverage * coverage * weight, questions=questions)
-
-
-def concept_score(doc: Document, concept: Concept) -> float:
-    typed = terms(concept.label)
-    return max(
-        (
-            (1.0 if variant == typed else SYNONYM_WEIGHT)
-            * sum(weight * occurrences(variant, doc.fields[name]) for name, weight in FIELD_WEIGHTS.items())
-            for variant in concept.variants
-        ),
-        default=0.0,
+    return Hit(
+        talk=doc.talk,
+        score=sum(scores) * coverage * coverage * weight,
+        questions=matching_questions(doc, concepts),
+        matches=field_matches(breakdowns),
+        slide_page=best_slide_page(doc, concepts),
     )
+
+
+def variant_scores(doc: Document, variant: Terms) -> dict[str, float]:
+    scores = {name: weight * occurrences(variant, doc.fields[name]) for name, weight in FIELD_WEIGHTS.items()}
+    pages = sum(1 for page in doc.pages if occurrences(variant, page.terms))
+    scores["slides"] = SLIDES_WEIGHT * min(pages, MAX_SLIDE_PAGES)
+    return scores
+
+
+def concept_breakdown(doc: Document, concept: Concept) -> dict[str, float]:
+    """Per-field scores of the concept's best-scoring variant (a synonym counts less than the typed word)."""
+    typed = terms(concept.label)
+    best: dict[str, float] = {}
+    for variant in sorted(concept.variants):  # a fixed order, so ties give the same badges on every start
+        factor = 1.0 if variant == typed else SYNONYM_WEIGHT
+        scores = {name: factor * score for name, score in variant_scores(doc, variant).items()}
+        if sum(scores.values()) > sum(best.values()):
+            best = scores
+    return best
+
+
+def cap_slides(breakdowns: list[dict[str, float]]) -> list[dict[str, float]]:
+    """Scale the slide scores down so the deck adds at most SLIDES_CAP over all the query's words."""
+    total = sum(breakdown.get("slides", 0.0) for breakdown in breakdowns)
+    if total <= SLIDES_CAP:
+        return breakdowns
+    factor = SLIDES_CAP / total
+    return [{**breakdown, "slides": breakdown.get("slides", 0.0) * factor} for breakdown in breakdowns]
+
+
+def field_matches(breakdowns: list[dict[str, float]]) -> list[FieldMatch]:
+    totals: Counter[str] = Counter()
+    for breakdown in breakdowns:
+        totals.update(breakdown)
+    ranked = sorted(totals.items(), key=lambda item: (-item[1], FIELD_ORDER.index(item[0])))
+    return [FieldMatch(field, score) for field, score in ranked if score > 0]
+
+
+def best_slide_page(doc: Document, concepts: list[Concept]) -> int | None:
+    """The page matching the most concepts, then the most words, then the lowest number."""
+    best: tuple[tuple[int, int, int], int] | None = None
+    for page in doc.pages:
+        counts = [
+            sum(occurrences(variant, page.terms) for variant in concept.variants) for concept in concepts
+        ]
+        matched = sum(1 for count in counts if count)
+        if not matched:
+            continue
+        rank = (matched, sum(counts), -page.number)
+        if best is None or rank > best[0]:
+            best = (rank, page.number)
+    return best[1] if best else None
 
 
 def matches_any(question_terms: Terms, variants: Iterable[Terms]) -> bool:
