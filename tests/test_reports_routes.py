@@ -159,3 +159,28 @@ def test_the_token_is_never_rendered_or_shown_in_the_settings_repr(tmp_path):
 def test_an_unknown_provider_fails_at_startup(tmp_path):
     with pytest.raises(ValueError, match="gitlab"):
         create_app(Settings(data_dir=REPO_DATA_DIR, db_path=tmp_path / "test.db", issues_provider="gitlab"))
+
+
+def test_the_form_has_visible_labels_helper_text_and_character_counters(client):
+    html = client.get("/report", params={"from": TALK}).text
+
+    assert '<label for="report-title">Title</label>' in html
+    assert '<label for="report-description">What happened?</label>' in html
+    assert 'data-counter-for="report-title"' in html
+    assert 'data-counter-for="report-description"' in html
+    assert "0 / 120" in html
+    assert "0 / 5000" in html
+    assert "does not collect your name" in html
+
+
+def test_the_confirmation_and_the_failure_page_each_have_a_way_back(client, tracker):
+    sent = client.post("/report", data=VALID)
+    assert "filed as #7" in sent.text
+    assert f'href="{TALK}"' in sent.text
+    assert "Report another" not in sent.text
+
+    tracker.error = TrackerError("boom")
+    failed = client.post("/report", data=VALID)
+    assert failed.status_code == 502
+    assert f'href="{TALK}"' in failed.text
+    assert "Try again" in failed.text

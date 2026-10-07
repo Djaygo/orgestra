@@ -1,0 +1,13 @@
+{% from "partials/ui.html" import icon %}
+{% set icons = {"talk": "play", "speaker": "user", "topic": "tag"} %}
+{% for suggestion in suggestions %}
+  <li role="option" id="suggestion-{{ loop.index0 }}" aria-selected="false">
+    <a href="{{ suggestion.href }}" tabindex="-1">
+      {{ icon(icons[suggestion.kind], 18) }}
+      <span class="suggestion-text">
+        <span class="suggestion-label">{{ suggestion.label }}</span>
+        <span class="suggestion-detail">{{ suggestion.detail }}</span>
+      </span>
+    </a>
+  </li>
+{% endfor %}

@@ -12,15 +12,18 @@ import {
 } from "three";
 import { CSS2DObject } from "three/addons/renderers/CSS2DRenderer.js";
 import type { CastMember } from "./events";
-import { headingTo, meetingPoint, type Point, stepToward, turnToward } from "./wander";
+import { type Bounds, headingTo, meetingPoint, type Point, stepToward, turnToward } from "./wander";
 
 const WALK_SPEED = 0.9;
 const APPROACH_SPEED = 1.4;
+// Walking on or off the plaza is brisk: nobody should wait for the cast to arrive.
+const ENTRANCE_SPEED = 3.2;
 const TURN_SPEED = 6;
 const SWING = 0.6;
 const STRIDE_RATE = 9;
 const BUBBLE_MS = 3200;
-const SPOTLIGHT_MS = 4000;
+const ARRIVAL_HOP_MS = 1500;
+const ROAM_RADIUS = 0.6;
 const BUBBLE_CHARS = 110;
 
 /** Geometries shared by every character, created and disposed once by the world. */
@@ -79,6 +82,27 @@ function label(className: string, text: string): CSS2DObject {
   return new CSS2DObject(element);
 }
 
+/** The speaker's tag is a real link to their talk, so the plaza works with a mouse, a finger and a keyboard. */
+function tagFor(member: CastMember): HTMLAnchorElement {
+  const tag = document.createElement("a");
+  tag.className = "stage-tag";
+  tag.href = `/talks/${member.talk}`;
+  // The stage lives outside the boosted #app, so it carries the same boost settings (see base.html).
+  tag.setAttribute("hx-boost", "true");
+  tag.setAttribute("hx-target", "#main");
+  tag.setAttribute("hx-select", "#main");
+  tag.setAttribute("hx-swap", "outerHTML transition:true");
+  tag.setAttribute("aria-label", `${member.name}: ${member.title}`);
+  const name = document.createElement("span");
+  name.className = "stage-name";
+  name.textContent = member.name;
+  const talk = document.createElement("span");
+  talk.className = "stage-talk";
+  talk.textContent = member.title;
+  tag.append(name, talk);
+  return tag;
+}
+
 export class Character {
   readonly root = new Group();
   readonly member: CastMember;
@@ -88,16 +112,31 @@ export class Character {
   private mode: Mode = "wander";
   private partner: Character | undefined;
   private talkUntil = 0;
-  private spotlightUntil = 0;
+  private line = "";
+  private arrivedUntil = 0;
+  /** In the front row: holds its spot instead of strolling. */
+  private held = false;
+  private hovered = false;
+  private leaving = false;
+  private arriving = false;
+  private home: Point;
+  /** Where this character walks off the plaza from where it stands; set by the world. */
+  exit: (from: Point) => Point = (from) => from;
+  /** Where conversations may happen, set by the world: far enough from the edge for their bubbles. */
+  plaza: () => Bounds = () => ({ halfWidth: Number.POSITIVE_INFINITY, halfDepth: Number.POSITIVE_INFINITY });
+  /** Came on stage for a conversation and leaves when it is over. */
+  guest = false;
+  active = false;
   private readonly clothes: MeshStandardMaterial;
   private readonly limbs: { arms: Group[]; legs: Group[] };
   private readonly bubble: CSS2DObject;
-  private readonly nameTag: CSS2DObject;
+  private readonly tag: CSS2DObject;
 
   constructor(member: CastMember, parts: SharedParts, start: Point) {
     this.member = member;
     this.position = start;
     this.target = start;
+    this.home = start;
     this.clothes = new MeshStandardMaterial({ color: new Color().setHSL(member.hue / 360, 0.55, 0.55) });
 
     const body = new Mesh(parts.body, this.clothes);
@@ -116,12 +155,15 @@ export class Character {
       arms: [limb(parts, this.clothes, -0.32, 0.9), limb(parts, this.clothes, 0.32, 0.9)],
       legs: [limb(parts, parts.dark, -0.11, 0.4), limb(parts, parts.dark, 0.11, 0.4)],
     };
-    this.nameTag = label("stage-name", member.name);
-    this.nameTag.position.y = 1.85;
-    // Names show only while someone talks or is spotlit, so a full plaza stays readable.
-    this.nameTag.visible = false;
+    const anchor = tagFor(member);
+    anchor.addEventListener("pointerenter", () => this.hover(true));
+    anchor.addEventListener("pointerleave", () => this.hover(false));
+    anchor.addEventListener("focus", () => this.hover(true));
+    anchor.addEventListener("blur", () => this.hover(false));
+    this.tag = new CSS2DObject(anchor);
+    this.tag.position.y = 1.85;
     this.bubble = label("stage-bubble", "");
-    this.bubble.position.y = 2.1;
+    this.bubble.position.y = 2.6;
     this.bubble.center.set(0.5, 1); // anchor the bottom edge, so long lines grow upward
     this.bubble.visible = false;
 
@@ -137,14 +179,35 @@ export class Character {
       ...eyes,
       ...this.limbs.arms,
       ...this.limbs.legs,
-      this.nameTag,
+      this.tag,
       this.bubble,
     );
-    this.root.position.set(start.x, 0, start.z);
+    this.setActive(false);
   }
 
   get slug(): string {
     return this.member.slug;
+  }
+
+  get present(): boolean {
+    return this.active && !this.leaving;
+  }
+
+  /** Free to take a stroll near its spot. */
+  get roaming(): boolean {
+    return this.present && !this.held && !this.hovered && this.idle;
+  }
+
+  get idle(): boolean {
+    return this.mode === "wander" && this.target.x === this.position.x && this.target.z === this.position.z;
+  }
+
+  get strollPoint(): Point {
+    return this.home;
+  }
+
+  get strollRadius(): number {
+    return ROAM_RADIUS;
   }
 
   wanderTo(point: Point): void {
@@ -153,16 +216,83 @@ export class Character {
     }
   }
 
-  get idle(): boolean {
-    return this.mode === "wander" && this.target.x === this.position.x && this.target.z === this.position.z;
+  /** Come on stage and walk to `slot` (or appear there at once). `front` holds the spot and stands out. */
+  enter(slot: Point, from: Point, front: boolean, now: number, snap: boolean): void {
+    if (!this.active) {
+      this.position = snap ? slot : from;
+      this.mode = "wander";
+      this.partner = undefined;
+      this.arrivedUntil = now + ARRIVAL_HOP_MS;
+      this.arriving = !snap;
+    }
+    this.guest = false;
+    this.leaving = false;
+    this.settle(slot, front, snap);
+    this.setActive(true);
+  }
+
+  /** Take a (new) spot while staying on stage. */
+  settle(slot: Point, front: boolean, snap: boolean): void {
+    this.home = slot;
+    this.held = front;
+    this.target = slot;
+    if (snap) {
+      this.position = slot;
+    }
+    this.tag.element.classList.toggle("front", front);
+    this.tag.element.tabIndex = front ? 0 : -1;
+  }
+
+  /** Walk off the plaza, then disappear. */
+  leave(snap: boolean): void {
+    this.held = false;
+    this.leaving = true;
+    this.mode = "wander";
+    this.partner = undefined;
+    this.bubble.visible = false;
+    this.target = this.exit(this.position);
+    if (snap) {
+      this.finishLeaving();
+    }
+  }
+
+  private finishLeaving(): void {
+    this.leaving = false;
+    this.guest = false;
+    this.hovered = false;
+    this.setActive(false);
+  }
+
+  private setActive(active: boolean): void {
+    this.active = active;
+    this.root.visible = active;
+    this.tag.visible = active;
+    this.root.position.set(this.position.x, 0, this.position.z);
+  }
+
+  private hover(on: boolean): void {
+    this.hovered = on;
+    if (on && this.mode === "wander") {
+      this.target = this.position;
+    }
   }
 
   /** Walk up to `partner` and say `text` once there (or right away if already close). */
   say(text: string, partner: Character | undefined, now: number): void {
     this.partner = partner;
     this.mode = partner ? "approach" : "talk";
+    this.line = text;
+    this.bubble.visible = false;
+    if (!partner) {
+      this.startTalking(now);
+    }
+  }
+
+  /** The bubble appears, and its time starts, when the speaker has walked up to the listener. */
+  private startTalking(now: number): void {
+    this.mode = "talk";
     this.talkUntil = now + BUBBLE_MS;
-    this.showBubble(text);
+    this.showBubble(this.line);
   }
 
   /** Stop and turn toward the speaker. */
@@ -173,44 +303,60 @@ export class Character {
     this.target = this.position;
   }
 
-  spotlight(now: number): void {
-    this.spotlightUntil = now + SPOTLIGHT_MS;
-  }
-
   update(seconds: number, now: number): void {
-    const moving = this.move(seconds);
+    if (!this.active) {
+      return;
+    }
+    const moving = this.move(seconds, now);
     if (this.mode === "talk" && now > this.talkUntil) {
       this.mode = "wander";
       this.partner = undefined;
       this.bubble.visible = false;
+      if (this.guest) {
+        this.leave(false);
+      } else {
+        this.target = this.home;
+      }
     }
-    const spotlit = now < this.spotlightUntil;
-    this.nameTag.element.classList.toggle("spotlit", spotlit);
-    this.nameTag.visible = spotlit || this.mode !== "wander";
+    if (this.leaving && !moving && this.idle) {
+      this.finishLeaving();
+      return;
+    }
+    const element = this.tag.element;
+    element.classList.toggle("talking", this.mode !== "wander" && this.bubble.visible);
     this.animate(moving, now);
   }
 
   dispose(): void {
     this.clothes.dispose();
-    this.nameTag.element.remove();
+    this.tag.element.remove();
     this.bubble.element.remove();
     this.root.removeFromParent();
   }
 
-  private move(seconds: number): boolean {
+  private move(seconds: number, now: number): boolean {
     if (this.mode === "approach" && this.partner) {
-      this.target = meetingPoint(this.position, this.partner.position);
+      const meeting = meetingPoint(this.position, this.partner.position);
+      const limit = this.plaza().halfWidth;
+      this.target = { x: Math.min(limit, Math.max(-limit, meeting.x)), z: meeting.z };
     }
-    const speed = this.mode === "approach" ? APPROACH_SPEED : WALK_SPEED;
+    const hurrying = this.arriving || this.leaving || this.guest;
+    const speed =
+      this.mode === "approach" && !this.guest ? APPROACH_SPEED : hurrying ? ENTRANCE_SPEED : WALK_SPEED;
     const next =
       this.mode === "talk" ? this.position : stepToward(this.position, this.target, speed * seconds);
     const moving = next.x !== this.position.x || next.z !== this.position.z;
     const lookAt = moving ? next : this.partner?.position;
-    if (lookAt) {
+    if (this.hovered && !moving && !this.partner) {
+      this.heading = turnToward(this.heading, 0, TURN_SPEED * seconds); // face the visitor
+    } else if (lookAt) {
       this.heading = turnToward(this.heading, headingTo(this.position, lookAt), TURN_SPEED * seconds);
     }
     if (this.mode === "approach" && !moving) {
-      this.mode = "talk";
+      this.startTalking(now);
+    }
+    if (!moving) {
+      this.arriving = false;
     }
     this.position = next;
     this.root.position.set(next.x, 0, next.z);
@@ -224,10 +370,11 @@ export class Character {
     const [leftArm, rightArm] = this.limbs.arms;
     const [leftLeg, rightLeg] = this.limbs.legs;
     leftArm?.rotation.set(swing, 0, 0);
-    rightArm?.rotation.set(-swing, 0, this.mode === "talk" && this.bubble.visible ? -0.6 : 0);
+    const wave = this.hovered && !moving ? -2.6 + Math.sin(phase * 1.6) * 0.35 : 0;
+    rightArm?.rotation.set(-swing, 0, wave || (this.mode === "talk" && this.bubble.visible ? -0.6 : 0));
     leftLeg?.rotation.set(-swing, 0, 0);
     rightLeg?.rotation.set(swing, 0, 0);
-    const hop = now < this.spotlightUntil ? Math.abs(Math.sin(phase * 0.6)) * 0.25 : 0;
+    const hop = now < this.arrivedUntil && !moving ? Math.abs(Math.sin(phase * 0.6)) * 0.25 : 0;
     this.root.position.y = (moving ? Math.abs(Math.sin(phase)) * 0.05 : 0) + hop;
   }
 

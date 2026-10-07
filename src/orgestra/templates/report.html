@@ -4,18 +4,23 @@
   <article class="report">
     <h1>Report a bug</h1>
     <p class="muted">Tell us what went wrong. Your report goes straight to the people who build this site.</p>
-    <form class="report-form" method="post" action="/report" hx-boost="false">
+    <form class="report-form card" method="post" action="/report" hx-boost="false">
       <input type="hidden" name="page" value="{{ page }}">
-      <label>Title
-        <input name="title" maxlength="120" required>
-      </label>
-      <label>What happened?
-        <textarea name="description" rows="6" maxlength="5000" required></textarea>
-      </label>
-      <p>
-        <button class="button" type="submit">Send report</button>
-        <a href="{{ page or '/' }}">Cancel</a>
-      </p>
+      <div class="field">
+        <label for="report-title">Title</label>
+        <input id="report-title" class="input" name="title" maxlength="120" required autocomplete="off">
+        <p class="field-help"><span data-counter-for="report-title">0 / 120</span> A short summary of the problem.</p>
+      </div>
+      <div class="field">
+        <label for="report-description">What happened?</label>
+        <textarea id="report-description" class="input" name="description" rows="6" maxlength="5000" required></textarea>
+        <p class="field-help"><span data-counter-for="report-description">0 / 5000</span> What you did, what you expected and what you saw.</p>
+      </div>
+      <p class="field-help">The report includes the page you came from and your browser, and does not collect your name or address.</p>
+      <div class="form-actions">
+        <button class="btn" type="submit">Send report</button>
+        <a class="btn btn-text" href="{{ page or '/' }}">Cancel</a>
+      </div>
     </form>
   </article>
 {% endblock %}

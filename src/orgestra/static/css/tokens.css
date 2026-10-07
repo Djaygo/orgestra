@@ -1,0 +1,105 @@
+/* Design tokens. Components use these roles, never raw colours.
+   Colours are oklch() through light-dark(): the scheme follows the system unless the root carries
+   data-theme="light" or "dark" (the theme toggle). The four wordmark colours are brand colours and
+   stay literal where the logo uses them. */
+
+:root {
+  color-scheme: light dark;
+
+  /* Surfaces and text */
+  --surface: light-dark(oklch(1 0 0), oklch(0.205 0.005 265));
+  --surface-container: light-dark(oklch(0.972 0.003 250), oklch(0.255 0.006 265));
+  --surface-container-high: light-dark(oklch(0.945 0.005 250), oklch(0.305 0.007 265));
+  --on-surface: light-dark(oklch(0.21 0.01 265), oklch(0.93 0.004 265));
+  --on-surface-muted: light-dark(oklch(0.45 0.012 265), oklch(0.76 0.01 265));
+  --outline: light-dark(oklch(0.6 0.01 265), oklch(0.62 0.01 265));
+  --outline-variant: light-dark(oklch(0.9 0.004 265), oklch(0.36 0.008 265));
+
+  /* Action colour: Google blue */
+  --primary: light-dark(oklch(0.52 0.19 259), oklch(0.78 0.1 255));
+  --on-primary: light-dark(oklch(1 0 0), oklch(0.2 0.03 265));
+  --primary-container: light-dark(oklch(0.93 0.04 255), oklch(0.36 0.08 258));
+  --on-primary-container: light-dark(oklch(0.28 0.09 262), oklch(0.9 0.04 255));
+
+  /* Feedback */
+  --error: light-dark(oklch(0.5 0.2 27), oklch(0.75 0.13 25));
+  --success: light-dark(oklch(0.5 0.13 150), oklch(0.78 0.14 150));
+  --highlight: light-dark(oklch(0.93 0.14 95), oklch(0.42 0.08 95));
+  --shadow: light-dark(oklch(0.2 0.02 265 / 0.18), oklch(0 0 0 / 0.55));
+
+  /* Brand */
+  --brand-blue: #4285f4;
+  --brand-red: #ea4335;
+  --brand-yellow: #fbbc05;
+  --brand-green: #34a853;
+
+  /* Type: Material 3 scale */
+  --font: "Roboto Variable", Roboto, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --text-display: clamp(2.5rem, 1.6rem + 3.6vw, 3.5625rem);
+  --text-headline-l: clamp(1.75rem, 1.4rem + 1.4vw, 2rem);
+  --text-headline-m: 1.75rem;
+  --text-headline-s: 1.5rem;
+  --text-title-l: 1.375rem;
+  --text-title-m: 1rem;
+  --text-title-s: 0.875rem;
+  --text-body-l: 1rem;
+  --text-body-m: 0.875rem;
+  --text-body-s: 0.75rem;
+  --text-label: 0.8125rem;
+
+  /* Space: 4px steps */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4rem;
+
+  /* Shape */
+  --radius-xs: 0.25rem;
+  --radius-sm: 0.5rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.75rem;
+  --radius-full: 999px;
+
+  /* Elevation */
+  --elev-1: 0 1px 2px var(--shadow), 0 1px 3px 1px var(--shadow);
+  --elev-2: 0 1px 2px var(--shadow), 0 2px 6px 2px var(--shadow);
+  --elev-3: 0 4px 8px 3px var(--shadow), 0 1px 3px var(--shadow);
+
+  /* Motion */
+  --dur-1: 120ms;
+  --dur-2: 220ms;
+  --dur-3: 360ms;
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --ease-emphasized: cubic-bezier(0.3, 0, 0.8, 0.15);
+
+  /* Layers */
+  --z-bar: 20;
+  --z-popover: 40;
+  --z-toast: 60;
+
+  /* Layout */
+  --bar-height: 4rem;
+  --content-width: 75rem;
+  --measure: 68ch;
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-1: 0.01ms;
+    --dur-2: 0.01ms;
+    --dur-3: 0.01ms;
+  }
+}

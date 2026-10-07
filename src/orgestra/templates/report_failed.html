@@ -1,11 +1,14 @@
 {% extends "base.html" %}
+{% from "partials/ui.html" import icon %}
 {% block title %}Report not sent · Orgestra{% endblock %}
 {% block content %}
-  <article class="report">
+  <section class="result-page">
+    <span class="result-icon result-icon-error">{{ icon("alert", 40) }}</span>
     <h1>We could not send your report</h1>
-    <p>Please try again later.</p>
+    <p class="muted">Please try again later.</p>
     <p>
-      <a href="{{ page or '/' }}">Back to where you were</a>
+      <a class="btn btn-tonal" href="/report?from={{ page|urlencode }}">Try again</a>
+      <a class="btn btn-text" href="{{ page or '/' }}">Back to where you were</a>
     </p>
-  </article>
+  </section>
 {% endblock %}

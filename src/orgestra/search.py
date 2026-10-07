@@ -80,6 +80,13 @@ class SearchResult:
     concepts: list[Concept]
     hits: list[Hit]
 
+    @property
+    def highlight_terms(self) -> frozenset[str]:
+        """Every stemmed word the search looked for, typed or from a synonym, for highlighting."""
+        return frozenset(
+            word for concept in self.concepts for variant in concept.variants for word in variant
+        )
+
     def top_questions(self, limit: int = 4) -> list[Question]:
         """The best-ranked talks' first matching questions, for a "People also ask" box."""
         return [hit.questions[0] for hit in self.hits if hit.questions][:limit]
@@ -121,7 +128,7 @@ class SearchIndex:
         ) | frozenset(t for doc in documents for page in doc.pages for t in page.terms)
         return cls(documents=documents, vocabulary=vocabulary, thesaurus=thesaurus)
 
-    def search(self, query: str, limit: int = 20) -> SearchResult:
+    def search(self, query: str, limit: int | None = 20) -> SearchResult:
         concepts = [self._with_typo_fixes(concept) for concept in self.thesaurus.expand(query)]
         if not concepts:
             return SearchResult(query=query, concepts=[], hits=[])

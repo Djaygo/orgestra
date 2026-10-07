@@ -1,5 +1,5 @@
 // Entry of the stage island: small on purpose. three.js loads only once the stage is on screen.
-import { bridgeTranscript, type CastMember } from "./events";
+import { bridgeSpotlight, bridgeTranscript, type CastMember } from "./events";
 
 function readCast(stage: Element): CastMember[] {
   const data = stage.querySelector("#cast-data")?.textContent;
@@ -24,6 +24,7 @@ function start(): void {
     return;
   }
   bridgeTranscript(transcript, document);
+  bridgeSpotlight(document);
   const cast = readCast(stage);
   whenVisible(world, () => {
     import("./world").then(({ mountWorld }) => mountWorld(world, cast, document));

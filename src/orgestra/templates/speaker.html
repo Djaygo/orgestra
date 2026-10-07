@@ -1,42 +1,34 @@
 {% extends "base.html" %}
+{% from "partials/ui.html" import icon, chip, avatar %}
+{% from "partials/talk_card.html" import talk_card %}
 {% block title %}{{ speaker.name }} · Orgestra{% endblock %}
 {% block content %}
-  <article class="persona">
-    <header class="persona-head">
-      <span class="avatar large" style="--hue: {{ speaker.slug|hue }}" aria-hidden="true">{{ speaker.name|initials }}</span>
-      <div>
+  <article class="speaker">
+<div hidden data-spotlight="{{ speaker.slug }}"></div>
+    <header class="speaker-head card">
+      {{ avatar(speaker.name, speaker.slug, "lg") }}
+      <div class="speaker-text">
         <h1>{{ speaker.name }}</h1>
-        {% if speaker.role_company %}<p class="meta">{{ speaker.role_company }}</p>{% endif %}
+        {% if speaker.role_company %}<p class="muted">{{ speaker.role_company }}</p>{% endif %}
+        {% if speaker.bio %}<p class="speaker-bio">{{ speaker.bio }}</p>{% endif %}
+        <div class="chip-row">
+          {% if speaker.email %}<a class="chip" href="mailto:{{ speaker.email }}">{{ icon("mail", 16) }}{{ speaker.email }}</a>{% endif %}
+          {% for label, url in speaker.links.items() %}
+            <a class="chip" href="{{ url }}" rel="noopener">{{ icon("globe", 16) }}{{ label }}</a>
+          {% endfor %}
+          {% for year, url in speaker.profiles.items() %}
+            <a class="chip" href="{{ url }}" rel="noopener">{{ icon("external", 16) }}Speaker page {{ year }}</a>
+          {% endfor %}
+        </div>
       </div>
     </header>
-    {% if speaker.bio %}<p>{{ speaker.bio }}</p>{% endif %}
-    <h2>Contact</h2>
-    <ul class="links">
-      {% if speaker.email %}
-        <li>
-          <a href="mailto:{{ speaker.email }}">{{ speaker.email }}</a>
-        </li>
-      {% else %}
-        <li class="muted">No public email address</li>
-      {% endif %}
-      {% for label, url in speaker.links.items() %}
-        <li>
-          <a href="{{ url }}" rel="noopener">{{ label }}</a>
-        </li>
-      {% endfor %}
-      {% for year, url in speaker.profiles.items() %}
-        <li>
-          <a href="{{ url }}" rel="noopener">Speaker page {{ year }}</a>
-        </li>
-      {% endfor %}
-    </ul>
-    <h2>Talks</h2>
-    <ul>
-      {% for talk in talks %}
-        <li>
-          <a href="/talks/{{ talk.ref }}">{{ talk.display_title }}</a> <span class="muted">{{ talk.year }}</span>
-        </li>
-      {% endfor %}
-    </ul>
+    {% if talks %}
+      <section class="speaker-talks" aria-labelledby="talks-heading">
+        <h2 id="talks-heading">Talks</h2>
+        <div class="card-grid">
+          {% for talk in talks %}{{ talk_card(talk, index=loop.index0) }}{% endfor %}
+        </div>
+      </section>
+    {% endif %}
   </article>
 {% endblock %}

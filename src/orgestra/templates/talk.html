@@ -1,58 +1,105 @@
 {% extends "base.html" %}
+{% from "partials/ui.html" import icon, chip, avatar %}
+{% from "partials/talk_card.html" import talk_card %}
 {% block title %}{{ talk.display_title }} · Orgestra{% endblock %}
 {% block content %}
   <article class="talk">
-    <p class="meta">
-      {{ talk.organization|upper }} {{ talk.year }} · {{ talk.section or "Talk" }}
-      {% if talk.day %}· {{ talk.day }} {{ talk.start }}–{{ talk.end }}{% endif %}
-      {% if talk.room %}· {{ talk.room }}{% endif %}
-    </p>
-    <h1>{{ talk.display_title }}</h1>
-    <p class="people">
-      {% for person in talk.speakers %}
-        {% include "partials/persona_chip.html" %}
-      {% endfor %}
-    </p>
-    {% if talk.tags %}
-      <p>
-        {% for tag in talk.tags %}<span class="tag">{{ tag }}</span>{% endfor %}
-      </p>
-    {% endif %}
-    {% if talk.abstract %}
-      {% for paragraph in talk.abstract.split("\n\n") %}<p>{{ paragraph }}</p>{% endfor %}
-    {% elif not talk.extracted %}
-      <p class="notice">The details of this talk have not been extracted yet.</p>
-    {% endif %}
-    <h2>Sources</h2>
-    <ul class="links">
-      <li>
-        <a href="{{ talk.session_url }}" rel="noopener">Schedule page</a>
-      </li>
-      {% if talk.slides_url %}
-        <li>
-          <a href="{{ talk.slides_url }}" rel="noopener">Slides</a>
-        </li>
+    <div hidden data-spotlight="{% for person in talk.speakers %}{{ person.slug }} {% endfor %}{% for other in related %}{% for person in other.speakers %}{{ person.slug }} {% endfor %}{% endfor %}"></div>
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <ol>
+        <li><a href="/browse">Browse</a></li>
+        <li><a href="/browse?tab={{ talk.year }}">{{ talk.year }}</a></li>
+        <li aria-current="page">{{ talk.section or "Talk" }}</li>
+      </ol>
+    </nav>
+    <div class="talk-layout">
+      <header class="talk-head">
+        <h1>{{ talk.display_title }}</h1>
+        {% if talk.speakers %}
+          <div class="talk-people">
+            {% for person in talk.speakers %}
+              <a class="person-chip" href="/speakers/{{ person.slug }}">{{ avatar(person.name, person.slug, "sm") }}{{ person.name }}</a>
+            {% endfor %}
+          </div>
+        {% endif %}
+        {% if talk.day or talk.room %}
+          <p class="talk-when">
+            {% if talk.day %}<span>{{ icon("calendar", 18) }}{{ talk.day }} {{ talk.start }}–{{ talk.end }}</span>{% endif %}
+            {% if talk.room %}<span>{{ icon("pin", 18) }}{{ talk.room }}</span>{% endif %}
+          </p>
+        {% endif %}
+        {% if talk.tags %}
+          <div class="chip-row">
+            {% for tag in talk.tags %}{{ chip(tag, href="/search?q=" ~ (tag|urlencode)) }}{% endfor %}
+          </div>
+        {% endif %}
+      </header>
+
+      {% if talk.embed_url %}
+        <section class="talk-player" aria-label="Video">
+          <div class="player">
+            <iframe class="player-frame"
+                    src="{{ talk.embed_url }}"
+                    title="Video: {{ talk.display_title }}"
+                    loading="lazy"
+                    allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; fullscreen"
+                    referrerpolicy="strict-origin-when-cross-origin"
+                    allowfullscreen></iframe>
+          </div>
+        </section>
       {% endif %}
-      {% if talk.video_url %}
-        <li>
-          <a href="{{ talk.video_url }}" rel="noopener">Video</a>
-        </li>
+
+      <div class="talk-body">
+        {% if talk.abstract %}
+          {% for paragraph in talk.abstract.split("\n\n") %}<p>{{ paragraph }}</p>{% endfor %}
+        {% elif not talk.extracted %}
+          <div class="notice">
+            <p>The details of this talk have not been extracted yet.</p>
+            <p class="muted">The schedule page has what is known so far.</p>
+          </div>
+        {% endif %}
+      </div>
+
+      <aside class="talk-aside" aria-label="Links">
+        <div class="card talk-links">
+          {% if talk.has_slides %}
+            <a class="btn btn-tonal" href="{{ talk.slides_url }}" rel="noopener">{{ icon("slides", 18) }}Open slides</a>
+          {% endif %}
+          {% if talk.video_url and not talk.embed_url %}
+            <a class="btn btn-tonal" href="{{ talk.video_url }}" rel="noopener">{{ icon("play", 18) }}Watch the video</a>
+          {% endif %}
+          <a class="btn btn-outlined" href="{{ talk.session_url }}" rel="noopener">{{ icon("external", 18) }}Schedule page</a>
+          {% for link in talk.other_links %}
+            <a class="btn btn-text talk-link" href="{{ link }}" rel="noopener">{{ icon("external", 18) }}<span>{{ link|replace("https://", "")|replace("http://", "") }}</span></a>
+          {% endfor %}
+          <button class="btn btn-text" type="button" data-copy-link>{{ icon("share", 18) }}Share</button>
+        </div>
+      </aside>
+
+      {% if questions %}
+        <section class="talk-questions" aria-labelledby="questions-heading">
+          <h2 id="questions-heading">Questions this talk answers</h2>
+          {% for question in questions %}
+            <details class="question">
+              <summary>{{ question.text }}</summary>
+              <p>{{ question.answer }}</p>
+            </details>
+          {% endfor %}
+        </section>
       {% endif %}
-      {% for link in talk.other_links %}
-        <li>
-          <a href="{{ link }}" rel="noopener">{{ link }}</a>
-        </li>
-      {% endfor %}
-    </ul>
-    {% if questions %}
-      <h2>Questions this talk answers</h2>
-      {% for question in questions %}
-        <details class="question">
-          <summary>{{ question.text }}</summary>
-          <p>{{ question.answer }}</p>
-        </details>
-      {% endfor %}
-    {% endif %}
-    {% include "partials/discussion/section.html" %}
+
+      {% if related %}
+        <section class="talk-related" aria-labelledby="related-heading">
+          <h2 id="related-heading">Related talks</h2>
+          <div class="card-grid">
+            {% for other in related %}{{ talk_card(other, index=loop.index0) }}{% endfor %}
+          </div>
+        </section>
+      {% endif %}
+
+      <div class="talk-discussion">
+        {% include "partials/discussion/section.html" %}
+      </div>
+    </div>
   </article>
 {% endblock %}
