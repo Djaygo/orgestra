@@ -1,0 +1,557 @@
+/* The town (/town): the pixel world fills the page under the app bar; the directory, the bag, the booth
+   panel and the transcript float over it as pixel-bordered cards. */
+
+/* The page is exactly one screen: the app bar (one or two rows), then the town in the rest. */
+.town-page {
+  --town-ink: #2b2233;
+  --town-paper: #fbf7ee;
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
+  padding-bottom: 0;
+}
+
+.town-page .content {
+  flex: 1;
+  min-height: 26rem;
+  width: 100%;
+  padding: 0;
+}
+
+.town {
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+  background: var(--town-ink);
+}
+
+.town-world {
+  position: absolute;
+  inset: 0;
+}
+
+.town-canvas {
+  display: block;
+  image-rendering: pixelated;
+}
+
+.town-overlay {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.town-layer {
+  position: absolute;
+  inset: 0 auto auto 0;
+}
+
+/* Cards over the world. */
+.town-help,
+.town-directory,
+.town-bag,
+.town-panel {
+  position: absolute;
+  z-index: 2;
+  border: 3px solid var(--town-ink);
+  border-radius: 4px;
+  background: var(--town-paper);
+  color: var(--town-ink);
+  box-shadow: 4px 4px 0 rgb(43 34 51 / 0.55);
+}
+
+.town :is(.town-help, .town-directory, .town-bag, .town-panel) a {
+  color: #1d4f91;
+}
+
+.town-help {
+  top: var(--space-3);
+  left: 50%;
+  translate: -50% 0;
+  margin: 0;
+  padding: var(--space-1) var(--space-3);
+  font-size: var(--text-body-s);
+  white-space: nowrap;
+}
+
+/* Once you take a step, you know how. */
+.town:has(.town-world[data-walked]) .town-help {
+  opacity: 0;
+  transition: opacity var(--dur-3) var(--ease-standard);
+  pointer-events: none;
+}
+
+.town-help kbd {
+  padding: 0 0.3em;
+  border: 1px solid var(--town-ink);
+  border-radius: 3px;
+  background: #fff;
+  font: inherit;
+  font-weight: 600;
+}
+
+.town-directory {
+  top: var(--space-3);
+  left: var(--space-3);
+  width: 13rem;
+  padding: var(--space-1) var(--space-3);
+  font-size: var(--text-body-m);
+}
+
+.town-directory summary {
+  padding: var(--space-1) 0;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.town-directory h2 {
+  margin: var(--space-1) 0;
+  font-size: var(--text-body-s);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.town-directory ul {
+  display: grid;
+  gap: 2px;
+  margin: 0 0 var(--space-2);
+  padding: 0;
+  list-style: none;
+}
+
+.town-directory a {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 2px var(--space-1);
+  border-radius: 3px;
+  text-decoration: none;
+}
+
+.town-directory a:hover {
+  background: rgb(43 34 51 / 0.08);
+}
+
+.booth-dot {
+  width: 0.7rem;
+  height: 0.7rem;
+  border: 2px solid var(--town-ink);
+  background: var(--booth);
+}
+
+/* Signs over booths and rooms, in world pixels (the layer moves with the camera). */
+.town-sign {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: #fff;
+  font: 700 calc(var(--town-scale, 3) * 4px) / 1 var(--font);
+  letter-spacing: 0.02em;
+  text-shadow: 0 2px 0 rgb(0 0 0 / 0.45);
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.town-sign-room {
+  translate: 0 -100%;
+  height: auto !important;
+  padding-bottom: calc(var(--town-scale, 3) * 1px);
+  font-size: calc(var(--town-scale, 3) * 4px);
+}
+
+/* What plays on a room's screen, over the screen itself. */
+.town-sign-screen {
+  align-content: center;
+  gap: calc(var(--town-scale, 3) * 0.5px);
+  padding: calc(var(--town-scale, 3) * 4px) calc(var(--town-scale, 3) * 3px) calc(var(--town-scale, 3) * 3px);
+  overflow: hidden;
+  font-size: calc(var(--town-scale, 3) * 3.4px);
+  line-height: 1.15;
+  white-space: normal;
+  text-align: center;
+  text-shadow: none;
+}
+
+.town-sign-screen small {
+  color: #a9c9ea;
+  font-size: 0.8em;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.town-sign-exit {
+  translate: 0 60%;
+  font-size: calc(var(--town-scale, 3) * 3.4px);
+}
+
+.town-sign:hover,
+.town-sign:focus-visible {
+  color: #fff6c9;
+}
+
+.town-bubble {
+  position: absolute;
+  z-index: 1;
+  width: max-content;
+  max-width: 16rem;
+  padding: 0.3rem 0.55rem;
+  border: 2px solid var(--town-ink);
+  border-radius: 4px;
+  background: #fff;
+  color: var(--town-ink);
+  font-size: var(--text-body-s);
+  line-height: 1.3;
+  translate: -50% -100%;
+  box-shadow: 2px 2px 0 rgb(43 34 51 / 0.4);
+  transition: opacity var(--dur-2) var(--ease-standard);
+}
+
+.town-bubble::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -7px;
+  width: 8px;
+  height: 8px;
+  border: solid var(--town-ink);
+  border-width: 0 2px 2px 0;
+  background: #fff;
+  translate: -50% 0;
+  rotate: 45deg;
+}
+
+.town-bubble b {
+  font-weight: 700;
+}
+
+.town-bubble-fading {
+  opacity: 0;
+}
+
+.town-name {
+  position: absolute;
+  width: max-content;
+  padding: 1px 6px;
+  border-radius: 3px;
+  background: rgb(43 34 51 / 0.85);
+  color: #fff;
+  font-size: var(--text-body-s);
+  white-space: nowrap;
+  translate: -50% 4px;
+}
+
+/* The bag. */
+.town-bag {
+  right: var(--space-3);
+  bottom: var(--space-3);
+  width: 17rem;
+  max-height: calc(100% - 2 * var(--space-3));
+  overflow: auto;
+  padding: var(--space-2) var(--space-3) var(--space-3);
+  font-size: var(--text-body-m);
+}
+
+.bag-title {
+  margin: var(--space-1) 0 0;
+  font-size: var(--text-body-s);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.bag-wallet {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin: var(--space-1) 0 var(--space-2);
+}
+
+.bag-wallet strong {
+  font-size: var(--text-title-l);
+}
+
+.bag-coin {
+  width: 1.1rem;
+  height: 1.1rem;
+  border: 2px solid #8a5a00;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #ffe28a, #f2b600 60%);
+}
+
+.bag-empty {
+  margin: 0;
+  color: #5c536a;
+}
+
+.bag-lines,
+.bag-items {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.bag-line {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0 var(--space-2);
+  padding: var(--space-1) 0 var(--space-1) var(--space-2);
+  border-left: 4px solid var(--booth);
+  margin-bottom: var(--space-2);
+}
+
+.bag-booth {
+  font-weight: 700;
+}
+
+.bag-deal {
+  color: #2f7a3e;
+  font-weight: 700;
+}
+
+.bag-items {
+  grid-column: 1 / -1;
+}
+
+.bag-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.bag-remove {
+  padding: 0 0.4rem;
+  border: 0;
+  background: none;
+  color: #5c536a;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.bag-saved {
+  margin: 0 0 var(--space-2);
+  color: #2f7a3e;
+  font-weight: 600;
+}
+
+.bag-nudge {
+  margin: 0 0 var(--space-2);
+  padding: var(--space-2);
+  border: 2px dashed #2f7a3e;
+  border-radius: 4px;
+  background: #eaf6ec;
+}
+
+.bag-nudge-add {
+  min-height: 0;
+  padding: 0;
+  color: #1d4f91;
+  font-weight: 700;
+}
+
+.bag-checkout {
+  width: 100%;
+}
+
+/* The booth panel. */
+.town-panel {
+  top: var(--space-3);
+  right: var(--space-3);
+  bottom: calc(var(--space-3) + var(--bag-room, 0px));
+  width: min(26rem, calc(100% - 2 * var(--space-3)));
+  overflow: auto;
+  padding: var(--space-3) var(--space-4) var(--space-4);
+}
+
+.town-panel-open .town-bag {
+  right: auto;
+  left: var(--space-3);
+}
+
+.town-panel-close {
+  position: sticky;
+  top: 0;
+  float: right;
+  min-height: 2rem;
+  padding: 0 var(--space-2);
+  color: var(--town-ink);
+  font-size: 1.4rem;
+}
+
+.booth {
+  --booth: #888;
+}
+
+.booth-header {
+  margin-bottom: var(--space-3);
+  padding-bottom: var(--space-2);
+  border-bottom: 4px solid var(--booth, var(--town-ink));
+}
+
+.booth-kicker {
+  margin: 0;
+  color: #5c536a;
+  font-size: var(--text-body-s);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.booth-header h2 {
+  margin: var(--space-1) 0;
+  font-size: var(--text-headline-s);
+}
+
+.booth-tagline {
+  margin: 0;
+}
+
+.seed-list,
+.room-talks,
+.receipt-rows {
+  display: grid;
+  gap: var(--space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.seed {
+  padding: var(--space-3);
+  border: 2px solid var(--town-ink);
+  border-radius: 4px;
+  background: #fff;
+}
+
+.seed-owned {
+  background: color-mix(in oklch, var(--booth) 10%, #fff);
+}
+
+.seed-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--space-2);
+}
+
+.seed-head h3 {
+  margin: 0;
+  font-size: var(--text-title-m);
+}
+
+.seed-price {
+  flex: none;
+  padding: 1px 6px;
+  border: 2px solid #8a5a00;
+  border-radius: 3px;
+  background: #ffe28a;
+  font-weight: 700;
+  font-size: var(--text-body-s);
+}
+
+.seed-pitch,
+.seed-product {
+  margin: var(--space-2) 0;
+}
+
+.seed-product {
+  color: #5c536a;
+  font-size: var(--text-body-s);
+}
+
+.seed-details {
+  margin-bottom: var(--space-2);
+  font-size: var(--text-body-s);
+}
+
+.seed-details summary {
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.seed-details dt {
+  margin-top: var(--space-2);
+  font-weight: 700;
+}
+
+.seed-details dd {
+  margin: 0;
+}
+
+.booth-deal {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+  padding: var(--space-3);
+  border: 2px dashed var(--booth);
+  border-radius: 4px;
+}
+
+.booth-deal p {
+  margin: 0;
+}
+
+.booth-deal s {
+  color: #5c536a;
+}
+
+.town-panel .btn[disabled] {
+  cursor: default;
+}
+
+.room-talks li {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1) var(--space-2);
+  align-items: baseline;
+}
+
+.room-when {
+  color: #5c536a;
+  font-size: var(--text-body-s);
+}
+
+.receipt-row code,
+.seed-product code {
+  padding: 0 3px;
+  border-radius: 3px;
+  background: rgb(43 34 51 / 0.08);
+}
+
+/* The transcript is for screen readers: the bubbles show the same lines. */
+.town-transcript {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+}
+
+@media (max-width: 52rem) {
+  .town-help {
+    display: none;
+  }
+
+  .town-bag {
+    left: var(--space-3);
+    width: auto;
+    max-height: 40%;
+  }
+
+  .town-panel {
+    left: var(--space-3);
+    width: auto;
+    bottom: var(--space-3);
+    z-index: 3;
+  }
+
+  .town-panel-open .town-bag {
+    right: var(--space-3);
+  }
+}

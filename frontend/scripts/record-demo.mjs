@@ -4,8 +4,9 @@
 //   npm run demo -- --out ../demo.webm      # from frontend/
 //
 // Options: --base <url> (default http://127.0.0.1:8000), --out <file.webm|file.mp4>,
-// --query <text> (default "agents"; "automation" for the slides tour), --tour full|slides|plaza
-// (default full; slides and plaza are zoomed close-ups, of the match badges and of the plaza, and need an .mp4 output). An .mp4 output needs
+// --query <text> (default "agents"; "automation" for the slides tour), --tour full|slides|plaza|town
+// (default full; slides and plaza are zoomed close-ups, of the match badges and of the plaza, and need an
+// .mp4 output; town walks the expo and shops for tool seeds). An .mp4 output needs
 // ffmpeg on PATH.
 // Chromium: CHROMIUM_PATH, else the browser Playwright manages.
 import { execFileSync } from "node:child_process";
@@ -231,6 +232,92 @@ async function plazaTour(page) {
   await pause(page, 3000);
 }
 
+const BACK = { ArrowUp: "ArrowDown", ArrowDown: "ArrowUp", ArrowLeft: "ArrowRight", ArrowRight: "ArrowLeft" };
+
+/** Where you stand in the town, as it reports it on #town-world[data-walked] ("x,y"). */
+async function standing(page) {
+  const walked = await page.locator("#town-world").getAttribute("data-walked");
+  const [x, y] = (walked || "-1,-1").split(",").map(Number);
+  return { x, y };
+}
+
+/** Walk with the arrow `key` until you stand on `to`: hold it until one tile short, then single steps. */
+async function walkTo(page, key, to) {
+  const axis = key === "ArrowUp" || key === "ArrowDown" ? "y" : "x";
+  const left = async () => Math.abs((await standing(page))[axis] - to[axis]);
+  await page.keyboard.down(key);
+  await page.waitForFunction(
+    ([axis, goal]) => {
+      const [x, y] = (document.getElementById("town-world")?.dataset.walked || "-99,-99")
+        .split(",")
+        .map(Number);
+      return Math.abs((axis === "y" ? y : x) - goal) <= 1;
+    },
+    [axis, to[axis]],
+  );
+  await page.keyboard.up(key);
+  await pause(page, 300);
+  for (let tries = 0; tries < 4 && (await left()) > 0; tries++) {
+    const overshot =
+      ((await standing(page))[axis] - to[axis]) * (key === "ArrowUp" || key === "ArrowLeft" ? 1 : -1) < 0;
+    await page.keyboard.press(overshot ? BACK[key] : key);
+    await pause(page, 300);
+  }
+}
+
+/** The town: walk the expo floor, get called out to by booth staff, shop for tool seeds with the stand
+ * deal and the budget, find a roped-off room and its screen, then check out. */
+async function townTour(page) {
+  await page.goto(values.base);
+  await pause(page, 1500);
+  await page.locator("a[href='/town']").click();
+  await page.waitForSelector(".town-canvas");
+  log("the expo");
+  await pause(page, 3500);
+  await walkTo(page, "ArrowUp", { x: 19, y: 14 });
+  await walkTo(page, "ArrowLeft", { x: 8, y: 14 });
+  await page.waitForSelector("#town-panel:not([hidden]) .booth");
+  log("a booth: staff call out, the panel opens");
+  await pause(page, 2500);
+  await page.locator(".seed-details summary").first().click();
+  log("how a seed works");
+  await pause(page, 3000);
+  await page.locator(".seed-details summary").first().click();
+  await page.locator("[data-add-seed='ci-check-watch']").click();
+  log("bought one");
+  await pause(page, 2500);
+  await page.locator(".bag-nudge-add").click();
+  log("the nudge completes the stand");
+  await pause(page, 3000);
+  await page.locator(".town-sign-booth", { hasText: "Second Brain" }).click();
+  await page.waitForSelector("#town-panel .booth[data-booth='second-brain-supply']");
+  log("walked to the next booth");
+  await pause(page, 2500);
+  await page.locator("[data-add-stand='second-brain-supply']").click();
+  log("took the whole stand");
+  await pause(page, 3000);
+  await page.locator(".town-panel-close").click();
+  await page.locator(".town-directory summary").click();
+  await page.locator(".town-directory [data-visit='booth:smell-and-polish']").click();
+  await page.waitForSelector("#town-panel .booth[data-booth='smell-and-polish']");
+  log("a few coins short of the big seed");
+  await pause(page, 3000);
+  await page.locator("[data-add-seed='repo-style-commits']").click();
+  log("the small one still fits");
+  await pause(page, 2500);
+  await page.locator(".town-directory summary").click();
+  await page.locator(".town-directory [data-visit='room:1']").click();
+  await page.waitForSelector("#town-panel .room");
+  log("a roped-off room and what plays on its screen");
+  await pause(page, 2000);
+  await page.keyboard.press("ArrowUp");
+  await pause(page, 2500);
+  await page.locator("[data-checkout]").click();
+  await page.waitForSelector(".receipt");
+  log("receipt");
+  await pause(page, 4000);
+}
+
 /** The tour: search with predictions and filters, a talk with its player and discussion, the theme,
  * Browse, a speaker, the report form and the 404. */
 async function tour(page) {
@@ -251,11 +338,12 @@ const browser = await chromium.launch({
 });
 // The close-up records a small layout viewport (the compact layout) that ffmpeg scales up to `size`.
 const zoomed = values.tour === "slides" || values.tour === "plaza";
-const viewport = values.tour === "plaza" ? { width: 1024, height: 640 } : zoomed ? { width: 800, height: 500 } : size;
+const viewport =
+  values.tour === "plaza" ? { width: 1024, height: 640 } : zoomed ? { width: 800, height: 500 } : size;
 const context = await browser.newContext({ viewport, recordVideo: { dir: videoDir, size: viewport } });
 const page = await context.newPage();
 try {
-  await ({ slides: slidesTour, plaza: plazaTour }[values.tour] ?? tour)(page);
+  await ({ slides: slidesTour, plaza: plazaTour, town: townTour }[values.tour] ?? tour)(page);
 } finally {
   await context.close(); // writes the video
   await browser.close();
