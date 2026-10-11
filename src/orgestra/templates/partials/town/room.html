@@ -1,0 +1,17 @@
+{# A presentation room: roped off for now, with what plays on its screen. #}
+<article class="room">
+  <header class="booth-header">
+    <p class="booth-kicker">Presentation room</p>
+    <h2>{{ room.name }}</h2>
+    <p class="booth-tagline">The rope stays up while the crew sets up the screen. Until the doors open, here is what plays in this room:</p>
+  </header>
+  <ul class="room-talks">
+    {% for talk in room.talks %}
+      <li>
+        <a href="/talks/{{ talk.ref }}">{{ talk.display_title }}</a>
+        <span class="room-when">{{ talk.day or "" }} {{ talk.start or "" }}</span>
+        {% if talk.has_slides %}<span class="badge">Slides</span>{% endif %}
+      </li>
+    {% endfor %}
+  </ul>
+</article>

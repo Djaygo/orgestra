@@ -18,16 +18,17 @@
     <link rel="stylesheet" href="/static/css/pages.css">
     <link rel="stylesheet" href="/static/css/discussion.css">
     <link rel="stylesheet" href="/static/css/stage.css">
+    <link rel="stylesheet" href="/static/css/town.css">
     <script src="/static/vendor/htmx.min.js" defer></script>
     <script src="/static/vendor/sse.js" defer></script>
     {% if ui_available %}<script type="module" src="/static/dist/ui.js"></script>{% endif %}
-    {% if scene_available %}<script type="module" src="/static/dist/stage.js"></script>{% endif %}
+    {% block scene_script %}{% if scene_available %}<script type="module" src="/static/dist/stage.js"></script>{% endif %}{% endblock %}
   </head>
   <body>
     <a class="skip-link" href="#content">Skip to content</a>
     {% include "partials/icons.html" %}
     <div id="app" hx-boost="true" hx-target="#main" hx-select="#main" hx-swap="outerHTML transition:true">
-      <main id="main" class="main {% block main_class %}{% endblock %}">
+      <main id="main" class="main {% block main_class %}{% endblock %}" {% block main_attrs %}{% endblock %}>
         {% block header %}
           <header class="app-bar">
             <div class="frame app-bar-inner">
@@ -47,6 +48,6 @@
       </main>
     </div>
     <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
-    {% include "partials/stage.html" %}
+    {% block stage %}{% include "partials/stage.html" %}{% endblock %}
   </body>
 </html>

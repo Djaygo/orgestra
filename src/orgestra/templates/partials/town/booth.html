@@ -1,0 +1,35 @@
+{# A sponsor's booth: its tool seeds as products. town.ts wires the buttons to the bag. #}
+<article class="booth" style="--booth: {{ sponsor.color }}" data-booth="{{ sponsor.slug }}">
+  <header class="booth-header">
+    <p class="booth-kicker">Sponsor booth</p>
+    <h2>{{ sponsor.name }}</h2>
+    <p class="booth-tagline">{{ sponsor.tagline }}</p>
+  </header>
+  <ul class="seed-list">
+    {% for seed in seeds %}
+      <li class="seed" data-seed="{{ seed.slug }}">
+        <div class="seed-head">
+          <h3>{{ seed.name }}</h3>
+          <span class="seed-price">{{ seed.price }} coins</span>
+        </div>
+        <p class="seed-pitch">{{ seed.pitch }}</p>
+        <p class="seed-product">Grows into {% for product in seed.product %}<code>{{ product }}</code>{% if not loop.last %}, {% endif %}{% endfor %}</p>
+        <details class="seed-details">
+          <summary>How it works</summary>
+          <dl>
+            <dt>Problem</dt><dd>{{ seed.problem }}</dd>
+            <dt>When it fires</dt><dd>{{ seed.fires }}</dd>
+            <dt>Mechanism</dt><dd>{{ seed.mechanism }}</dd>
+            <dt>Gates</dt><dd>{{ seed.gates }}</dd>
+          </dl>
+        </details>
+        <button type="button" class="btn seed-add" data-add-seed="{{ seed.slug }}">Add to bag</button>
+      </li>
+    {% endfor %}
+  </ul>
+  {% set full_price = seeds|sum(attribute="price") %}
+  <footer class="booth-deal">
+    <p>Take the whole stand for <strong>{{ bundle }} coins</strong> <s>{{ full_price }}</s></p>
+    <button type="button" class="btn btn-tonal" data-add-stand="{{ sponsor.slug }}">Take the stand</button>
+  </footer>
+</article>

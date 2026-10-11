@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% block title %}Expo · Orgestra{% endblock %}
+{% block main_class %}town-page{% endblock %}
+{# Full page loads in and out: the town has no plaza strip, and the next page brings it back. #}
+{% block main_attrs %}hx-boost="false"{% endblock %}
+{% block scene_script %}{% if town_available %}<script type="module" src="/static/dist/town.js"></script>{% endif %}{% endblock %}
+{% block stage %}{% endblock %}
+{% block content %}
+  <h1 class="visually-hidden">The expo</h1>
+  <section id="town" class="town" aria-label="The expo floor">
+    <div id="town-world" class="town-world" aria-hidden="true"></div>
+    <p class="town-help">
+      <kbd>Arrows</kbd> or <kbd>WASD</kbd> to walk, or click the floor. Walk up to a booth to see what it sells.
+    </p>
+    <nav class="town-directory" aria-label="Expo directory">
+      <details>
+      <summary>Directory</summary>
+      <h2>Booths</h2>
+      <ul>
+        {% for sponsor in expo.sponsors %}
+          <li>
+            <a href="/town/booths/{{ sponsor.slug }}"
+               data-visit="booth:{{ sponsor.slug }}"
+               style="--booth: {{ sponsor.color }}"><span class="booth-dot" aria-hidden="true"></span>{{ sponsor.name }}</a>
+          </li>
+        {% endfor %}
+      </ul>
+      {% if rooms %}
+        <h2>Rooms</h2>
+        <ul>
+          {% for room in rooms %}
+            <li>
+              <a href="/town/rooms/{{ loop.index }}"
+                 data-visit="room:{{ loop.index }}"
+>{{ room.name }}</a>
+            </li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+      </details>
+    </nav>
+    <aside id="town-panel" class="town-panel" aria-label="Booth" hidden>
+      <button type="button" class="town-panel-close btn btn-text" data-close-panel aria-label="Close">×</button>
+      <div id="town-panel-body" aria-live="polite"></div>
+    </aside>
+    <section id="town-bag" class="town-bag" aria-label="Your bag" aria-live="polite"></section>
+    {# Inside #app, so the boost's target, select and swap are reset for the transcript's own swaps. #}
+    <ol id="town-transcript"
+        class="town-transcript"
+        hx-ext="sse"
+        sse-connect="/conversations/stream"
+        sse-swap="turn"
+        hx-target="this"
+        hx-select="unset"
+        hx-swap="innerHTML"
+        aria-live="polite"
+        aria-label="What the speakers are saying"></ol>
+  </section>
+  <script type="application/json" id="town-data">{{ town_json|safe }}</script>
+  <script type="application/json" id="cast-data">{{ cast_json|safe }}</script>
+{% endblock %}

@@ -2,7 +2,7 @@ import { defineConfig } from "vite";
 
 // Two entries built into the Python package's static folder: stage.ts, tiny, loads the three.js world
 // (a separate chunk) only when the stage scrolls into view, and ui.ts, the small script behind the
-// interface (theme, shortcuts, predictions).
+// interface (theme, shortcuts, predictions). town.ts is the /town page's pixel world and shop.
 export default defineConfig({
   base: "/static/dist/",
   build: {
@@ -11,7 +11,7 @@ export default defineConfig({
     // three.js is most of the lazy world chunk; it loads only when the stage is on screen.
     chunkSizeWarningLimit: 600,
     rollupOptions: {
-      input: { stage: "src/stage.ts", ui: "src/ui.ts" },
+      input: { stage: "src/stage.ts", ui: "src/ui.ts", town: "src/town.ts" },
       output: {
         entryFileNames: "[name].js",
         chunkFileNames: "chunks/[name]-[hash].js",

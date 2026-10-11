@@ -18,6 +18,11 @@ Search and personas over the talks and slides of a conference (GOTO Copenhagen t
   and links (email when public).
 - **Stage**: the speakers walk around a three.js plaza at the bottom of the home page and at the end of
   every other page, and talk to each other about their talks.
+- **Expo** (`/town`, "Visit the expo" on the home page): an ai-town style pixel hall you walk with the
+  arrow keys, WASD or clicks. Fictional sponsors sell tool seeds (ideas for agent harness tools: a skill,
+  hook or check) from their booths for expo coins, with a stand deal for taking all of a booth's seeds;
+  the bag is kept in the browser. The presentation rooms are roped off and show the next talk on their
+  screen. Speakers stroll the floor and talk, as on the plaza.
 - **Theme**: follows your system; the Theme button switches between light, dark and system. Everything
   respects reduced motion.
 
@@ -63,6 +68,7 @@ HTMX pages plus one three.js island:
 | Routes | `app.py` | full pages for navigation, fragments for htmx, `/conversations/stream` for SSE |
 | Templates | `src/orgestra/templates/` | Jinja2; htmx and its SSE extension are vendored in `static/vendor/` |
 | Stage | `frontend/src/` | TypeScript + Vite, built into `src/orgestra/static/dist/` |
+| Expo | `src/orgestra/town/`, `resources/sponsors.toml`, `frontend/src/town/` | sponsors and seeds, the booth and room panels (htmx), the canvas world and the bag |
 
 The pages follow Google search: a centred logo and search box on the home page, and on the results
 page a search box that updates `#results` while typing (`hx-get`, debounced, `hx-push-url`), with a

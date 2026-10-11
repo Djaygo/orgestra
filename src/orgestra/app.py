@@ -38,11 +38,14 @@ from orgestra.search import Hit, SearchIndex, SearchResult
 from orgestra.slides import load_slides
 from orgestra.suggest import suggest
 from orgestra.thesaurus import load_thesaurus
+from orgestra.town import routes as town_routes
+from orgestra.town.expo import Expo, load_expo
 
 PACKAGE_DIR = Path(__file__).parent
 REPO_DATA_DIR = PACKAGE_DIR.parents[1] / "data"
 SCENE_ENTRY = PACKAGE_DIR / "static" / "dist" / "stage.js"
 UI_ENTRY = PACKAGE_DIR / "static" / "dist" / "ui.js"
+TOWN_ENTRY = PACKAGE_DIR / "static" / "dist" / "town.js"
 SearchQuery = Annotated[str, Query(max_length=200)]
 FilterParam = Annotated[str, Query(max_length=10)]
 RESULTS_SHOWN = 20
@@ -80,6 +83,7 @@ class Services:
     cast: list[Persona]
     templates: Jinja2Templates
     tracker: IssueTracker | None
+    expo: Expo
 
 
 def is_fragment_request(request: Request) -> bool:
@@ -123,6 +127,7 @@ def build_templates(catalog: Catalog, cast: list[Persona]) -> Jinja2Templates:
         "cast_json": cast_json(cast),
         "scene_available": SCENE_ENTRY.exists(),
         "ui_available": UI_ENTRY.exists(),
+        "town_available": TOWN_ENTRY.exists(),
     }
 
     def layout_context(request: Request) -> dict[str, object]:
@@ -163,6 +168,7 @@ def build_services(settings: Settings) -> Services:
         cast=cast,
         templates=build_templates(catalog, cast),
         tracker=build_tracker(settings.issues_provider, settings.issues_repo, settings.issues_token),
+        expo=load_expo(),
     )
 
 
@@ -382,6 +388,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     app.include_router(router)
     app.include_router(discussion_routes.router)
     app.include_router(reports_routes.router)
+    app.include_router(town_routes.router)
     app.add_exception_handler(StarletteHTTPException, http_error)
     app.add_exception_handler(Exception, server_error)
     return app

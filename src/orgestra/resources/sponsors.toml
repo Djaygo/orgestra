@@ -1,0 +1,147 @@
+# The expo floor of /town: fictional sponsors, each selling tool seeds from its booth.
+# A tool seed is the idea for an agent harness tool (a skill, hook or check) written down before its
+# code. These are the seeds of the author's wiki (work/seeds/*.md); `product` is what each grew into.
+# Prices are in expo coins; a visitor starts with `budget`.
+
+budget = 100
+
+[[sponsors]]
+slug = "pipeline-pals"
+name = "Pipeline Pals"
+tagline = "We stay on your CI so you don't have to."
+color = "#3f9d5a"
+
+[[sponsors]]
+slug = "smell-and-polish"
+name = "Smell & Polish"
+tagline = "Code health you can measure, one smell at a time."
+color = "#d9822b"
+
+[[sponsors]]
+slug = "second-brain-supply"
+name = "Second Brain Supply Co."
+tagline = "Your wiki, in every project you open."
+color = "#7a5bd1"
+
+[[sponsors]]
+slug = "hindsight-and-mentor"
+name = "Hindsight & Mentor"
+tagline = "Every session teaches you something. We make sure it does."
+color = "#2f86c9"
+
+[[seeds]]
+slug = "ci-check-watch"
+sponsor = "pipeline-pals"
+name = "CI Check Watch"
+product = ["pr-checks", "mr-checks"]
+price = 24
+hook = "CI red again? We watch it for you."
+pitch = "Watches CI after every push, fixes only real failures with one clear correction in line with the author's intent, escalates the rest, never amends."
+problem = "An agent opens a pull request and moves on while CI fails, or fixes a failure by guessing at intent."
+fires = "Right after creating a pull or merge request, or pushing to one."
+mechanism = "Watches the checks to completion, reads only the failed logs, reproduces locally with the project's own command and pushes each fix as a new commit. Tests stuck over 10 minutes are investigated as hangs."
+gates = "Fixes only within the change's scope; third-party, infrastructure or ambiguous failures are escalated instead of guessed."
+
+[[seeds]]
+slug = "stacked-reviews"
+sponsor = "pipeline-pals"
+name = "Stacked Reviews"
+product = ["stacking-prs"]
+price = 16
+hook = "One giant PR? Slice it into a stack."
+pitch = "Splits work into small dependent change requests that each pass CI and review on their own."
+problem = "One large change request is hard to review, and stacked branches managed by hand drift apart after every rebase."
+fires = "When you ask for a stack, or the current branch is already part of one."
+mechanism = "One branch per reviewable step on top of the one below; restacks the upstack after a change lower down, and checks CI bottom first. Uses git-spice on GitHub and GitLab alike."
+gates = "Never rebases or force-pushes outside the stack; force-pushes only through the tool's lease-protected submit."
+
+[[seeds]]
+slug = "scored-refactoring"
+sponsor = "smell-and-polish"
+name = "Scored Refactoring"
+product = ["reviewing-code-health", "reviewing-frontend-health"]
+price = 28
+hook = "Is your code Green? We give it a score out of 10."
+pitch = "Scores changed code with linters into a 1-10 health score, locks behaviour with the test suite, then fixes one smell per step until every touched file is Green."
+problem = "AI-generated code collects smells, and refactors without a measure or a behaviour lock stop too early or change behaviour silently."
+fires = "On a code review, a refactor request, or before committing or opening a pull request."
+mechanism = "A script runs the linters and type checkers on the changed code only and turns them into a score; the model applies a design checklist and refactors one smell per step, measuring again each time."
+gates = "Stops at Green or when a fix would change a public contract; never changes tests to make them pass."
+
+[[seeds]]
+slug = "repo-style-commits"
+sponsor = "smell-and-polish"
+name = "Repo-Style Commits"
+product = ["git-style"]
+price = 8
+hook = "Commits that sound like your team wrote them."
+pitch = "Loads the repo's commit and PR conventions before any git action, detects the dominant style and matches it."
+problem = "Agents write commits and PR bodies in their own house style, which clashes with the repo's history."
+fires = "Before any commit, push, or pull request, as a prerequisite rather than an afterthought."
+mechanism = "Reads the last 30 commit subjects, classifies the style (conventional, scoped brackets or plain) and matches it: imperative mood, first line under 72 characters, PR bodies about problem and behaviour."
+gates = "Never amends; never force-pushes unless asked."
+
+[[seeds]]
+slug = "wiki-advisor"
+sponsor = "second-brain-supply"
+name = "Wiki Advisor"
+product = ["wiki-advisor", "capture-seed"]
+price = 22
+hook = "Your notes, consulted before you design."
+pitch = "Consults your wiki from any project at checkpoints through a read-only subagent, and captures new tool ideas back into the vault inbox."
+problem = "A wiki only helps while you work inside it; in other projects its concepts are out of reach and new ideas are lost."
+fires = "Before designing a new feature, skill or workflow, and during the weekly review."
+mechanism = "A read-only subagent shortlists pages from the index, reads up to about eight and follows their typed links, then returns concepts, seeds, tensions and gaps in a short reply."
+gates = "The advisor never writes; capture writes only after you approve the draft."
+
+[[seeds]]
+slug = "kplex-wiki-maintenance"
+sponsor = "second-brain-supply"
+name = "Typed-Link Wiki Care"
+product = ["obsidian-kplex-wiki"]
+price = 14
+hook = "Links with meaning, graphs that stay tidy."
+pitch = "Keeps an Obsidian wiki legible: types links with ontology fields, keeps the ontology in sync and files concepts into subject folders."
+problem = "Untyped links show up as meaningless children, and settings, templates and folder moves quietly break the graph."
+fires = "When adding links, editing plugin settings, moving notes or linting a vault."
+mechanism = "Typed fields read from the live ontology, a table of known gotchas, a subject-folder taxonomy, and a check script that reports what would be misplaced."
+gates = "Report-only on raw notes; new subjects need your approval."
+
+[[seeds]]
+slug = "weekly-recall-review"
+sponsor = "second-brain-supply"
+name = "Weekly Recall Review"
+product = ["weekly-review"]
+price = 18
+hook = "Remember why you did it, a week later."
+pitch = "A weekly ritual that turns the week's commits and agent sessions into spaced-repetition why-questions, people to align with and harness proposals."
+problem = "Work done with an agent is forgotten quickly, and who else touches the same code stays implicit."
+fires = "Once a week, on your own machine."
+mechanism = "Scripts gather the facts; due questions are asked one at a time and graded, and the interval doubles (1, 2, 4, 8 weeks) or resets. Three to five new questions come from the week's work."
+gates = "Never shows the stored answer first; nothing leaves the machine."
+
+[[seeds]]
+slug = "session-retrospective"
+sponsor = "hindsight-and-mentor"
+name = "Session Retrospective"
+product = ["reviewing-sessions"]
+price = 20
+hook = "Same agent mistake twice? We find the pattern."
+pitch = "Mines agent session transcripts for token sinks, corrections and repeated procedures, and turns patterns into proposed rules or skills, each backed by numbers."
+problem = "The same agent mistakes and expensive habits recur because nobody reads the transcripts, which are too large to read."
+fires = "On a periodic review of agent usage, or when proposing new rules or skills."
+mechanism = "A script builds a report (token ledger, corrections, repeated tool sequences, unused skills). A correction seen twice becomes a rule; a procedure seen three times becomes a skill candidate."
+gates = "Every proposal names its numbers; transcripts never leave the machine."
+
+[[seeds]]
+slug = "learn-by-doing-mode"
+sponsor = "hindsight-and-mentor"
+name = "Learn-by-Doing Mode"
+product = ["learning-mode"]
+price = 12
+hook = "Let the agent coach you instead of coding for you."
+pitch = "An opt-in session where the agent handles boilerplate and commands but leaves core logic and design choices to you, one hint at a time."
+problem = "Delegating everything ships faster but stops you learning."
+fires = "Only when you opt in for a session."
+mechanism = "The agent writes scaffolding and a failing test, leaves a TODO with the contract, gives one hint per attempt and offers two or three designs to pick from."
+gates = "Never writes the core logic itself; one hint at a time."
